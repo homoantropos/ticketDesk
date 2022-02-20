@@ -1,0 +1,48 @@
+<ng-container *ngIf="userForm; else loader">
+  <form
+    class="col-sm-12 centerHorizontal formContainer"
+    [formGroup]="userForm"
+    (ngSubmit)="onSubmit(userForm.value)"
+  >
+    <h4 class="centerHorizontal m-b-3">Дані для реєстрації:</h4>
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>email:</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>password:</mat-label>
+      <input matInput formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>дата народження (реєстрація можлива, якщо Вам виповнилось 12 років):</mat-label>
+      <input matInput [min]="userService.getYear()" [matDatepicker]="$any(birthday)" formControlName="birthday">
+      <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
+      <mat-datepicker #birthday></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>прізвище:</mat-label>
+      <input matInput formControlName="surname">
+    </mat-form-field>
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>ім'я:</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <button mat-button color="accent">додати аватар</button>
+    <button mat-raised-button class="col-sm-12" type="submit" color="primary">зареєструватись</button>
+    <p>
+      <small>Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
+    </p>
+
+  </form>
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+

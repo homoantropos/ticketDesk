@@ -1,5 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", sans-serif; }
@@ -14,4 +14,25 @@ body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", san
   position: absolute;
   left: 50%;
   transform: translate(-50%);
+}
+
+.formContainer {
+  border: solid grey 1px;
+  transform: translate(-50%, 20%);
+  display: block;
+  padding: 20px 10px 20px 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 500px;
+}
+
+@media (max-width: 550px) {
+  .formContainer {
+    width: 90vw;
+    padding: 5px 5px 5px 5px;
+  }
+}
+
+p {
+  text-align: center;
 }
