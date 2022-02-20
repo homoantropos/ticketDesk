@@ -4,6 +4,7 @@ export interface User {
   birthday: Date,
   surname?: string,
   name?: string,
+  phoneNumber?: string,
   role?: string,
   profilePictureSrc?: string,
   id?: number

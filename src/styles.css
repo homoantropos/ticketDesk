@@ -4,6 +4,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", sans-serif; }
 
+.error {
+  color: red;
+}
+
 .centerVertical {
   position: absolute;
   top: 50%;
@@ -18,15 +22,14 @@ body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", san
 
 .formContainer {
   border: solid grey 1px;
-  transform: translate(-50%, 20%);
-  display: block;
+  transform: translate(-50%, 10%);
   padding: 20px 10px 20px 20px;
-  margin-top: 5px;
+  margin-top: 3px;
   margin-bottom: 5px;
   width: 500px;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 510px) {
   .formContainer {
     width: 90vw;
     padding: 5px 5px 5px 5px;
@@ -35,4 +38,8 @@ body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", san
 
 p {
   text-align: center;
+}
+
+mat-form-field {
+  width: 100%
 }

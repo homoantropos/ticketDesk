@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "../interfaces";
+import {Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,9 @@ export class UserService {
   ) {
   }
 
+  registerUser(user: User): Observable<User > {
+    return this.http.post<User>(`${environment.dbUrl}/user/register`, user);
+  }
 
   private _emptyUserFormInitValue: User = {
     email: '',
@@ -19,6 +24,7 @@ export class UserService {
     birthday: this.getYear(),
     surname: '',
     name: '',
+    phoneNumber: '',
     role: '',
     profilePictureSrc: ''
   }

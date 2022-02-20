@@ -4,6 +4,8 @@ import {User} from "../../interfaces";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {switchMap} from "rxjs";
+import {DateManipulationService} from "../../services/date-manipulation.service";
+import {AgeValidator} from "../../services/age-validator";
 
 @Component({
   selector: 'app-user-register-or-edit',
@@ -15,36 +17,39 @@ export class UserRegisterOrEditComponent implements OnInit {
 
   // @ts-ignore
   userForm: FormGroup;
-  // @ts-ignore
-  minDate: Date;
+  today = new Date();
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    public userService: UserService
+    public userService: UserService,
+    public dPs: DateManipulationService
   ) {
   }
 
   ngOnInit(): void {
-    this.minDate = this.userService.getYear();
     this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
-    console.log(this.userForm.value);
   }
 
   createForm(user: User): FormGroup {
     return this.fb.group({
-      email: [user.email, [Validators.email, Validators.required]],
+      email: [user.email, [Validators.required, Validators.email]],
       password: [user.password, [Validators.required, Validators.minLength(6)]],
-      birthday: [user.birthday, [Validators.required]],
+      birthday: [user.birthday, [Validators.required, AgeValidator]],
       surname: [user.surname],
       name: [user.name],
+      phoneNumber: [user.phoneNumber,
+        Validators.pattern("^((\\+38-?)|0)[\ )(.]*(0)[0-9]{2}[\ )(.]*[0-9]{3}[\ )(.]*[0-9]{2}[\ )(.]*[0-9]{2}$")],
       role: [user.role],
       profilePictureSrc: [user.profilePictureSrc]
     })
   }
 
   onSubmit(user: User): void {
-
+    this.userService.registerUser(user)
+      .subscribe(
+        user => console.log(user)
+      )
   }
 
 }

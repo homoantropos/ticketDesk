@@ -1,27 +1,47 @@
 <ng-container *ngIf="userForm; else loader">
+  <div class="formTitle m-t-2 m-b-2">
+    <b class="centerHorizontal">Дані для реєстрації:</b>
+  </div>
+
   <form
     class="col-sm-12 centerHorizontal formContainer"
     [formGroup]="userForm"
     (ngSubmit)="onSubmit(userForm.value)"
   >
-    <h4 class="centerHorizontal m-b-3">Дані для реєстрації:</h4>
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
       <input matInput formControlName="email">
     </mat-form-field>
+    <div *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors">
+      <small class="error" *ngIf="userForm.controls['email'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="userForm.controls['email'].errors['email']">введіть коректну адресу електронної
+        пошти</small>
+    </div>
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>password:</mat-label>
       <input matInput formControlName="password">
     </mat-form-field>
+    <div *ngIf="userForm.controls['password'].touched && userForm.controls['password'].errors">
+      <small class="error" *ngIf="userForm.controls['password'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="userForm.controls['password'].errors['minlength']">
+        пароль повинен бути більшим {{userForm.controls['password'].errors['minlength'].requiredLength}} символів
+        ви ввели {{userForm.controls['password'].errors['minlength'].actualLength}} символів</small>
+    </div>
 
     <mat-form-field class="col-sm-12 centerHorizontal">
-      <mat-label>дата народження (реєстрація можлива, якщо Вам виповнилось 12 років):</mat-label>
+      <mat-label>дата народження:</mat-label>
       <input matInput [min]="userService.getYear()" [matDatepicker]="$any(birthday)" formControlName="birthday">
       <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
       <mat-datepicker #birthday></mat-datepicker>
     </mat-form-field>
+    <div *ngIf="userForm.controls['birthday'].errors">
+        <small
+          class="error"
+          *ngIf="userForm.controls['birthday'].errors['invalidAge']">реєстрація дозволена для старших 12 років</small>
+    </div>
+
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>прізвище:</mat-label>
@@ -33,9 +53,25 @@
       <input matInput formControlName="name">
     </mat-form-field>
 
-    <button mat-button color="accent">додати аватар</button>
-    <button mat-raised-button class="col-sm-12" type="submit" color="primary">зареєструватись</button>
-    <p>
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>номер телефону (формат: +38 012 345 67 89:</mat-label>
+      <input matInput formControlName="phoneNumber">
+    </mat-form-field>
+    <div *ngIf="userForm.controls['phoneNumber'].errors">
+      <small
+        class="error"
+        *ngIf="userForm.controls['phoneNumber'].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
+    </div>
+
+    <button mat-button class="col-sm-12" color="accent">додати аватар</button>
+    <button
+      mat-raised-button
+      class="col-sm-12"
+      type="submit"
+      color="primary"
+      [disabled]="userForm.invalid"
+    >зареєструватись</button>
+    <p *ngIf="userForm.valid">
       <small>Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
     </p>
 

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  dbUrl: 'localhost:8050/api'
+  dbUrl: 'http://localhost:8050/api'
 };
 
 /*
