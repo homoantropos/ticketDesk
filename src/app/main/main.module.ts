@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatMenuModule} from "@angular/material/menu";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -11,7 +14,10 @@ import { MainComponent } from './main.component';
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    MatToolbarModule,
+    MatMenuModule,
+    SharedModule
   ]
 })
 export class MainModule { }

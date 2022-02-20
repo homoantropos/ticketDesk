@@ -1,1 +1,27 @@
-<p>main works!</p>
+<mat-toolbar [ngStyle]="{justifyContent: 'space-between'}" color="accent">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+      <p>Головна</p>
+    </button>
+    <button mat-menu-item routerLink="admin" routerLinkActive="active">
+      <p>admin</p>
+    </button>
+  </mat-menu>
+
+  <span
+    class="p-l-1" [ngStyle]="{cursor: 'pointer', zIndex: 1}"
+    routerLink="" routerLinkActive="active">TicketDesk</span>
+
+  <button [ngStyle]="{float: 'right'}"
+          mat-icon-button
+          class="example-icon favorite-icon p-r-0" aria-label="Example icon-button with heart icon">
+    <mat-icon>login</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
