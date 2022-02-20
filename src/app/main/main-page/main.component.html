@@ -1,4 +1,4 @@
-<mat-toolbar [ngStyle]="{justifyContent: 'space-between'}" color="accent">
+<mat-toolbar color="accent">
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
     <mat-icon>more_vert</mat-icon>
   </button>
@@ -12,17 +12,29 @@
   </mat-menu>
 
   <span
-    class="p-l-1" [ngStyle]="{cursor: 'pointer', zIndex: 1}"
-    routerLink="" routerLinkActive="active">TicketDesk</span>
+    class="pointer m-l-3"
+    routerLink="" routerLinkActive="active"><b>TicketDesk</b>
+  </span>
 
-  <button [ngStyle]="{float: 'right'}"
-          mat-icon-button
-          class="example-icon favorite-icon p-r-0" aria-label="Example icon-button with heart icon">
-    <mat-icon>login</mat-icon>
-  </button>
+  <div>
+    <span>реєстрація</span>
+    <button mat-icon-button
+            class="m-r-1"
+            (click)="goToRegisterForm()"
+    >
+      <mat-icon>person_add</mat-icon>
+    </button>
+
+    <span>вхід</span>
+    <button
+      mat-icon-button
+      class="m-r-1">
+
+      <mat-icon>login</mat-icon>
+    </button>
+  </div>
 
 </mat-toolbar>
 
-<app-user-register-or-edit></app-user-register-or-edit>
 <router-outlet></router-outlet>
 

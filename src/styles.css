@@ -40,6 +40,19 @@ p {
   text-align: center;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 mat-form-field {
   width: 100%
+}
+
+mat-toolbar {
+  justify-content: space-between;
+}
+
+mat-toolbar span {
+  font-family: "Oswald", "Roboto Condensed", sans-serif;
+  font-size: large;
 }

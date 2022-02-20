@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../interfaces";
 import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Params} from "@angular/router";
-import {switchMap} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DateManipulationService} from "../../services/date-manipulation.service";
 import {AgeValidator} from "../../services/age-validator";
 
@@ -17,11 +16,20 @@ export class UserRegisterOrEditComponent implements OnInit {
 
   // @ts-ignore
   userForm: FormGroup;
-  today = new Date();
+
+  @ViewChild('emailInput')
+  set emailInput(emailInput: ElementRef<HTMLInputElement>) {
+    if (emailInput) {
+      setTimeout(() => {
+        emailInput.nativeElement.focus();
+      });
+    }
+  }
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     public userService: UserService,
     public dPs: DateManipulationService
   ) {
@@ -48,7 +56,10 @@ export class UserRegisterOrEditComponent implements OnInit {
   onSubmit(user: User): void {
     this.userService.registerUser(user)
       .subscribe(
-        user => console.log(user)
+        user => {
+          console.log(user);
+          this.router.navigate(['main']);
+        }
       )
   }
 

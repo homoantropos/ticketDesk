@@ -11,7 +11,7 @@
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
-      <input matInput formControlName="email">
+      <input matInput formControlName="email" #emailInput>
     </mat-form-field>
     <div *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors">
       <small class="error" *ngIf="userForm.controls['email'].errors['required']">поле повинно бути заповнене</small>
