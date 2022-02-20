@@ -17,14 +17,7 @@ export class UserRegisterOrEditComponent implements OnInit {
   // @ts-ignore
   userForm: FormGroup;
 
-  @ViewChild('emailInput')
-  set emailInput(emailInput: ElementRef<HTMLInputElement>) {
-    if (emailInput) {
-      setTimeout(() => {
-        emailInput.nativeElement.focus();
-      });
-    }
-  }
+  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +30,11 @@ export class UserRegisterOrEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
+    if (this.userForm) {
+      setTimeout(() => {
+        this.emailInput.nativeElement.focus();
+      });
+    }
   }
 
   createForm(user: User): FormGroup {
