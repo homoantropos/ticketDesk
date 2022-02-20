@@ -4,7 +4,6 @@ import {DateManipulationService} from "./date-manipulation.service";
 export function AgeValidator (control: AbstractControl): {[key: string]: boolean} | null {
   const dmS = new DateManipulationService();
   if(dmS.ageCheck(control.value, 12)) {
-    console.log('im worked');
     return {invalidAge: true};
   }
   return null
