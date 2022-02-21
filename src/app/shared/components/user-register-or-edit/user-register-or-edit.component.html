@@ -11,7 +11,7 @@
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
-      <input matInput formControlName="email" #emailInput>
+      <input matInput type="email" formControlName="email" #emailInput>
     </mat-form-field>
     <div *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors">
       <small class="error" *ngIf="userForm.controls['email'].errors['required']">поле повинно бути заповнене</small>
@@ -21,7 +21,7 @@
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>password:</mat-label>
-      <input matInput formControlName="password">
+      <input matInput type="password" formControlName="password">
     </mat-form-field>
     <div *ngIf="userForm.controls['password'].touched && userForm.controls['password'].errors">
       <small class="error" *ngIf="userForm.controls['password'].errors['required']">поле повинно бути заповнене</small>
@@ -72,7 +72,7 @@
       [disabled]="userForm.invalid"
     >зареєструватись</button>
     <p *ngIf="userForm.valid">
-      <small>Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
+      <small class="centerText">Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
     </p>
 
   </form>
