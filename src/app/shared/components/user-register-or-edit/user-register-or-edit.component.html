@@ -32,7 +32,7 @@
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>дата народження:</mat-label>
-      <input matInput [min]="userService.getYear()" [matDatepicker]="$any(birthday)" formControlName="birthday">
+      <input matInput [max]="userService.getYear()" [matDatepicker]="$any(birthday)" formControlName="birthday">
       <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
       <mat-datepicker #birthday></mat-datepicker>
     </mat-form-field>
