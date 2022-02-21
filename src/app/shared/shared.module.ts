@@ -22,14 +22,14 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {UserRegisterOrEditComponent} from './components/user-register-or-edit/user-register-or-edit.component';
 import {LoaderComponent} from './components/loader/loader.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 @NgModule({
   declarations: [
-
-
     UserRegisterOrEditComponent,
-    LoaderComponent
+    LoaderComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +52,7 @@ import {LoaderComponent} from './components/loader/loader.component';
     MatIconModule
   ],
   exports: [
+    AlertComponent,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,

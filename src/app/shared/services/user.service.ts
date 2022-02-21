@@ -18,6 +18,10 @@ export class UserService {
     return this.http.post<User>(`${environment.dbUrl}/user/register`, user);
   }
 
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${environment.dbUrl}/user/${id}`);
+  }
+
   private _emptyUserFormInitValue: User = {
     email: '',
     password: '',

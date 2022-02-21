@@ -2,9 +2,10 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../interfaces";
 import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {DateManipulationService} from "../../services/date-manipulation.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {AgeValidator} from "../../services/age-validator";
+import {Alert, AlertService} from "../../services/alert.service";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-user-register-or-edit',
@@ -16,6 +17,25 @@ export class UserRegisterOrEditComponent implements OnInit {
 
   // @ts-ignore
   userForm: FormGroup;
+  showUserForm = false;
+  submitted = false;
+  // @ts-ignore
+  userId: number;
+
+  // @ts-ignore
+  uSub: Subscription;
+
+  // @ts-ignore
+  createOrEditLabelName: string;
+  private creatOrEditor = true;
+
+  setCreatOrEditor(condition: boolean): void {
+    this.creatOrEditor = condition;
+  }
+
+  get creatorOrEditor(): boolean {
+    return this.creatOrEditor;
+  }
 
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
 
@@ -24,11 +44,31 @@ export class UserRegisterOrEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public userService: UserService,
-    public dPs: DateManipulationService
+    private alert: AlertService
   ) {
   }
 
   ngOnInit(): void {
+    if (this.route.toString().includes('edit')) {
+      this.setCreatOrEditor(false);
+      this.createOrEditLabelName = 'Змінити';
+      this.route.paramMap
+        .pipe(
+          switchMap(
+            (params: Params) => {
+              this.userId = params['id'];
+              return this.userService.getUserById(params['id']);
+            }
+          )
+        )
+        .subscribe(
+          coach => this.userForm = this.createForm(coach),
+          error => this.alert.danger(error.message)
+        );
+    } else {
+      this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
+      this.createOrEditLabelName = 'Додати';
+    }
     this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
     if (this.userForm) {
       setTimeout(() => {
