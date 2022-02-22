@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {User} from "../interfaces";
-import {Observable} from "rxjs";
+import {Observable, Subject, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  error$: Subject<string> = new Subject<string>();
 
   constructor(
     private http: HttpClient
@@ -18,8 +20,26 @@ export class UserService {
     return this.http.post<User>(`${environment.dbUrl}/user/register`, user);
   }
 
+  updateUser(user:User): Observable<User> {
+    return this.http.patch<User>(`${environment.dbUrl}/user/register`, user);
+  }
+
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(`${environment.dbUrl}/user/${id}`);
+  }
+
+
+  errorHandle(error: HttpErrorResponse): any {
+    const message = error.error.message;
+    switch (message) {
+      case('повторювані значення ключа порушують обмеження унікальності \"coach_name_surname_fathersName_key\"'):
+        this.error$.next('Такий тренер вже існує в базі даних, зміни не можуть бути збережені');
+        break;
+      case('Тренер звязаний з базою результатів і не може бути видалений з бази даних.'):
+        this.error$.next('Тренер звязаний з базою результатів і не може бути видалений з бази даних.');
+        break;
+    }
+    return throwError(error);
   }
 
   private _emptyUserFormInitValue: User = {

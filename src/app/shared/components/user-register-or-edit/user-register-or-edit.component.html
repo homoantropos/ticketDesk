@@ -1,6 +1,6 @@
 <ng-container *ngIf="userForm; else loader">
   <div class="formTitle m-t-2 m-b-2">
-    <b class="centerHorizontal">Дані для реєстрації:</b>
+    <b class="centerHorizontal">{{createOrEditLabelName}}</b>
   </div>
 
   <form
@@ -64,16 +64,27 @@
     </div>
 
     <button mat-button class="col-sm-12" color="accent">додати аватар</button>
+
+    <button mat-button
+            class="col-sm-6"
+            color="primary"
+            type="button"
+            (click)="resetCoachForm()"
+    >
+      Скасувати
+    </button>
+
     <button
       mat-raised-button
-      class="col-sm-12"
+      class="col-sm-6"
       type="submit"
       color="primary"
-      [disabled]="userForm.invalid"
+      [disabled]="userForm.invalid || submitted"
     >зареєструватись</button>
     <p *ngIf="userForm.valid">
       <small class="centerText">Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
     </p>
+
 
   </form>
 </ng-container>

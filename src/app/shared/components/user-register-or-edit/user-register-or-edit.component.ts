@@ -1,10 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../interfaces";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {AgeValidator} from "../../services/age-validator";
-import {Alert, AlertService} from "../../services/alert.service";
+import {AlertService} from "../../services/alert.service";
 import {switchMap} from "rxjs";
 
 @Component({
@@ -13,7 +13,7 @@ import {switchMap} from "rxjs";
   styleUrls: ['./user-register-or-edit.component.css']
 })
 
-export class UserRegisterOrEditComponent implements OnInit {
+export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
 
   // @ts-ignore
   userForm: FormGroup;
@@ -21,7 +21,6 @@ export class UserRegisterOrEditComponent implements OnInit {
   submitted = false;
   // @ts-ignore
   userId: number;
-
   // @ts-ignore
   uSub: Subscription;
 
@@ -51,7 +50,7 @@ export class UserRegisterOrEditComponent implements OnInit {
   ngOnInit(): void {
     if (this.route.toString().includes('edit')) {
       this.setCreatOrEditor(false);
-      this.createOrEditLabelName = 'Змінити';
+      this.createOrEditLabelName = 'Змінити дані';
       this.route.paramMap
         .pipe(
           switchMap(
@@ -67,7 +66,7 @@ export class UserRegisterOrEditComponent implements OnInit {
         );
     } else {
       this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
-      this.createOrEditLabelName = 'Додати';
+      this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
     }
     this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
     if (this.userForm) {
@@ -85,20 +84,69 @@ export class UserRegisterOrEditComponent implements OnInit {
       surname: [user.surname],
       name: [user.name],
       phoneNumber: [user.phoneNumber,
-        Validators.pattern("^((\\+38-?)|0)[\ )(.]*(0)[0-9]{2}[\ )(.]*[0-9]{3}[\ )(.]*[0-9]{2}[\ )(.]*[0-9]{2}$")],
+        Validators.pattern("^((\\+38-?)|0)[\ )(.-]*(0)[0-9]{2}[\ )(.-]*[0-9]{3}[\ )(.-]*[0-9]{2}[\ )(.-]*[0-9]{2}$")],
       role: [user.role],
       profilePictureSrc: [user.profilePictureSrc]
     })
   }
 
-  onSubmit(user: User): void {
-    this.userService.registerUser(user)
-      .subscribe(
-        user => {
-          console.log(user);
-          this.router.navigate(['main']);
-        }
-      )
+  onSubmit(formValue: any): void {
+    this.userForm.disable();
+    this.submitted = true;
+    const createdUser: User = {
+      email: formValue.email.trim(),
+      password: formValue.password.trim(),
+      birthday: new Date(formValue.birthday),
+      surname: formValue.surname.trim(),
+      name: formValue.name.trim(),
+      phoneNumber: formValue.phoneNumber.trim(),
+      role: formValue.role.trim(),
+    };
+    let userServiceMethod;
+    if (this.creatorOrEditor) {
+      userServiceMethod = this.userService.registerUser(createdUser);
+    } else {
+      createdUser.id = this.userId;
+      userServiceMethod = this.userService.updateUser(createdUser);
+    }
+    this.uSub = userServiceMethod
+        .subscribe(
+          user => {
+            this.router.navigate(['main']);
+            // this.alert.success(dbCoachAndMessage.message);
+            this.resetCoachForm();
+          }, error => {
+            this.userService.errorHandle(error);
+            this.userForm.enable();
+            this.submitted = false;
+          }
+        );
+    if (this.userService.error$) {
+      this.userService.error$.subscribe(
+        message =>
+          this.alert.danger(message)
+      );
+    }
+  }
+
+  resetCoachForm(): void {
+    this.router.navigate(['main'], {
+      queryParams: {
+        showButton: false
+      }
+    });
+    this.userForm.reset();
+    this.userForm.enable();
+    this.submitted = false;
+    this.showUserForm = false;
+    this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
+    this.setCreatOrEditor(true);
+  }
+
+  ngOnDestroy(): void {
+    if (this.uSub) {
+      this.uSub.unsubscribe();
+    }
   }
 
 }
