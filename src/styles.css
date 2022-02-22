@@ -30,6 +30,10 @@ body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", san
   align-content: center;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 @media (max-width: 510px) {
   .formContainer {
     width: 90vw;
@@ -37,13 +41,14 @@ body { margin: 0; font-family: "Roboto Condensed", Roboto, "Helvetica Neue", san
   }
 }
 
+.dn {
+  display: none;
+}
 p {
   text-align: center;
 }
 
-.pointer {
-  cursor: pointer;
-}
+
 
 mat-form-field {
   width: 100%

@@ -37,6 +37,10 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   }
 
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('input') inputRef!: ElementRef<HTMLInputElement>;
+  // @ts-ignore
+  image: File;
+  imagePreview = '';
 
   constructor(
     private fb: FormBuilder,
@@ -90,6 +94,24 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     })
   }
 
+  doClick(): void {
+    this.inputRef.nativeElement.click();
+  }
+
+  onFileUpload(event: any): void {
+    const file = event.target.files[0]
+    this.image = file
+
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      if(reader.result)
+      this.imagePreview = reader.result.toString()
+    }
+
+    reader.readAsDataURL(file)
+  }
+
   onSubmit(formValue: any): void {
     this.userForm.disable();
     this.submitted = true;
@@ -110,17 +132,17 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       userServiceMethod = this.userService.updateUser(createdUser);
     }
     this.uSub = userServiceMethod
-        .subscribe(
-          user => {
-            this.router.navigate(['main']);
-            // this.alert.success(dbCoachAndMessage.message);
-            this.resetCoachForm();
-          }, error => {
-            this.userService.errorHandle(error);
-            this.userForm.enable();
-            this.submitted = false;
-          }
-        );
+      .subscribe(
+        user => {
+          this.router.navigate(['main']);
+          // this.alert.success(dbCoachAndMessage.message);
+          this.resetCoachForm();
+        }, error => {
+          this.userService.errorHandle(error);
+          this.userForm.enable();
+          this.submitted = false;
+        }
+      );
     if (this.userService.error$) {
       this.userService.error$.subscribe(
         message =>
@@ -136,7 +158,6 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       }
     });
     this.userForm.reset();
-    this.userForm.enable();
     this.submitted = false;
     this.showUserForm = false;
     this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
