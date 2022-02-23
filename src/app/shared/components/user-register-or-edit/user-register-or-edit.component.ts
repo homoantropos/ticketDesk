@@ -36,7 +36,15 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     return this.creatOrEditor;
   }
 
-  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
+  // @ViewChild('name')
+  // set name(name: ElementRef<HTMLInputElement>) {
+  //   if (name) {
+  //     setTimeout(() => {
+  //       name.nativeElement.focus();
+  //     });
+  //   }
+  // }
+
   @ViewChild('profilePictureLoader') profilePictureLoader!: ElementRef<HTMLInputElement>
   profilePictureSrc = '';
   // @ts-ignore
@@ -63,20 +71,13 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
               return this.userService.getUserById(params['id']);
             }
           )
-        )
-        .subscribe(
-          coach => this.userForm = this.createForm(coach),
+        ).subscribe(
+          user => this.userForm = this.createForm(user),
           error => this.alert.danger(error.message)
         );
     } else {
       this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
       this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
-    }
-    this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
-    if (this.userForm) {
-      setTimeout(() => {
-        this.emailInput.nativeElement.focus();
-      });
     }
   }
 
@@ -94,8 +95,9 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     })
   }
 
-  clickProfilePictureSrcInput(): void {
+  clickProfilePictureSrcInput(event: any): void {
     this.profilePictureLoader.nativeElement.click();
+    this.stopEvent(event);
   }
 
   loadProfilePictureLoaderPreview(event: any): void {
@@ -105,8 +107,8 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     const reader = new FileReader()
 
     reader.onload = () => {
-      if(reader.result)
-      this.profilePictureSrc = reader.result.toString()
+      if (reader.result)
+        this.profilePictureSrc = reader.result.toString()
     }
 
     reader.readAsDataURL(file)
@@ -126,7 +128,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     };
     let userServiceMethod;
     if (this.creatorOrEditor) {
-      userServiceMethod = this.userService.registerUser(createdUser);
+      userServiceMethod = this.userService.registerUser(createdUser, this.profilePicture);
     } else {
       createdUser.id = this.userId;
       userServiceMethod = this.userService.updateUser(createdUser);
@@ -136,7 +138,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
         user => {
           this.router.navigate(['main']);
           // this.alert.success(dbCoachAndMessage.message);
-          this.resetCoachForm();
+          this.resetUserForm();
         }, error => {
           this.userService.errorHandle(error);
           this.userForm.enable();
@@ -151,18 +153,23 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  resetCoachForm(): void {
+  resetUserForm(): void {
     this.router.navigate(['main'], {
       queryParams: {
         showButton: false
       }
     });
-    this.userForm.reset();
-    this.userForm.enable();
-    this.submitted = false;
-    this.showUserForm = false;
-    this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
-    this.setCreatOrEditor(true);
+    // this.userForm.reset();
+    // this.userForm.enable();
+    // this.submitted = false;
+    // this.showUserForm = false;
+    // this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
+    // this.setCreatOrEditor(true);
+  }
+
+  stopEvent(event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   ngOnDestroy(): void {

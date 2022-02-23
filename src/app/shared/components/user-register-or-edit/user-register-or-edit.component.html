@@ -11,7 +11,7 @@
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
-      <input matInput type="email" formControlName="email" #emailInput>
+      <input matInput type="email" formControlName="email" #name>
     </mat-form-field>
     <div *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors">
       <small class="error" *ngIf="userForm.controls['email'].errors['required']">поле повинно бути заповнене</small>
@@ -75,16 +75,17 @@
     <button mat-button
             class="col-sm-12"
             color="accent"
-            (click)="clickProfilePictureSrcInput()"
+            (click)="clickProfilePictureSrcInput($event)"
     >
       додати аватар
     </button>
 
     <button mat-button
+            click-stop-propagation
             class="col-sm-6"
             color="primary"
             type="button"
-            (click)="resetCoachForm()"
+            (click)="resetUserForm()"
     >
       Скасувати
     </button>

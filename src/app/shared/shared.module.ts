@@ -23,13 +23,15 @@ import {MatRadioModule} from "@angular/material/radio";
 import {UserRegisterOrEditComponent} from './components/user-register-or-edit/user-register-or-edit.component';
 import {LoaderComponent} from './components/loader/loader.component';
 import { AlertComponent } from './components/alert/alert.component';
+import {ClickStopPropagationDirective} from './directives/click-stop-propagation.directive';
 
 
 @NgModule({
   declarations: [
     UserRegisterOrEditComponent,
     LoaderComponent,
-    AlertComponent
+    AlertComponent,
+    ClickStopPropagationDirective
   ],
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ import { AlertComponent } from './components/alert/alert.component';
     HttpClientModule,
     MatIconModule,
     UserRegisterOrEditComponent,
-    LoaderComponent
+    LoaderComponent,
+    ClickStopPropagationDirective
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'uk'}, {provide: MAT_DATE_LOCALE, useValue: 'uk'},
