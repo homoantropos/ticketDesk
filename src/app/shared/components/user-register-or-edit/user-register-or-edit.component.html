@@ -81,6 +81,7 @@
     <button mat-button
             class="col-sm-12"
             color="accent"
+            [disabled]="userForm.invalid || submitted"
             (click)="clickProfilePictureSrcInput($event)"
     >
       додати аватар
