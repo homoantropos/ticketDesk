@@ -36,16 +36,10 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     return this.creatOrEditor;
   }
 
-  // @ViewChild('name')
-  // set name(name: ElementRef<HTMLInputElement>) {
-  //   if (name) {
-  //     setTimeout(() => {
-  //       name.nativeElement.focus();
-  //     });
-  //   }
-  // }
-
-  @ViewChild('profilePictureLoader') profilePictureLoader!: ElementRef<HTMLInputElement>
+  // @ts-ignore
+  @ViewChild('emailInput') private emailInput: ElementRef;
+  // @ts-ignore
+  @ViewChild('profilePictureLoader') private profilePictureLoader: ElementRef;
   profilePictureSrc = '';
   // @ts-ignore
   profilePicture: File;
@@ -78,6 +72,11 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     } else {
       this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
       this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
+    }
+    if (this.userForm.controls['email']) {
+      setTimeout(() =>
+        this.emailInput.nativeElement.focus(), 0
+      );
     }
   }
 
