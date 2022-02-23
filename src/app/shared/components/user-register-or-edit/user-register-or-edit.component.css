@@ -1,5 +1,8 @@
-.h100 {
-  height: 100px;
+.h120 {
+  height: 120px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .formTitle {

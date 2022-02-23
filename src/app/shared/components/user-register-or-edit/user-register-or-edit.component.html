@@ -70,7 +70,9 @@
         *ngIf="userForm.controls['phoneNumber'].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
     </div>
 
-    <img [src]="profilePictureSrc" alt="../../../../assets/images/ava_compressed.png" />
+    <div *ngIf="profilePictureSrc">
+      <img class="h120" [src]="profilePictureSrc" alt="profile picture" />
+    </div>
 
     <input
       type="file"
@@ -93,6 +95,7 @@
             class="col-sm-6"
             color="primary"
             type="button"
+            [disabled]="!userForm.touched && !userForm.dirty"
             (click)="resetUserForm()"
     >
       Скасувати
