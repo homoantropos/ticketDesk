@@ -37,10 +37,10 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   }
 
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('input') inputRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('profilePictureLoader') profilePictureLoader!: ElementRef<HTMLInputElement>
+  profilePictureSrc = '';
   // @ts-ignore
-  image: File;
-  imagePreview = '';
+  profilePicture: File;
 
   constructor(
     private fb: FormBuilder,
@@ -94,19 +94,19 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     })
   }
 
-  doClick(): void {
-    this.inputRef.nativeElement.click();
+  clickProfilePictureSrcInput(): void {
+    this.profilePictureLoader.nativeElement.click();
   }
 
-  onFileUpload(event: any): void {
+  loadProfilePictureLoaderPreview(event: any): void {
     const file = event.target.files[0]
-    this.image = file
+    this.profilePicture = file
 
     const reader = new FileReader()
 
     reader.onload = () => {
       if(reader.result)
-      this.imagePreview = reader.result.toString()
+      this.profilePictureSrc = reader.result.toString()
     }
 
     reader.readAsDataURL(file)
@@ -158,6 +158,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       }
     });
     this.userForm.reset();
+    this.userForm.enable();
     this.submitted = false;
     this.showUserForm = false;
     this.createOrEditLabelName = 'Внесіть дані для реєстрації:';

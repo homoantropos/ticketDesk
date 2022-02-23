@@ -11,7 +11,7 @@
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
-      <input matInput formControlName="email" #emailInput>
+      <input matInput type="email" formControlName="email" #emailInput>
     </mat-form-field>
     <div *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors">
       <small class="error" *ngIf="userForm.controls['email'].errors['required']">поле повинно бути заповнене</small>
@@ -37,9 +37,9 @@
       <mat-datepicker #birthday></mat-datepicker>
     </mat-form-field>
     <div *ngIf="userForm.controls['birthday'].errors">
-      <small
-        class="error"
-        *ngIf="userForm.controls['birthday'].errors['invalidAge']">реєстрація дозволена для старших 12 років</small>
+        <small
+          class="error"
+          *ngIf="userForm.controls['birthday'].errors['invalidAge']">реєстрація дозволена для старших 12 років</small>
     </div>
 
 
@@ -63,24 +63,21 @@
         *ngIf="userForm.controls['phoneNumber'].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
     </div>
 
-    <img
-      class="h100"
-      [src]="imagePreview"
-      *ngIf="imagePreview"
-    />
+    <img [src]="profilePictureSrc" alt="../../../../assets/images/ava_compressed.png" />
 
     <input
       type="file"
       class="dn"
-      (change)="onFileUpload($event)"
-      #input
+      (change)="loadProfilePictureLoaderPreview($event)"
+      #profilePictureLoader
     >
 
     <button mat-button
-            class="col-sm-12" color="accent"
-            (click)="doClick()"
-            [disabled]="userForm.invalid"
-    >додати аватар
+            class="col-sm-12"
+            color="accent"
+            (click)="clickProfilePictureSrcInput()"
+    >
+      додати аватар
     </button>
 
     <button mat-button
@@ -98,17 +95,14 @@
       type="submit"
       color="primary"
       [disabled]="userForm.invalid || submitted"
-    >зареєструватись
-    </button>
+    >зареєструватись</button>
     <p *ngIf="userForm.valid">
-      <small class="centerText">Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої
-        інформації</small>
+      <small class="centerText">Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
     </p>
 
 
   </form>
 </ng-container>
-
 
 <ng-template #loader>
   <app-loader></app-loader>
