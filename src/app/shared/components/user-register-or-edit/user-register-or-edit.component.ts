@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../interfaces";
 import {UserService} from "../../services/user.service";
@@ -13,7 +13,7 @@ import {switchMap} from "rxjs";
   styleUrls: ['./user-register-or-edit.component.css']
 })
 
-export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
+export class UserRegisterOrEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // @ts-ignore
   userForm: FormGroup;
@@ -73,7 +73,17 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
       this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
     }
+
+  }
+
+  ngAfterViewInit() {
     if (this.userForm.controls['email']) {
+      window.onclick = function (event: any) {
+        event.stopPropagation();
+        event.preventDefault();
+        const emailInput = document.getElementsByName('emailInput')[0];
+        emailInput.focus();
+      }
       setTimeout(() =>
         this.emailInput.nativeElement.focus(), 0
       );
