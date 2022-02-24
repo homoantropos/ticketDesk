@@ -24,6 +24,8 @@ import {UserRegisterOrEditComponent} from './components/user-register-or-edit/us
 import {LoaderComponent} from './components/loader/loader.component';
 import { AlertComponent } from './components/alert/alert.component';
 import {ClickStopPropagationDirective} from './directives/click-stop-propagation.directive';
+import { LoginComponent } from './components/login/login.component';
+import { PageNotFoungComponent } from './components/page-not-foung/page-not-foung.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import {ClickStopPropagationDirective} from './directives/click-stop-propagation
     UserRegisterOrEditComponent,
     LoaderComponent,
     AlertComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    LoginComponent,
+    PageNotFoungComponent
   ],
   imports: [
     CommonModule,
@@ -57,6 +61,7 @@ import {ClickStopPropagationDirective} from './directives/click-stop-propagation
     AlertComponent,
     FormsModule,
     ReactiveFormsModule,
+    LoginComponent,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -72,6 +77,7 @@ import {ClickStopPropagationDirective} from './directives/click-stop-propagation
     MatRadioModule,
     HttpClientModule,
     MatIconModule,
+    PageNotFoungComponent,
     UserRegisterOrEditComponent,
     LoaderComponent,
     ClickStopPropagationDirective

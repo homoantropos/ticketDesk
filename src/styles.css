@@ -10,6 +10,10 @@ body {
   font-family: "Roboto Condensed", Roboto, "Helvetica Neue", sans-serif;
 }
 
+.active:hover {
+  color: gold;
+}
+
 .error {
   color: red;
 }
@@ -53,6 +57,7 @@ p {
 
 .pointer {
   cursor: pointer;
+  z-index: 1;
 }
 
 mat-form-field {
