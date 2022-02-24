@@ -25,7 +25,7 @@ import {LoaderComponent} from './components/loader/loader.component';
 import { AlertComponent } from './components/alert/alert.component';
 import {ClickStopPropagationDirective} from './directives/click-stop-propagation.directive';
 import { LoginComponent } from './components/login/login.component';
-import { PageNotFoungComponent } from './components/page-not-foung/page-not-foung.component';
+import { PageNotFoundComponent } from './components/page-not-foung/page-not-found.component';
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import { PageNotFoungComponent } from './components/page-not-foung/page-not-foun
     AlertComponent,
     ClickStopPropagationDirective,
     LoginComponent,
-    PageNotFoungComponent
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -77,7 +77,7 @@ import { PageNotFoungComponent } from './components/page-not-foung/page-not-foun
     MatRadioModule,
     HttpClientModule,
     MatIconModule,
-    PageNotFoungComponent,
+    PageNotFoundComponent,
     UserRegisterOrEditComponent,
     LoaderComponent,
     ClickStopPropagationDirective

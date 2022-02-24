@@ -1,1 +1,66 @@
-<p>login works!</p>
+<ng-container *ngIf="loginForm; else loader">
+  <div class="formTitle m-t-2 m-b-2">
+    <b class="centerHorizontal">Увійдіть</b>
+  </div>
+
+  <form
+    class="col-sm-12 centerHorizontal formContainer"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit(loginForm.controls['email'], loginForm.controls['password'])"
+  >
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>email:</mat-label>
+      <input
+        matInput
+        name="emailInput"
+        #emailInput
+        title="for email"
+        type="text"
+        formControlName="email"
+      >
+    </mat-form-field>
+    <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors">
+      <small class="error" *ngIf="loginForm.controls['email'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="loginForm.controls['email'].errors['email']">введіть коректну адресу електронної
+        пошти</small>
+    </div>
+
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>password:</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+    <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors">
+      <small class="error" *ngIf="loginForm.controls['password'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="loginForm.controls['password'].errors['minlength']">
+        пароль повинен бути більшим {{loginForm.controls['password'].errors['minlength'].requiredLength}} символів
+        ви ввели {{loginForm.controls['password'].errors['minlength'].actualLength}} символів</small>
+    </div>
+
+    <button mat-button
+            click-stop-propagation
+            class="col-sm-6"
+            color="primary"
+            type="button"
+            [disabled]="loginForm.invalid || submitted"
+    >
+      Скасувати
+    </button>
+
+    <button
+      mat-raised-button
+      class="col-sm-6"
+      type="submit"
+      color="primary"
+      [disabled]="loginForm.invalid || submitted"
+    >увійти
+    </button>
+
+  </form>
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+
