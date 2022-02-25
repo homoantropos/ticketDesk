@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
       email,
       password
     };
+    console.log(user);
     this.aSub = this.auth.login(user)
       .subscribe(
         () => this.router.navigate(['/']),
