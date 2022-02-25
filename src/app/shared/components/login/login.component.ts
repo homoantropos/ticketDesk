@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth/auth.service";
+import {Router} from "@angular/router";
+import {User} from "../../interfaces";
+import {Subscription} from "rxjs";
+import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-login',
@@ -12,9 +17,15 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
 
+  aSub: Subscription = new Subscription();
+
   constructor(
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService,
+    private alert: AlertService
+  ) {
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -24,7 +35,30 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(email: string, password: string): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.loginForm.disable();
+    this.submitted = true;
+    const user: User = {
+      email,
+      password
+    };
+    this.aSub = this.auth.login(user)
+      .subscribe(
+        () => this.router.navigate(['/']),
+        error => {
+          this.alert.danger(error.error.message);
+          this.loginForm.enable();
+        }
+      );
+    this.submitted = false;
+  }
 
+  ngOnDestroy(): void {
+    if (this.aSub) {
+      this.aSub.unsubscribe();
+    }
   }
 
 }
