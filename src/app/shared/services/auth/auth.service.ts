@@ -23,9 +23,7 @@ export interface DecToken {
 export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();
-  public _token: string | null = null;
-  // @ts-ignore
-  private dec_token: DecToken;
+  private _token: string | null = null;
 
   constructor(
     private http: HttpClient,
@@ -41,32 +39,29 @@ export class AuthService {
 
   get token(): string | null {
     const token = sessionStorage.getItem('auth-token');
-    // @ts-ignore
-    this.dec_token = jwt_decode(token);
-    if (new Date(this.dec_token.exp) < new Date()) {
+    if (this.checkSession()) {
       return token
     }
     this.logOut();
     return null;
   }
 
-  checkSession(token: string | null): boolean {
-    if (token !== undefined) {
-      // @ts-ignore
-      this.dec_token = jwt_decode(token);
-      const expDate = new Date(this.dec_token.exp);
-      if (expDate < new Date())
-        return true;
-    }
-    return false
+  checkSession(): boolean {
+    // @ts-ignore
+    const expDate = new Date(sessionStorage.getItem('auth-token-exp'));
+    return expDate > new Date();
   }
 
   login(user: User): Observable<any> {
-    return this.http.post<{token: string}>(`${environment.dbUrl}/user/login`, user)
+    return this.http.post<{ token: string }>(`${environment.dbUrl}/user/login`, user)
       .pipe(
         tap(
           response => {
-            this.setToken(response.token);
+            {
+              const authExpTime = new Date(new Date().getTime() + 60 * 60 * 1000);
+              sessionStorage.setItem('auth-token-exp', authExpTime.toString());
+              this.setToken(response.token);
+            }
           }
         ),
         catchError(this.errorHandle.bind(this))
@@ -80,7 +75,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this._token;
+    return this.checkSession();
   }
 
   role(): string | null {
