@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
 
+  // @ts-ignore
+  @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>
   aSub: Subscription = new Subscription();
 
   constructor(
@@ -32,6 +34,11 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     })
+    if(this.loginForm.controls['email'] !== undefined) {
+      setTimeout(() =>
+        this.emailInput.nativeElement.focus(), 0
+      );
+    }
   }
 
   onSubmit(email: string, password: string): void {
@@ -44,15 +51,22 @@ export class LoginComponent implements OnInit {
       email,
       password
     };
-    console.log(user);
     this.aSub = this.auth.login(user)
       .subscribe(
-        () => this.router.navigate(['/']),
+        () => {
+          this.router.navigate(['/'])
+        },
         error => {
-          this.alert.danger(error.error.message);
+          this.auth.errorHandle(error);
           this.loginForm.enable();
         }
       );
+    if (this.auth.error$) {
+      this.auth.error$.subscribe(
+        message =>
+          this.alert.danger(message)
+      );
+    }
     this.submitted = false;
   }
 

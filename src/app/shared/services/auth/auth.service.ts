@@ -6,14 +6,26 @@ import {Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AlertService} from '../alert.service';
+import jwt_decode from 'jwt-decode';
+
+export interface DecToken {
+  email: string,
+  role: string,
+  id: number,
+  iat: number,
+  exp: number
+}
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+
   public error$: Subject<string> = new Subject<string>();
-  token: string | null = null;
+  public _token: string | null = null;
+  // @ts-ignore
+  private dec_token: DecToken;
 
   constructor(
     private http: HttpClient,
@@ -22,28 +34,38 @@ export class AuthService {
   ) {
   }
 
-  getToken(): string | null {
-    const expDateString = sessionStorage.getItem('auth-token-exp');
-    if (expDateString !== null) {
-      const expDate = new Date(expDateString);
-      if (new Date() > expDate) {
-        this.logOut();
-        return null;
-      }
+  setToken(token: string | null): void {
+    this._token = token;
+    token === null ? sessionStorage.clear() : sessionStorage.setItem('auth-token', token);
+  }
+
+  get token(): string | null {
+    const token = sessionStorage.getItem('auth-token');
+    // @ts-ignore
+    this.dec_token = jwt_decode(token);
+    if (new Date(this.dec_token.exp) < new Date()) {
+      return token
     }
-    return sessionStorage.getItem('auth-token');
+    this.logOut();
+    return null;
+  }
+
+  checkSession(token: string | null): boolean {
+    if (token !== undefined) {
+      // @ts-ignore
+      this.dec_token = jwt_decode(token);
+      const expDate = new Date(this.dec_token.exp);
+      if (expDate < new Date())
+        return true;
+    }
+    return false
   }
 
   login(user: User): Observable<any> {
-    return this.http.post<{ token: string, userRole: string, userEmail: string }>(`${environment.dbUrl}/user/login`, user)
+    return this.http.post<{token: string}>(`${environment.dbUrl}/user/login`, user)
       .pipe(
         tap(
           response => {
-            const authExpTime = new Date(new Date().getTime() + 60 * 60 * 1000);
-            sessionStorage.setItem('auth-token-exp', authExpTime.toString());
-            sessionStorage.setItem('auth-token', response.token);
-            sessionStorage.setItem('user-email', response.userEmail);
-            sessionStorage.setItem('role', response.userRole);
             this.setToken(response.token);
           }
         ),
@@ -53,25 +75,28 @@ export class AuthService {
 
   logOut(): void {
     this.setToken(null);
-    sessionStorage.clear();
     this.alert.warning('Ви вийшли з сайту');
     this.router.navigate(['/']);
   }
 
-
   isAuthenticated(): boolean {
-    return !!this.token;
+    return !!this._token;
   }
 
   role(): string | null {
     return sessionStorage.getItem('role');
   }
 
-  setToken(token: string | null): void {
-    this.token = token;
+  accessAllowed(role: string): boolean {
+    if (this.isAuthenticated()) {
+      // @ts-ignore
+      return role === jwt_decode(this.token).role;
+    }
+    return false
   }
 
-  private errorHandle(error: HttpErrorResponse): any {
+  public errorHandle(error: HttpErrorResponse): any {
+    console.log(error);
     const message = error.error.message;
     if (message) {
       switch (message) {

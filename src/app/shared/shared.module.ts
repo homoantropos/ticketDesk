@@ -26,6 +26,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import {ClickStopPropagationDirective} from './directives/click-stop-propagation.directive';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-foung/page-not-found.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PageNotFoundComponent } from './components/page-not-foung/page-not-foun
     AlertComponent,
     ClickStopPropagationDirective,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
@@ -59,8 +61,9 @@ import { PageNotFoundComponent } from './components/page-not-foung/page-not-foun
   ],
   exports: [
     AlertComponent,
+    ClickStopPropagationDirective,
     FormsModule,
-    ReactiveFormsModule,
+    LoaderComponent,
     LoginComponent,
     MatFormFieldModule,
     MatInputModule,
@@ -78,9 +81,9 @@ import { PageNotFoundComponent } from './components/page-not-foung/page-not-foun
     HttpClientModule,
     MatIconModule,
     PageNotFoundComponent,
+    ReactiveFormsModule,
     UserRegisterOrEditComponent,
-    LoaderComponent,
-    ClickStopPropagationDirective
+    UserProfileComponent
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'uk'}, {provide: MAT_DATE_LOCALE, useValue: 'uk'},

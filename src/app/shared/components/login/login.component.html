@@ -6,7 +6,7 @@
   <form
     class="col-sm-12 centerHorizontal formContainer"
     [formGroup]="loginForm"
-    (ngSubmit)="onSubmit(loginForm.controls['email'], loginForm.controls['password'])"
+    (ngSubmit)="onSubmit(loginForm.controls['email'].value, loginForm.controls['password'].value)"
   >
 
     <mat-form-field class="col-sm-12 centerHorizontal">

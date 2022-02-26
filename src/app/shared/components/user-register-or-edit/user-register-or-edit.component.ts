@@ -160,12 +160,6 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
         showButton: false
       }
     });
-    // this.userForm.reset();
-    // this.userForm.enable();
-    // this.submitted = false;
-    // this.showUserForm = false;
-    // this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
-    // this.setCreatOrEditor(true);
   }
 
   stopEvent(event: Event): void {

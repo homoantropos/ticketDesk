@@ -20,12 +20,28 @@
       <mat-icon>person_add</mat-icon>
     </button>
 
+    <button title="вхід"
+            mat-icon-button
+            class="m-r-1"
+    >
+      <mat-icon routerLink="login" routerLinkActive="active">login</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <button mat-icon-button
+            title="профіль"
+            class="m-r-1"
+            (click)="goToUserProfile()"
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+
     <button
-      title="вхід"
+      title="вихід"
       mat-icon-button
       class="m-r-1">
-
-      <mat-icon routerLink="login" routerLinkActive="active">login</mat-icon>
+      <mat-icon (click)="auth.logOut()">logout</mat-icon>
     </button>
   </div>
 
