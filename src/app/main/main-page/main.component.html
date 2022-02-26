@@ -11,7 +11,7 @@
     </button>
   </mat-menu>
 
-  <div>
+  <div *ngIf="!auth.isAuthenticated()">
     <button mat-icon-button
             title="реєстрація"
             class="m-r-1"
@@ -28,7 +28,7 @@
     </button>
   </div>
 
-  <div>
+  <div *ngIf="auth.isAuthenticated()">
     <button mat-icon-button
             title="профіль"
             class="m-r-1"

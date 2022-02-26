@@ -78,10 +78,6 @@ export class AuthService {
     return this.checkSession();
   }
 
-  role(): string | null {
-    return sessionStorage.getItem('role');
-  }
-
   accessAllowed(role: string): boolean {
     if (this.isAuthenticated()) {
       // @ts-ignore
@@ -91,7 +87,6 @@ export class AuthService {
   }
 
   public errorHandle(error: HttpErrorResponse): any {
-    console.log(error);
     const message = error.error.message;
     if (message) {
       switch (message) {
