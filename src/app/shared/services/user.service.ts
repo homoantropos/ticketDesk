@@ -28,8 +28,16 @@ export class UserService {
     return this.http.post<User>(`${environment.dbUrl}/user/register`, fd);
   }
 
-  updateUser(user:User): Observable<User> {
-    return this.http.patch<User>(`${environment.dbUrl}/user/register`, user);
+  updateUser(user:User, image?: File): Observable<User> {
+    const fd = new FormData();
+    Object.keys(user).forEach(
+      // @ts-ignore
+      key => fd.append(key, user[key])
+    )
+    if(image) {
+      fd.append('image', image, image.name);
+    }
+    return this.http.patch<User>(`${environment.dbUrl}/user/${user.id}`, fd);
   }
 
   getUserById(id: number): Observable<User> {

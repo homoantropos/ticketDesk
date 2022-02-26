@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
   }
 
   goToUserProfile(): void {
-    this.router.navigateByUrl(`/main/profile/${sessionStorage.getItem('user-email')}`);
+    this.router.navigateByUrl(`/main/profile/${this.auth.getUserId()}`);
   }
 
   ngOnDestroy() {

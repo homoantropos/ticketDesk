@@ -1,1 +1,17 @@
+<ng-container *ngIf="user; else loader">
+  <img [src]="user.profilePictureSrc" alt="profile picture" />
+  <p>{{user.surname}} {{user.name}}</p>
+  <p>{{user.email}}</p>
+  <p>{{user.phoneNumber}}</p>
+  <p>{{user.birthday | date: 'dd.MM.YYYY'}}</p>
+  <p>{{user.role}}</p>
+  <p>{{user | json}} </p>
+  <button mat-icon-button>
+    <mat-icon (click)="goToEditor(16)">edit</mat-icon>
+  </button>
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
 

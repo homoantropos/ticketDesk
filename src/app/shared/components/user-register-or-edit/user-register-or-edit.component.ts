@@ -6,6 +6,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {AgeValidator} from "../../services/age-validator";
 import {AlertService} from "../../services/alert.service";
 import {switchMap} from "rxjs";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-user-register-or-edit',
@@ -49,7 +50,8 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public userService: UserService,
-    private alert: AlertService
+    private alert: AlertService,
+    private auth: AuthService
   ) {
   }
 
@@ -57,7 +59,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     if (this.route.toString().includes('edit')) {
       this.setCreatOrEditor(false);
       this.createOrEditLabelName = 'Змінити дані';
-      this.route.paramMap
+      this.route.params
         .pipe(
           switchMap(
             (params: Params) => {
@@ -66,14 +68,22 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
             }
           )
         ).subscribe(
-          user => this.userForm = this.createForm(user),
+          user => {
+            this.userForm = this.createForm(user);
+            this.makeFocus();
+          },
           error => this.alert.danger(error.message)
         );
     } else {
       this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
+      this.makeFocus();
       this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
     }
-    if (this.userForm.controls['email']) {
+
+  }
+
+  makeFocus(): void {
+    if (typeof this.userForm.controls['email']) {
       setTimeout(() =>
         this.emailInput.nativeElement.focus(), 0
       );
@@ -123,19 +133,19 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       surname: formValue.surname.trim(),
       name: formValue.name.trim(),
       phoneNumber: formValue.phoneNumber.trim(),
-      role: formValue.role.trim(),
+      role: '',
     };
     let userServiceMethod;
     if (this.creatorOrEditor) {
       userServiceMethod = this.userService.registerUser(createdUser, this.profilePicture);
     } else {
       createdUser.id = this.userId;
-      userServiceMethod = this.userService.updateUser(createdUser);
+      userServiceMethod = this.userService.updateUser(createdUser, this.profilePicture);
     }
     this.uSub = userServiceMethod
       .subscribe(
         user => {
-          this.router.navigate(['main']);
+          this.router.navigateByUrl(`profile/${this.auth.getUserId()}`);
           // this.alert.success(dbCoachAndMessage.message);
           this.resetUserForm();
         }, error => {
@@ -155,13 +165,12 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   resetUserForm(): void {
     this.reset = true;
     this.userForm.reset();
-    this.router.navigate(['main'], {
-      queryParams: {
-        showButton: false
-      }
-    });
   }
 
+  goToMainPage(): void {
+    this.resetUserForm();
+    this.router.navigate(['main']);
+  }
   stopEvent(event: Event): void {
     event.stopPropagation();
     event.preventDefault();

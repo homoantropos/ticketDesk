@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {switchMap} from "rxjs";
 import {User} from "../../interfaces";
 
@@ -16,8 +16,10 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.params
@@ -33,4 +35,7 @@ export class UserProfileComponent implements OnInit {
       )
   }
 
+  goToEditor(id: number): void {
+    this.router.navigateByUrl(`edit/${id}`);
+  }
 }

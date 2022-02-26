@@ -96,7 +96,7 @@
             color="primary"
             type="button"
             [disabled]="userForm.invalid || submitted"
-            (click)="resetUserForm()"
+            (click)="goToMainPage()"
     >
       Скасувати
     </button>
@@ -107,7 +107,7 @@
       type="submit"
       color="primary"
       [disabled]="userForm.invalid || submitted"
-    >зареєструватись</button>
+    >{{createOrEditLabelName}}</button>
     <p *ngIf="userForm.valid">
       <small class="centerText">Увага! Натискаючи "зареєструватись", Ви підтверджуєте достовірність наданої інформації</small>
     </p>

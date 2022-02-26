@@ -11,7 +11,7 @@ import jwt_decode from 'jwt-decode';
 export interface DecToken {
   email: string,
   role: string,
-  id: number,
+  userId: number,
   iat: number,
   exp: number
 }
@@ -24,6 +24,8 @@ export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();
   private _token: string | null = null;
+  // @ts-ignore
+  private dec_token: DecToken;
 
   constructor(
     private http: HttpClient,
@@ -84,6 +86,15 @@ export class AuthService {
       return role === jwt_decode(this.token).role;
     }
     return false
+  }
+
+  getUserId(): number | null {
+    if (this.isAuthenticated()) {
+      // @ts-ignore
+      this.dec_token = jwt_decode(sessionStorage.getItem('auth-token'));
+      return this.dec_token.userId;
+    }
+    return null
   }
 
   public errorHandle(error: HttpErrorResponse): any {
