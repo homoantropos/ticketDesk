@@ -1,17 +1,1 @@
 
-
-.formTitle {
-  font-size: large;
-}
-
-@media (max-width: 510px) {
-  .formTitle {
-    font-size: medium;
-  }
-}
-
-@media (max-width: 310px) {
-  .formTitle {
-    font-size: small;
-  }
-}

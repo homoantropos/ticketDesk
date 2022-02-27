@@ -23,7 +23,6 @@ import {MatRadioModule} from "@angular/material/radio";
 import {UserRegisterOrEditComponent} from './components/user-register-or-edit/user-register-or-edit.component';
 import {LoaderComponent} from './components/loader/loader.component';
 import { AlertComponent } from './components/alert/alert.component';
-import {ClickStopPropagationDirective} from './directives/click-stop-propagation.directive';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-foung/page-not-found.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
@@ -34,7 +33,6 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     UserRegisterOrEditComponent,
     LoaderComponent,
     AlertComponent,
-    ClickStopPropagationDirective,
     LoginComponent,
     PageNotFoundComponent,
     UserProfileComponent
@@ -61,7 +59,6 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
   ],
   exports: [
     AlertComponent,
-    ClickStopPropagationDirective,
     FormsModule,
     LoaderComponent,
     LoginComponent,
