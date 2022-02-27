@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {AuthService} from "./auth.service";
+import {AlertService} from "../alert.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ import {AuthService} from "./auth.service";
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private alert: AlertService
   ) {
   }
 
@@ -31,6 +33,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           loginFailed: true
         }
       });
+      this.alert.warning('Для доступу ви повинні увійти на сайт');
       return false;
     }
   }
