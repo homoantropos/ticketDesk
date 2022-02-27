@@ -41,7 +41,8 @@ export class UserProfileComponent implements OnInit {
           if(this.user.profilePictureSrc)
           this.profilePictureSrc = `http://localhost:8050/${this.user.profilePictureSrc}`
         }, error => {
-          this.alert.danger(error.message);
+          this.router.navigate(['main']);
+          this.alert.danger(error.error.message);
         }
       )
   }
