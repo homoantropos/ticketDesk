@@ -17,6 +17,9 @@ export class UserProfileComponent implements OnInit {
   user: User;
   profilePictureSrc = '';
 
+  showDeleteConfirmation = false;
+  option = 'сторінку';
+
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
@@ -38,8 +41,8 @@ export class UserProfileComponent implements OnInit {
       .subscribe(
         user => {
           this.user = user;
-          if(this.user.profilePictureSrc)
-          this.profilePictureSrc = `http://localhost:8050/${this.user.profilePictureSrc}`
+          if (this.user.profilePictureSrc)
+            this.profilePictureSrc = `http://localhost:8050/${this.user.profilePictureSrc}`
         }, error => {
           this.router.navigate(['main']);
           this.alert.danger(error.error.message);
@@ -48,7 +51,36 @@ export class UserProfileComponent implements OnInit {
   }
 
   goToEditor(): void {
-    console.log(this.auth.getUserId());
     this.router.navigateByUrl(`edit/${this.auth.getUserId()}`);
+  }
+
+  callDeletion(): void {
+    this.showDeleteConfirmation = true;
+  }
+
+  deleteProfile(confirm: boolean): void {
+    if (confirm) {
+      // @ts-ignore
+      this.userService.deleteUser(this.auth.getUserId())
+        .subscribe(
+          message => {
+            this.alert.success(message);
+            this.auth.logOut();
+            this.router.navigate(['main']);
+          },
+          error => {
+            this.userService.errorHandle(error);
+          }
+        );
+      if (this.userService.error$) {
+        this.userService.error$.subscribe(
+          message => this.alert.danger(message)
+        );
+      }
+    } else {
+      this.alert.warning('Видалення скасованою');
+    }
+    this.showDeleteConfirmation = false;
+
   }
 }

@@ -26,6 +26,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-foung/page-not-found.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { DeletionConfirmerComponent } from './components/deletion-confirmer/deletion-confirmer.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     AlertComponent,
     LoginComponent,
     PageNotFoundComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    DeletionConfirmerComponent
   ],
   imports: [
     CommonModule,

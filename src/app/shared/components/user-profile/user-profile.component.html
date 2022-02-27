@@ -9,6 +9,9 @@
         <button mat-icon-button>
           <mat-icon (click)="goToEditor()">edit</mat-icon>
         </button>
+        <button mat-icon-button>
+          <mat-icon (click)="callDeletion()">delete</mat-icon>
+        </button>
       </td>
       <td>
         <p>{{user.surname}} {{user.name}}</p>
@@ -35,3 +38,8 @@
   <app-loader></app-loader>
 </ng-template>
 
+<app-deletion-confirmer
+  [show]="showDeleteConfirmation"
+  [option]="option"
+  (confirm)="deleteProfile($event)"
+></app-deletion-confirmer>

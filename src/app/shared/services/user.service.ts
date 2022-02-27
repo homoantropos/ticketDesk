@@ -45,6 +45,9 @@ export class UserService {
     return this.http.get<User>(`${environment.dbUrl}/user/${id}`);
   }
 
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.dbUrl}/user/${id}`)
+  }
 
   errorHandle(error: HttpErrorResponse): any {
     const message = error.error.message;
