@@ -40,6 +40,13 @@ body {
   align-content: center;
 }
 
+.h120 {
+  height: 120px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
 @media (max-width: 510px) {
   .formContainer {
     width: 90vw;

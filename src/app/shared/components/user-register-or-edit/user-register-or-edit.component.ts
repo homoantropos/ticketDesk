@@ -18,7 +18,6 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
 
   // @ts-ignore
   userForm: FormGroup;
-  showUserForm = false;
   submitted = false;
   // @ts-ignore
   userId: number;
@@ -27,6 +26,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   reset = false;
   // @ts-ignore
   createOrEditLabelName: string;
+  buttonName = 'зареєсттруватись'
   private creatOrEditor = true;
 
   setCreatOrEditor(condition: boolean): void {
@@ -59,6 +59,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     if (this.route.toString().includes('edit')) {
       this.setCreatOrEditor(false);
       this.createOrEditLabelName = 'Змінити дані';
+      this.buttonName = 'зберегти зміни'
       this.route.params
         .pipe(
           switchMap(
@@ -133,7 +134,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       surname: formValue.surname.trim(),
       name: formValue.name.trim(),
       phoneNumber: formValue.phoneNumber.trim(),
-      role: '',
+      role: formValue.role.trim()
     };
     let userServiceMethod;
     if (this.creatorOrEditor) {

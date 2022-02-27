@@ -18,17 +18,18 @@ export class UserService {
 
   registerUser(user: User, image?: File): Observable<User > {
     const fd = new FormData();
-    Object.keys(user).forEach(
+    Object.keys(user).map(
       // @ts-ignore
-      key => fd.append(key, user[key])
+      key => fd.set(key, user[key])
     )
+    console.log(fd.getAll('password'));
     if(image) {
       fd.append('image', image, image.name);
     }
     return this.http.post<User>(`${environment.dbUrl}/user/register`, fd);
   }
 
-  updateUser(user:User, image?: File): Observable<User> {
+  updateUser(user: User, image?: File): Observable<User> {
     const fd = new FormData();
     Object.keys(user).forEach(
       // @ts-ignore
@@ -48,7 +49,7 @@ export class UserService {
   errorHandle(error: HttpErrorResponse): any {
     const message = error.error.message;
     switch (message) {
-      case('повторювані значення ключа порушують обмеження унікальності \"user_email_key\"'):
+      case('повторювані значення ключа порушують обмеження унікальності \"user_email_key47\"'):
         this.error$.next('Такий користувач вже існує в базі даних, зміни не можуть бути збережені');
         break;
       case('Користувач звязаний з базою результатів і не може бути видалений з бази даних.'):
@@ -65,7 +66,7 @@ export class UserService {
     surname: '',
     name: '',
     phoneNumber: '',
-    role: '',
+    role: 'user',
     profilePictureSrc: ''
   }
 
