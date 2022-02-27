@@ -37,7 +37,6 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     return this.creatOrEditor;
   }
 
-  validators: Array<Validators> = [Validators.required, Validators.minLength(6)]
   // @ts-ignore
   @ViewChild('emailInput') private emailInput: ElementRef;
   // @ts-ignore
@@ -71,13 +70,13 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
           )
         ).subscribe(
           user => {
-            this.userForm = this.createForm(user, this.validators);
+            this.userForm = this.createForm(user, this.creatorOrEditor);
             this.makeFocus();
           },
           error => this.alert.danger(error.message)
         );
     } else {
-      this.userForm = this.createForm(this.userService.emptyUserFormInitValue, this.validators);
+      this.userForm = this.createForm(this.userService.emptyUserFormInitValue, this.creatorOrEditor);
       this.makeFocus();
       this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
     }
@@ -92,10 +91,11 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  createForm(user: User, validators: Array<Validators>): FormGroup {
+  createForm(user: User, creatorOrEditor: boolean): FormGroup {
+    const validators: Array<Validators> = [Validators.required, Validators.minLength(6)];
     let actualPasswordValidators;
     let passwordValidators;
-    if(this.creatorOrEditor) {
+    if(creatorOrEditor) {
       actualPasswordValidators = validators.slice(1);
       passwordValidators = validators;
     } else {
@@ -145,7 +145,8 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       surname: formValue.surname.trim(),
       name: formValue.name.trim(),
       phoneNumber: formValue.phoneNumber.trim(),
-      role: formValue.role.trim()
+      role: formValue.role.trim(),
+      profilePictureSrc: formValue.profilePictureSrc
     };
     if (!this.creatorOrEditor) {
       createdUser['actualPassword'] = formValue.actualPassword.trim();
