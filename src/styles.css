@@ -47,6 +47,13 @@ body {
   transform: translate(-50%);
 }
 
+.h200 {
+  height: 250px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
 @media (max-width: 510px) {
   .formContainer {
     width: 90vw;

@@ -37,6 +37,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     return this.creatOrEditor;
   }
 
+  validators: Array<Validators> = [Validators.required, Validators.minLength(6)]
   // @ts-ignore
   @ViewChild('emailInput') private emailInput: ElementRef;
   // @ts-ignore
@@ -70,13 +71,13 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
           )
         ).subscribe(
           user => {
-            this.userForm = this.createForm(user);
+            this.userForm = this.createForm(user, this.validators);
             this.makeFocus();
           },
           error => this.alert.danger(error.message)
         );
     } else {
-      this.userForm = this.createForm(this.userService.emptyUserFormInitValue);
+      this.userForm = this.createForm(this.userService.emptyUserFormInitValue, this.validators);
       this.makeFocus();
       this.createOrEditLabelName = 'Внесіть дані для реєстрації:';
     }
@@ -91,11 +92,20 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  createForm(user: User): FormGroup {
+  createForm(user: User, validators: Array<Validators>): FormGroup {
+    let actualPasswordValidators;
+    let passwordValidators;
+    if(this.creatorOrEditor) {
+      actualPasswordValidators = validators.slice(1);
+      passwordValidators = validators;
+    } else {
+      actualPasswordValidators = validators;
+      passwordValidators = validators.slice(1);
+    }
     return this.fb.group({
       email: [user.email, [Validators.required, Validators.email]],
-      actualPassword: ['', [Validators.required, Validators.minLength(6)]],
-      password: [user.password, [Validators.required, Validators.minLength(6)]],
+      actualPassword: ['', actualPasswordValidators],
+      password: ['', passwordValidators],
       birthday: [user.birthday, [Validators.required, AgeValidator]],
       surname: [user.surname ? user.surname : ''],
       name: [user.name ? user.name : ''],

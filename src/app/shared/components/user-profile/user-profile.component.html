@@ -1,14 +1,34 @@
 <ng-container *ngIf="user; else loader">
-  <img class="h120" [src]="profilePictureSrc" alt="profile picture" />
-  <p>{{user.surname}} {{user.name}}</p>
-  <p>{{user.email}}</p>
-  <p>{{user.phoneNumber}}</p>
-  <p>{{user.birthday | date: 'dd.MM.YYYY'}}</p>
-  <p>{{user.role}}</p>
-  <p>{{user | json}} </p>
-  <button mat-icon-button>
-    <mat-icon (click)="goToEditor()">edit</mat-icon>
-  </button>
+  <table class="table table-striped centerHorizontal col-sm-8">
+    <tbody>
+    <tr class="m-a-0 col-sm-1">
+      <td><img class="h200" [src]="profilePictureSrc" alt="profile picture"/></td>
+    </tr>
+    <tr>
+      <td>
+        <button mat-icon-button>
+          <mat-icon (click)="goToEditor()">edit</mat-icon>
+        </button>
+      </td>
+      <td>
+        <p>{{user.surname}} {{user.name}}</p>
+      </td>
+      <td>
+        <p>{{user.email}}</p>
+      </td>
+      <td>
+        <p>{{user.phoneNumber}}</p>
+      </td>
+      <td>
+        <p>{{user.birthday | date: 'dd.MM.YYYY'}}</p>
+      </td>
+      <td>
+        <p>{{user.role}}</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
 </ng-container>
 
 <ng-template #loader>
