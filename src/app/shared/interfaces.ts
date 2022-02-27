@@ -1,6 +1,7 @@
 export interface User {
   email: string,
   password: string,
+  actualPassword?: string,
   birthday?: Date,
   surname?: string,
   name?: string,

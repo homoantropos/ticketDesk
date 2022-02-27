@@ -26,8 +26,19 @@
         пошти</small>
     </div>
 
+    <mat-form-field class="col-sm-12 centerHorizontal" *ngIf="!creatorOrEditor">
+      <mat-label>ваш пароль:</mat-label>
+      <input matInput type="password" formControlName="actualPassword">
+    </mat-form-field>
+    <div *ngIf="userForm.controls['actualPassword'].touched && userForm.controls['actualPassword'].errors">
+      <small class="error" *ngIf="userForm.controls['actualPassword'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="userForm.controls['actualPassword'].errors['minlength']">
+        пароль повинен бути більшим {{userForm.controls['actualPassword'].errors['minlength'].requiredLength}} символів
+        ви ввели {{userForm.controls['actualPassword'].errors['minlength'].actualLength}} символів</small>
+    </div>
+
     <mat-form-field class="col-sm-12 centerHorizontal">
-      <mat-label>password:</mat-label>
+      <mat-label>{{creatorOrEditor ? 'пароль:' : 'новий пароль:'}}</mat-label>
       <input matInput type="password" formControlName="password">
     </mat-form-field>
     <div *ngIf="userForm.controls['password'].touched && userForm.controls['password'].errors">

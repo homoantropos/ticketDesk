@@ -94,14 +94,15 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   createForm(user: User): FormGroup {
     return this.fb.group({
       email: [user.email, [Validators.required, Validators.email]],
+      actualPassword: ['', [Validators.required, Validators.minLength(6)]],
       password: [user.password, [Validators.required, Validators.minLength(6)]],
       birthday: [user.birthday, [Validators.required, AgeValidator]],
-      surname: [user.surname],
-      name: [user.name],
-      phoneNumber: [user.phoneNumber,
+      surname: [user.surname ? user.surname : ''],
+      name: [user.name ? user.name : ''],
+      phoneNumber: [user.phoneNumber ? user.phoneNumber : '',
         Validators.pattern("^((\\+38-?)|0)[\ )(.-]*(0)[0-9]{2}[\ )(.-]*[0-9]{3}[\ )(.-]*[0-9]{2}[\ )(.-]*[0-9]{2}$")],
       role: [user.role],
-      profilePictureSrc: [user.profilePictureSrc]
+      profilePictureSrc: [user.profilePictureSrc ? user.profilePictureSrc : '']
     })
   }
 
@@ -136,6 +137,9 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       phoneNumber: formValue.phoneNumber.trim(),
       role: formValue.role.trim()
     };
+    if (!this.creatorOrEditor) {
+      createdUser['actualPassword'] = formValue.actualPassword.trim();
+    }
     let userServiceMethod;
     if (this.creatorOrEditor) {
       userServiceMethod = this.userService.registerUser(createdUser, this.profilePicture);
@@ -151,6 +155,10 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
           this.resetUserForm();
         }, error => {
           this.userService.errorHandle(error);
+          if(this.auth.error$)
+            this.auth.error$.subscribe(
+              message => this.alert.danger(message)
+            )
           this.userForm.enable();
           this.submitted = false;
         }
@@ -172,6 +180,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     this.resetUserForm();
     this.router.navigate(['main']);
   }
+
   stopEvent(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
