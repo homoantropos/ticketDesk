@@ -9,6 +9,10 @@
     (ngSubmit)="onSubmit(userForm.value)"
   >
 
+    <div class="alert info" *ngIf="userForm.controls['passwordCheck'].dirty && message">
+      {{ message }}
+    </div>
+
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
       <input
@@ -26,14 +30,34 @@
         пошти</small>
     </div>
 
-    <mat-form-field class="col-sm-12 centerHorizontal" *ngIf="!creatorOrEditor">
-
+    <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-icon class="pointer m-a-0" [ngStyle]="{float:'right'}"
                 (click)="changePasswordInputType()">
         {{visibilityKind}}
       </mat-icon>
+      <mat-label>{{creatorOrEditor ? 'пароль:' : 'новий пароль:'}}</mat-label>
+      <input matInput [type]="inputPasswordType" formControlName="password">
+    </mat-form-field>
+    <div *ngIf="userForm.controls['password'].touched && userForm.controls['password'].errors">
+      <small class="error" *ngIf="userForm.controls['password'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="userForm.controls['password'].errors['minlength']">
+        пароль повинен бути більшим {{userForm.controls['password'].errors['minlength'].requiredLength}} символів
+        ви ввели {{userForm.controls['password'].errors['minlength'].actualLength}} символів</small>
+    </div>
 
-      <mat-label>ваш пароль:</mat-label>
+    <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-label>повторіть пароль:</mat-label>
+      <input matInput [type]="inputPasswordType" formControlName="passwordCheck" (keyup)="checkPasswords()">
+    </mat-form-field>
+    <div *ngIf="userForm.controls['passwordCheck'].touched && userForm.controls['passwordCheck'].errors">
+      <small class="error" *ngIf="userForm.controls['passwordCheck'].errors['required']">поле повинно бути заповнене</small>
+      <small class="error" *ngIf="userForm.controls['passwordCheck'].errors['minlength']">
+        пароль повинен бути більшим {{userForm.controls['passwordCheck'].errors['minlength'].requiredLength}} символів
+        ви ввели {{userForm.controls['passwordCheck'].errors['minlength'].actualLength}} символів</small>
+    </div>
+
+    <mat-form-field class="col-sm-12 centerHorizontal" *ngIf="!creatorOrEditor">
+      <mat-label>чинний пароль:</mat-label>
       <input matInput [type]="inputPasswordType" formControlName="actualPassword">
     </mat-form-field>
     <div *ngIf="userForm.controls['actualPassword'].touched && userForm.controls['actualPassword'].errors">
@@ -42,26 +66,6 @@
       <small class="error" *ngIf="userForm.controls['actualPassword'].errors['minlength']">
         пароль повинен бути більшим {{userForm.controls['actualPassword'].errors['minlength'].requiredLength}} символів
         ви ввели {{userForm.controls['actualPassword'].errors['minlength'].actualLength}} символів</small>
-    </div>
-
-    <mat-form-field class="col-sm-12 centerHorizontal">
-
-      <mat-icon class="pointer m-a-0" [ngStyle]="{float:'right'}"
-                (click)="changePasswordInputType()">
-        {{visibilityKind}}
-      </mat-icon>
-
-      <mat-label>{{creatorOrEditor ? 'пароль:' : 'новий пароль:'}}</mat-label>
-
-      <input matInput [type]="inputPasswordType" formControlName="password">
-
-    </mat-form-field>
-
-    <div *ngIf="userForm.controls['password'].touched && userForm.controls['password'].errors">
-      <small class="error" *ngIf="userForm.controls['password'].errors['required']">поле повинно бути заповнене</small>
-      <small class="error" *ngIf="userForm.controls['password'].errors['minlength']">
-        пароль повинен бути більшим {{userForm.controls['password'].errors['minlength'].requiredLength}} символів
-        ви ввели {{userForm.controls['password'].errors['minlength'].actualLength}} символів</small>
     </div>
 
     <mat-form-field class="col-sm-12 centerHorizontal">

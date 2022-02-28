@@ -47,6 +47,8 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   get visibilityKind() {
     return this._visibilityKind;
   }
+
+  message = '';
   // @ts-ignore
   @ViewChild('emailInput') private emailInput: ElementRef;
   // @ts-ignore
@@ -116,6 +118,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       email: [user.email, [Validators.required, Validators.email]],
       actualPassword: ['', actualPasswordValidators],
       password: ['', passwordValidators],
+      passwordCheck: ['', passwordValidators],
       birthday: [user.birthday, [Validators.required, AgeValidator]],
       surname: [user.surname ? user.surname : ''],
       name: [user.name ? user.name : ''],
@@ -210,6 +213,15 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   changePasswordInputType(): void {
     this._inputPasswordType = this.inputPasswordType === 'password' ? 'text' : 'password';
     this._visibilityKind = this.visibilityKind === "visibility" ? 'visibility_off' : 'visibility';
+  }
+
+  checkPasswords(): void {
+    if (this.userForm.value.passwordCheck !== this.userForm.value.password) {
+      this.message = 'Паролі не співпадають';
+    } else {
+      this.message = '';
+      this.submitted = false;
+    }
   }
 
   ngOnDestroy(): void {

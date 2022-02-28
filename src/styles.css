@@ -102,3 +102,15 @@ mat-toolbar span {
   font-size: large;
 }
 
+.alert {
+  color: white;
+  text-align: center;
+}
+
+.danger {
+  background-color: red;
+}
+
+.info {
+  background-color: grey;
+}
