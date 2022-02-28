@@ -37,6 +37,16 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     return this.creatOrEditor;
   }
 
+  private _inputPasswordType = 'password';
+
+  public get inputPasswordType() {
+    return this._inputPasswordType;
+  }
+
+  private _visibilityKind = 'visibility';
+  get visibilityKind() {
+    return this._visibilityKind;
+  }
   // @ts-ignore
   @ViewChild('emailInput') private emailInput: ElementRef;
   // @ts-ignore
@@ -69,12 +79,12 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
             }
           )
         ).subscribe(
-          user => {
-            this.userForm = this.createForm(user, this.creatorOrEditor);
-            this.makeFocus();
-          },
-          error => this.alert.danger(error.message)
-        );
+        user => {
+          this.userForm = this.createForm(user, this.creatorOrEditor);
+          this.makeFocus();
+        },
+        error => this.alert.danger(error.message)
+      );
     } else {
       this.userForm = this.createForm(this.userService.emptyUserFormInitValue, this.creatorOrEditor);
       this.makeFocus();
@@ -95,7 +105,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     const validators: Array<Validators> = [Validators.required, Validators.minLength(6)];
     let actualPasswordValidators;
     let passwordValidators;
-    if(creatorOrEditor) {
+    if (creatorOrEditor) {
       actualPasswordValidators = validators.slice(1);
       passwordValidators = validators;
     } else {
@@ -166,7 +176,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
           this.resetUserForm();
         }, error => {
           this.userService.errorHandle(error);
-          if(this.auth.error$)
+          if (this.auth.error$)
             this.auth.error$.subscribe(
               message => this.alert.danger(message)
             )
@@ -195,6 +205,11 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   stopEvent(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
+  }
+
+  changePasswordInputType(): void {
+    this._inputPasswordType = this.inputPasswordType === 'password' ? 'text' : 'password';
+    this._visibilityKind = this.visibilityKind === "visibility" ? 'visibility_off' : 'visibility';
   }
 
   ngOnDestroy(): void {
