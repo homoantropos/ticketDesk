@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   // @ts-ignore
   loginForm: FormGroup;
   submitted = false;
+  message = ''
 
   // @ts-ignore
   @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>
@@ -57,17 +58,23 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/'])
         },
         error => {
+          this.message = error.error.message;
           this.auth.errorHandle(error);
           this.loginForm.enable();
         }
       );
     if (this.auth.error$) {
       this.auth.error$.subscribe(
-        message =>
+        message => {
           this.alert.danger(message)
+        }
       );
     }
     this.submitted = false;
+  }
+
+  goToMainPage(): void {
+    this.router.navigate(['main']);
   }
 
   ngOnDestroy(): void {

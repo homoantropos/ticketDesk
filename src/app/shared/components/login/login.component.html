@@ -9,6 +9,9 @@
     (ngSubmit)="onSubmit(loginForm.controls['email'].value, loginForm.controls['password'].value)"
   >
 
+    <div class="alert info" *ngIf="message">
+      {{ message }}
+    </div>
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
       <input
@@ -38,11 +41,11 @@
     </div>
 
     <button mat-button
-            click-stop-propagation
             class="col-sm-6"
             color="primary"
             type="button"
             [disabled]="loginForm.invalid || submitted"
+            (click)="goToMainPage()"
     >
       Скасувати
     </button>
