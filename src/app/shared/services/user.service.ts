@@ -52,7 +52,7 @@ export class UserService {
   errorHandle(error: HttpErrorResponse): any {
     const message = error.error.message;
     switch (message) {
-      case('повторювані значення ключа порушують обмеження унікальності \"user_email_key47\"'):
+      case('повторювані значення ключа порушують обмеження унікальності \"user_email_key4\"'):
         this.error$.next('Такий користувач вже існує в базі даних, зміни не можуть бути збережені');
         break;
       case('Користувач звязаний з базою результатів і не може бути видалений з бази даних.'):
