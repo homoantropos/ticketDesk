@@ -22,7 +22,6 @@ export class UserService {
       // @ts-ignore
       key => fd.set(key, user[key])
     )
-    console.log(fd.getAll('password'));
     if(image) {
       fd.append('image', image, image.name);
     }

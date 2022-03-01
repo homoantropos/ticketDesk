@@ -77,9 +77,7 @@ export class AuthService {
   }
 
   resetPassword(email: string): Observable<{message: string}> {
-    const fd = new FormData();
-    fd.append('email', email);
-    return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, fd);
+    return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, email);
   }
 
   isAuthenticated(): boolean {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
 
@@ -13,6 +13,7 @@ export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
   message = 'Введіть елекронну пошту, указану під час реєстрації'
   submitted = false;
+  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +23,10 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.resetPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
-    })
+    });
+    if(this.resetPasswordForm.controls['email']) {
+      setTimeout(() => this.emailInput.nativeElement.focus(), 0)
+    }
   }
 
   resetPassword(email: string): void {
