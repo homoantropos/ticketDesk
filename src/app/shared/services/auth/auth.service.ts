@@ -72,7 +72,6 @@ export class AuthService {
 
   reset(email: string): Observable<{message: string}> {
     const body = {email};
-    console.log('in service: ', email);
     return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, body);
   }
 
