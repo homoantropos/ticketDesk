@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
 
   resetPassword(): void {
     this.loginForm.reset();
-    this.message = 'На емейл, указаний під час реєстрації, надіслано інструкції щодо відновлення паролю'
+    this.router.navigate(['reset']);
   }
 
   ngOnDestroy(): void {

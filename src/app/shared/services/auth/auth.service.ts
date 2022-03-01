@@ -76,6 +76,12 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  resetPassword(email: string): Observable<{message: string}> {
+    const fd = new FormData();
+    fd.append('email', email);
+    return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, fd);
+  }
+
   isAuthenticated(): boolean {
     return this.checkSession();
   }

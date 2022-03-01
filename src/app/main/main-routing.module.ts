@@ -5,6 +5,7 @@ import {UserRegisterOrEditComponent} from "../shared/components/user-register-or
 import {LoginComponent} from "../shared/components/login/login.component";
 import {UserProfileComponent} from "../shared/components/user-profile/user-profile.component";
 import {AuthGuard} from "../shared/services/auth/auth.guard";
+import {ResetPasswordComponent} from "../shared/components/reset-password/reset-password.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'foolMatch'},
@@ -12,7 +13,8 @@ const routes: Routes = [
       {path: 'register', component: UserRegisterOrEditComponent},
       {path: 'login', component: LoginComponent},
       {path: 'profile/:id', canActivate: [AuthGuard], component: UserProfileComponent},
-      {path: 'edit/:id', canActivate: [AuthGuard], component: UserRegisterOrEditComponent}
+      {path: 'edit/:id', canActivate: [AuthGuard], component: UserRegisterOrEditComponent},
+      {path: 'reset', component: ResetPasswordComponent}
     ]
   },
 ];

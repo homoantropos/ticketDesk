@@ -28,6 +28,7 @@ import { PageNotFoundComponent } from './components/page-not-foung/page-not-foun
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { DeletionConfirmerComponent } from './components/deletion-confirmer/deletion-confirmer.component';
 import {RouterModule} from "@angular/router";
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {RouterModule} from "@angular/router";
     LoginComponent,
     PageNotFoundComponent,
     UserProfileComponent,
-    DeletionConfirmerComponent
+    DeletionConfirmerComponent,
+    ResetPasswordComponent
   ],
     imports: [
         CommonModule,
@@ -83,6 +85,7 @@ import {RouterModule} from "@angular/router";
     MatIconModule,
     PageNotFoundComponent,
     ReactiveFormsModule,
+    ResetPasswordComponent,
     UserRegisterOrEditComponent,
     UserProfileComponent
   ],
