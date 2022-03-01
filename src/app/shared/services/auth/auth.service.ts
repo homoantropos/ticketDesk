@@ -70,14 +70,16 @@ export class AuthService {
       );
   }
 
+  reset(email: string): Observable<{message: string}> {
+    const body = {email};
+    console.log('in service: ', email);
+    return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, body);
+  }
+
   logOut(): void {
     this.setToken(null);
     this.alert.warning('Ви вийшли з сайту');
     this.router.navigate(['/']);
-  }
-
-  resetPassword(email: string): Observable<{message: string}> {
-    return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, email);
   }
 
   isAuthenticated(): boolean {

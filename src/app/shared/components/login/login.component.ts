@@ -78,8 +78,7 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword(): void {
-    this.loginForm.reset();
-    this.router.navigate(['reset']);
+    this.router.navigate(['updatepass']);
   }
 
   ngOnDestroy(): void {

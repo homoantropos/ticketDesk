@@ -28,6 +28,10 @@ export class UserService {
     return this.http.post<User>(`${environment.dbUrl}/user/register`, fd);
   }
 
+  changePassword(email: string): Observable<{ message: string }> {
+    return this.http.post<{message: string}>(`${environment.dbUrl}/user/reset`, email);
+  }
+
   updateUser(user: User, image?: File): Observable<User> {
     const fd = new FormData();
     Object.keys(user).forEach(
@@ -44,6 +48,9 @@ export class UserService {
     return this.http.get<User>(`${environment.dbUrl}/user/${id}`);
   }
 
+  getAllUsers(): Observable<Array<User>> {
+    return this.http.get<Array<User>>(`${environment.dbUrl}/user`)
+  }
   deleteUser(id: number): Observable<any> {
     return this.http.delete<any>(`${environment.dbUrl}/user/${id}`)
   }

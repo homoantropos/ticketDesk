@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-reset-password',
@@ -18,28 +19,27 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.resetPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
-    if(this.resetPasswordForm.controls['email']) {
+    if (this.resetPasswordForm.controls['email']) {
       setTimeout(() => this.emailInput.nativeElement.focus(), 0)
     }
   }
 
   resetPassword(email: string): void {
-    this.submitted = true;
-    this.auth.resetPassword(email)
-      .subscribe(
-        response => {
-          this.message = response.message;
-          this.submitted = false;
-        }, error => {
-          this.message = error.error.message;
-        }
-      );
+    this.auth.reset(email).subscribe(
+      response => {
+        this.message = response.message;
+      }, error => {
+        catchError(error);
+        this.message = error.error.message
+      }
+    )
   }
 
 }

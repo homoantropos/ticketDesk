@@ -14,7 +14,7 @@ const routes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'profile/:id', canActivate: [AuthGuard], component: UserProfileComponent},
       {path: 'edit/:id', canActivate: [AuthGuard], component: UserRegisterOrEditComponent},
-      {path: 'reset', component: ResetPasswordComponent}
+      {path: 'updatepass', component: ResetPasswordComponent}
     ]
   },
 ];
