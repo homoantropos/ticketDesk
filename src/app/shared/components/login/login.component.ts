@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     })
-    if(this.loginForm.controls['email'] !== undefined) {
+    if (this.loginForm.controls['email'] !== undefined) {
       setTimeout(() =>
         this.emailInput.nativeElement.focus(), 0
       );
@@ -75,6 +75,11 @@ export class LoginComponent implements OnInit {
 
   goToMainPage(): void {
     this.router.navigate(['main']);
+  }
+
+  resetPassword(): void {
+    this.loginForm.reset();
+    this.message = 'На емейл, указаний під час реєстрації, надіслано інструкції щодо відновлення паролю'
   }
 
   ngOnDestroy(): void {

@@ -27,6 +27,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-foung/page-not-found.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { DeletionConfirmerComponent } from './components/deletion-confirmer/deletion-confirmer.component';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -39,26 +40,27 @@ import { DeletionConfirmerComponent } from './components/deletion-confirmer/dele
     UserProfileComponent,
     DeletionConfirmerComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatAutocompleteModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    HttpClientModule,
-    MatIconModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatAutocompleteModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        HttpClientModule,
+        MatIconModule,
+        RouterModule
+    ],
   exports: [
     AlertComponent,
     FormsModule,
