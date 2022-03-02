@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {AuthService} from "./auth.service";
 import {AlertService} from "../alert.service";
 
@@ -13,7 +13,8 @@ export class AdminLayoutGuard implements CanActivate {
     private auth: AuthService,
     private router: Router,
     private alert: AlertService
-  ) {  }
+  ) {
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -21,14 +22,24 @@ export class AdminLayoutGuard implements CanActivate {
     if (this.auth.accessAllowed('superAdmin')) {
       return true;
     } else {
-      this.router.navigate(['main'], {
-        queryParams: {
-          accessAllowed: false
-        }
-      });
-      this.alert.warning('Вибачте, однак у вас немає права доступу до цього рівня сайту');
-      return false;
+      if (this.auth.isAuthenticated()) {
+        this.router.navigate(['main'], {
+          queryParams: {
+            accessAllowed: false
+          }
+        });
+        this.alert.warning('Вибачте, однак у вас немає права доступу до цього рівня сайту');
+        return false;
+      } else {
+        this.router.navigate(['main', 'login'], {
+            queryParams: {
+              loginFailed: true
+            }
+          }
+        )
+        this.alert.warning('Для доступу ви повинні увійти на сайт');
+        return false;
+      }
     }
   }
-
 }
