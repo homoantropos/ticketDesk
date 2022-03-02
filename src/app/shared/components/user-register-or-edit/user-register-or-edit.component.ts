@@ -174,7 +174,8 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
     this.uSub = userServiceMethod
       .subscribe(
         user => {
-          this.router.navigateByUrl(`profile/${this.auth.getUserId()}`);
+          const id = this.auth.accessAllowed('superAdmin') ? this.userId : this.auth.getUserId();
+          this.router.navigateByUrl(`profile/${id}`);
           // this.alert.success(dbCoachAndMessage.message);
           this.resetUserForm();
         }, error => {

@@ -29,6 +29,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { DeletionConfirmerComponent } from './components/deletion-confirmer/deletion-confirmer.component';
 import {RouterModule} from "@angular/router";
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     PageNotFoundComponent,
     UserProfileComponent,
     DeletionConfirmerComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SearchPipe
   ],
     imports: [
         CommonModule,
@@ -63,32 +65,33 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
         MatIconModule,
         RouterModule
     ],
-  exports: [
-    AlertComponent,
-    FormsModule,
-    LoaderComponent,
-    LoginComponent,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatAutocompleteModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    HttpClientModule,
-    MatIconModule,
-    PageNotFoundComponent,
-    ReactiveFormsModule,
-    ResetPasswordComponent,
-    UserRegisterOrEditComponent,
-    UserProfileComponent
-  ],
+    exports: [
+        AlertComponent,
+        FormsModule,
+        LoaderComponent,
+        LoginComponent,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatAutocompleteModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        HttpClientModule,
+        MatIconModule,
+        PageNotFoundComponent,
+        ReactiveFormsModule,
+        ResetPasswordComponent,
+        UserRegisterOrEditComponent,
+        UserProfileComponent,
+        SearchPipe
+    ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'uk'}, {provide: MAT_DATE_LOCALE, useValue: 'uk'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

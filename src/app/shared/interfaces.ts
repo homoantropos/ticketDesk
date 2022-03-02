@@ -8,6 +8,8 @@ export interface User {
   phoneNumber?: string,
   role?: string,
   profilePictureSrc?: string,
+  status?: string,
+  confirmationCode?: string,
   id?: number
 }
 

@@ -6,14 +6,15 @@ import { AdminComponent } from './admin.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
 import {SharedModule} from "../shared/shared.module";
-import { UserDashboardComponent } from './users-admin/user-dashboard/user-dashboard.component';
-import { UserListComponent } from './users-admin/user-list/user-list.component';
+import { UserAdminPageComponent } from './users-dashboard/user-admin-page/user-admin-page.component';
+import { UserListComponent } from './users-dashboard/user-list/user-list.component';
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    UserDashboardComponent,
+    UserAdminPageComponent,
     UserListComponent
   ],
   imports: [
@@ -21,7 +22,8 @@ import { UserListComponent } from './users-admin/user-list/user-list.component';
     AdminRoutingModule,
     MatToolbarModule,
     MatMenuModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ]
 })
 export class AdminModule { }

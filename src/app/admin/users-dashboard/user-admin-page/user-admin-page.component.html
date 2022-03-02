@@ -1,0 +1,33 @@
+<div class="col-sm-2 m-t-1">
+
+</div>
+
+<div class="col-sm-8 m-t-1">
+  <ng-container *ngIf="users; else loader">
+    <ng-container *ngIf="users.length > 0; else emptyList">
+      <app-user-list
+        [users]="users | search : searchValue : searchField"
+      ></app-user-list>
+    </ng-container>
+    <ng-template #emptyList>
+      <h2>Список користувачів порожній</h2>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+</div>
+
+<div class="col-sm-2 m-t-1">
+  <mat-form-field >
+    <mat-label>пошук ...</mat-label>
+    <input matInput
+           title="nameInput"
+           type="text"
+           #nameInput
+           [(ngModel)]="searchValue"
+    >
+  </mat-form-field>
+</div>
+

@@ -1,0 +1,62 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th (click)="sortTable(['id'])"
+        [innerHTML]="sortDirection ? 'id &#8595;' : 'id &#8593;'"
+        class="sortArrow"></th>
+    <th (click)="sortTable(['email'])"
+        [innerHTML]="sortDirection ? 'email &#8595;' : 'email &#8593;'"
+        class="sortArrow"></th>
+    <th (click)="sortTable(['role'])"
+        [innerHTML]="sortDirection ? 'role &#8595;' : 'role &#8593;'"
+        class="sortArrow"></th>
+    <th (click)="sortTable(['surname'])"
+        [innerHTML]="sortDirection ? 'користувач &#8595;' : 'користувач &#8593;'"
+        class="sortArrow"></th>
+    <th>phone number</th>
+    <th (click)="sortTable(['status'])"
+        [innerHTML]="sortDirection ? 'status &#8595;' : 'status &#8593;'"
+        class="sortArrow"></th>
+    <th>edit</th>
+    <th>delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users |
+  paginate: { itemsPerPage: itemsPerPage, currentPage: paginatorStartPageNumber }">
+    <td>{{user.id}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.role}}</td>
+    <td>{{user.surname}} {{user.name}}</td>
+    <td>{{user.phoneNumber}}</td>
+    <td>{{user.status}}</td>
+    <td>
+      <mat-icon class="pointer" (click)="editUser(user.id)">edit</mat-icon>
+    </td>
+    <td>
+      <mat-icon class="pointer">delete</mat-icon>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div>
+  <div class="paginatorSelect">
+    <small>
+      рядків на сторінці:
+    </small>
+    <mat-select
+      [(ngModel)]="itemsPerPage"
+    >
+      <mat-option value=5>5</mat-option>
+      <mat-option value=10>10</mat-option>
+      <mat-option value=15>15</mat-option>
+    </mat-select>
+  </div>
+  <pagination-controls
+    class="my-pagination"
+    (pageChange)="paginatorStartPageNumber = $event"
+    previousLabel="назад"
+    nextLabel="уперед"
+  ></pagination-controls>
+</div>
+
