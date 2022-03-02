@@ -1,1 +1,33 @@
-<p>admin works!</p>
+<mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="goToMainPage()">
+      <p>Головна</p>
+    </button>
+    <button mat-menu-item>
+      <p>admin</p>
+    </button>
+  </mat-menu>
+
+  <div *ngIf="auth.isAuthenticated()">
+    <button mat-icon-button
+            title="профіль"
+            class="m-r-1"
+            (click)="goToUserProfile()"
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+
+    <button
+      title="вихід"
+      mat-icon-button
+      class="m-r-1">
+      <mat-icon (click)="auth.logOut()">logout</mat-icon>
+    </button>
+  </div>
+
+</mat-toolbar>
+
+<router-outlet></router-outlet>

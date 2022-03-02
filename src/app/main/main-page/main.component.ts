@@ -27,7 +27,10 @@ export class MainComponent implements OnInit {
     this.router.navigateByUrl(`/main/profile/${this.auth.getUserId()}`);
   }
 
+  goToAdminPage(): void {
+    this.router.navigate(['admin']);
+  }
+
   ngOnDestroy() {
-    this.auth.logOut();
   }
 }

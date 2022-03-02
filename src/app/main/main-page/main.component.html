@@ -6,7 +6,7 @@
     <button mat-menu-item routerLink="" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
       <p>Головна</p>
     </button>
-    <button mat-menu-item routerLink="admin" routerLinkActive="active">
+    <button mat-menu-item (click)="goToAdminPage()" routerLinkActive="active">
       <p>admin</p>
     </button>
   </mat-menu>

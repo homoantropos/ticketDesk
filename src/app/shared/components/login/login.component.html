@@ -40,15 +40,16 @@
         ви ввели {{loginForm.controls['password'].errors['minlength'].actualLength}} символів</small>
     </div>
 
-    <small
-      class="col-sm-12 pointer"
-      (click)="resetPassword()"
-      *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].dirty"
-    >
-      <a href="" onclick="return false;">
-        забули пароль?
-      </a>
-    </small>
+    <ng-container *ngIf="loginForm.touched && loginForm.controls['password'].dirty">
+      <small
+        class="col-sm-12 pointer"
+        (click)="resetPassword()"
+      >
+        <a href="" onclick="return false;">
+          забули пароль?
+        </a>
+      </small>
+    </ng-container>
 
     <button mat-button
             class="col-sm-6"
