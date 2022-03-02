@@ -6,11 +6,15 @@ import { AdminComponent } from './admin.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
 import {SharedModule} from "../shared/shared.module";
+import { UserDashboardComponent } from './users-admin/user-dashboard/user-dashboard.component';
+import { UserListComponent } from './users-admin/user-list/user-list.component';
 
 
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
+    UserDashboardComponent,
+    UserListComponent
   ],
   imports: [
     CommonModule,
