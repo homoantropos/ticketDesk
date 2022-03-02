@@ -60,11 +60,13 @@ export class UserProfileComponent implements OnInit {
 
   deleteProfile(confirm: boolean): void {
     if (confirm) {
+      const id = this.auth.accessAllowed('superAdmin') ? this.user.id : this.auth.getUserId();
       // @ts-ignore
-      this.userService.deleteUser(this.auth.getUserId())
+      this.userService.deleteUser(id)
         .subscribe(
           message => {
-            this.alert.success(message);
+            this.alert.success(message.message);
+            if(!this.auth.accessAllowed('superAdmin'))
             this.auth.logOut();
             this.router.navigate(['main']);
           },

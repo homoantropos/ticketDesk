@@ -18,7 +18,6 @@
         [innerHTML]="sortDirection ? 'status &#8595;' : 'status &#8593;'"
         class="sortArrow"></th>
     <th>edit</th>
-    <th>delete</th>
   </tr>
   </thead>
   <tbody>
@@ -32,9 +31,6 @@
     <td>{{user.status}}</td>
     <td>
       <mat-icon class="pointer" (click)="editUser(user.id)">edit</mat-icon>
-    </td>
-    <td>
-      <mat-icon class="pointer">delete</mat-icon>
     </td>
   </tr>
   </tbody>
