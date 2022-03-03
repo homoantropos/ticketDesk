@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../shared/services/auth/auth.service";
 import {AlertService} from "../shared/services/alert.service";
@@ -9,6 +9,8 @@ import {AlertService} from "../shared/services/alert.service";
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+
+  @Input() title = 'адмін панель';
 
   constructor(
     private router: Router,
