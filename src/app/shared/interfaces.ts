@@ -21,7 +21,7 @@ export interface Performance {
   posterSrc?: string,
 }
 
-export interface Sit {
+export interface Seat {
 
 }
 
