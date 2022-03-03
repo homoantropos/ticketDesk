@@ -1,5 +1,3 @@
-import {TicketStatus} from "./enums";
-
 export interface User {
   email: string,
   password: string,
@@ -18,16 +16,21 @@ export interface User {
 export interface Performance {
   name: string,
   description: string,
-  place: string,
+  place: Theatre,
   start: Date,
   posterSrc?: string,
 }
 
+export interface Theatre {
+  name: string,
+  country: string,
+  town: string,
+  address: string
+}
+
 export interface Seat {
   row: number,
-  seatNumber: number
+  seatNumber: number,
+  auditoriumSection?: string
 }
 
-export interface Cart {
-
-}

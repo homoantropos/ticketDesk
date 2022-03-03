@@ -29,7 +29,7 @@ export class UserListComponent implements OnInit {
   }
 
   editUser(id?: number): void {
-    this.router.navigateByUrl(`admin/edit/${id}`)
+    this.router.navigateByUrl(`admin/user/edit/${id}`)
   }
 
   sortTable(sortOption: any): void {
