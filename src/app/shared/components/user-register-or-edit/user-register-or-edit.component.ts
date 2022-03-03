@@ -26,7 +26,8 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   reset = false;
   // @ts-ignore
   createOrEditLabelName: string;
-  buttonName = 'зареєсттруватись'
+  buttonName = 'зареєсттруватись';
+  showRoleInput = false;
   private creatOrEditor = true;
 
   setCreatOrEditor(condition: boolean): void {
@@ -82,6 +83,7 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
           )
         ).subscribe(
         user => {
+          this.showRoleInput = this.auth.accessAllowed('superAdmin');
           this.userForm = this.createForm(user, this.creatorOrEditor);
           this.makeFocus();
         },

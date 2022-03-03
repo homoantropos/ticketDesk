@@ -101,6 +101,11 @@
         *ngIf="userForm.controls['phoneNumber'].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
     </div>
 
+    <mat-form-field class="col-sm-12 centerHorizontal" *ngIf="showRoleInput">
+      <mat-label>role:</mat-label>
+      <input matInput formControlName="role" />
+    </mat-form-field>
+
     <div *ngIf="profilePictureSrc">
       <img class="h120" [src]="profilePictureSrc" alt="profile picture"/>
     </div>

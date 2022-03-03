@@ -13,14 +13,9 @@ export class UserAdminPageComponent implements OnInit {
   // @ts-ignore
   users: Array<User>;
 
-  showButton = true;
-
   searchOption = true;
   searchValue = '';
   searchField = ['email'];
-
-  // @ts-ignore
-  // @ViewChild('nameInput') nameInputRef: ElementRef;
 
   constructor(
     private userService: UserService,

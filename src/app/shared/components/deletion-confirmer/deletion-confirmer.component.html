@@ -1,14 +1,14 @@
 <div class="backDrop" *ngIf="show">
   <div class="delete_confirmer p-t-2">
     <h3>УВАГА!<br>Наслідки цієї дії неможливо скасувати!<br>Видалити {{option}} остаточно? </h3>
-    <div class="btn-container">
+    <div class="btn-container centerHorizontal">
 
       <button mat-button [ngStyle]="{backgroundColor: 'slategray', color: 'white'}"
               (click)="confirm.emit(true)">
         Так
       </button>
 
-      <button mat-button [ngStyle]="{backgroundColor: 'white'}"
+      <button mat-button [ngStyle]="{backgroundColor: 'white', color: 'slategray'}"
               (click)="confirm.emit(false)">
         Ні
       </button>

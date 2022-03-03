@@ -18,9 +18,6 @@ export class UserListComponent implements OnInit {
 
   userId = 0;
 
-  showDeleteConfirmation = false;
-  option = 'користувача';
-
   @Output() showButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(

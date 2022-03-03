@@ -15,8 +15,10 @@ export interface User {
 
 export interface Performance {
   name: string,
+  description: string,
+  place: string,
   start: Date,
-  posterSrc: string,
+  posterSrc?: string,
 }
 
 export interface Sit {
