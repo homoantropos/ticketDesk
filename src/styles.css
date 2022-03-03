@@ -94,6 +94,10 @@ div .paginatorSelect small {
   cursor: pointer;
 }
 
+.scroll {
+  overflow: scroll;
+}
+
 @media (max-width: 510px) {
   .formContainer {
     width: 90vw;

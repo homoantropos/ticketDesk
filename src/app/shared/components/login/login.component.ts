@@ -18,6 +18,17 @@ export class LoginComponent implements OnInit {
   submitted = false;
   message = ''
 
+  private _inputPasswordType = 'password';
+
+  public get inputPasswordType() {
+    return this._inputPasswordType;
+  }
+
+  private _visibilityKind = 'visibility';
+  get visibilityKind() {
+    return this._visibilityKind;
+  }
+
   // @ts-ignore
   @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>
   aSub: Subscription = new Subscription();
@@ -79,6 +90,11 @@ export class LoginComponent implements OnInit {
 
   resetPassword(): void {
     this.router.navigate(['updatepass']);
+  }
+
+  changePasswordInputType(): void {
+    this._inputPasswordType = this.inputPasswordType === 'password' ? 'text' : 'password';
+    this._visibilityKind = this.visibilityKind === "visibility" ? 'visibility_off' : 'visibility';
   }
 
   ngOnDestroy(): void {

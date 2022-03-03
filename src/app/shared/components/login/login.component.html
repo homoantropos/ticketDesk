@@ -30,8 +30,12 @@
     </div>
 
     <mat-form-field class="col-sm-12 centerHorizontal">
+      <mat-icon class="pointer m-a-0" [ngStyle]="{float:'right'}"
+                (click)="changePasswordInputType()">
+        {{visibilityKind}}
+      </mat-icon>
       <mat-label>password:</mat-label>
-      <input matInput type="password" formControlName="password">
+      <input matInput [type]="inputPasswordType" formControlName="password">
     </mat-form-field>
     <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors">
       <small class="error" *ngIf="loginForm.controls['password'].errors['required']">поле повинно бути заповнене</small>
