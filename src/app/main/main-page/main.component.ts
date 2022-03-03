@@ -10,14 +10,12 @@ import {AuthService} from "../../shared/services/auth/auth.service";
 
 export class MainComponent implements OnInit {
 
-
   constructor(
     private router: Router,
     public auth: AuthService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
   goToRegisterForm(): void {
     this.router.navigateByUrl('/main/register');
@@ -31,6 +29,4 @@ export class MainComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  ngOnDestroy() {
-  }
 }

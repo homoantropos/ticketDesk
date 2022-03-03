@@ -1,3 +1,5 @@
+import {TicketStatus} from "./enums";
+
 export interface User {
   email: string,
   password: string,
@@ -22,11 +24,8 @@ export interface Performance {
 }
 
 export interface Seat {
-
-}
-
-export interface Ticket {
-
+  row: number,
+  seatNumber: number
 }
 
 export interface Cart {
