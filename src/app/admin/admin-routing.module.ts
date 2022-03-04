@@ -8,6 +8,9 @@ import {UserRegisterOrEditComponent} from "../shared/components/user-register-or
 import {
   AuditoriumSectionAdminPageComponent
 } from "./auditorium-section-dashboard/auditorium-section-admin-page/auditorium-section-admin-page.component";
+import {
+  AuditoriumSectionEditorComponent
+} from "./auditorium-section-dashboard/auditorium-section-editor/auditorium-section-editor.component";
 
 const routes: Routes = [
   { path: '', canActivate: [AdminLayoutGuard, AuthGuard], component: AdminComponent, children: [
@@ -16,7 +19,9 @@ const routes: Routes = [
           {path: 'edit/:id', component: UserRegisterOrEditComponent},
         ]},
       {path: 'section', children: [
-          {path: '', component: AuditoriumSectionAdminPageComponent}
+          {path: '', component: AuditoriumSectionAdminPageComponent},
+          {path: 'create', component: AuditoriumSectionEditorComponent},
+          {path: 'edit/:id', component: AuditoriumSectionEditorComponent}
         ]}
     ] },
 ];

@@ -19,18 +19,25 @@ export interface Performance {
   place: Theatre,
   start: Date,
   posterSrc?: string,
+  id?: number
 }
 
 export interface Theatre {
   name: string,
   country: string,
   town: string,
-  address: string
+  address: string,
+  id?: number
 }
 
 export interface Seat {
   row: number,
   seatNumber: number,
-  auditoriumSection?: string
+  auditoriumSection: AuditoriumSection,
+  id?: number
 }
 
+export interface AuditoriumSection {
+  sectionName: string
+  id?: number
+}

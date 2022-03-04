@@ -1,1 +1,78 @@
-<p>auditorium-section-list works!</p>
+<div *ngIf="sectionService.sections.length !== 0; else emptyListMessage">
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th
+        (click)="sortTable(['id'])"
+        [innerHTML]="sortDirection ? 'ID &#8595;' : 'ID &#8593;'"
+        class="sortArrow"
+      >
+      </th>
+      <th
+        (click)="sortTable(['sectionName'])"
+        [innerHTML]="sortDirection ? 'Назва &#8595;' : 'Навза &#8593;'"
+        class="sortArrow"
+      >
+      </th>
+      <th>
+        редагувати
+      </th>
+      <th>
+        видалити
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+      *ngFor="let section of sections | paginate: { itemsPerPage: itemsPerPage, currentPage: paginatorStartPageNumber }">
+      <td>
+        {{section.id}}
+      </td>
+      <td>
+        {{section.sectionName}}
+      </td>
+      <td>
+        <mat-icon *ngIf="section.id" (click)="goToSectionEditor(section.id)">
+          edit
+        </mat-icon>
+      </td>
+      <td>
+        <mat-icon *ngIf="section.id" (click)="callDeletion(section.id)">
+          delete
+        </mat-icon>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <div class="paginatorSelect">
+      <small>
+        рядків на сторінці:
+      </small>
+      <mat-select
+        [(ngModel)]="itemsPerPage"
+      >
+        <mat-option value=5>5</mat-option>
+        <mat-option value=10>10</mat-option>
+        <mat-option value=15>15</mat-option>
+      </mat-select>
+    </div>
+    <pagination-controls
+      class="my-pagination"
+      (pageChange)="paginatorStartPageNumber = $event"
+      previousLabel="назад"
+      nextLabel="уперед"
+    ></pagination-controls>
+  </div>
+</div>
+
+<ng-template #emptyListMessage>
+  <h3 class="centerHorizontal"><b>База даних частин глядацького залу порожня</b></h3>
+</ng-template>
+
+<app-deletion-confirmer
+  [show]="showDeleteConfirmation"
+  [option]="option"
+  (confirm)="onDelete($event)"
+></app-deletion-confirmer>

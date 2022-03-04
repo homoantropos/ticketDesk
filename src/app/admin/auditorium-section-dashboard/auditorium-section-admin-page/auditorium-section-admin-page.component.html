@@ -1,1 +1,44 @@
-<p>auditorium-section-admin-page works!</p>
+<button mat-button color="primary"
+        [ngStyle]="{marginTop:'10px'}"
+        type="button"
+        (click)="goToSectionEditor()"
+        *ngIf="showButton">
+  Додати
+</button>
+
+
+<div *ngIf="showButton" [ngStyle]="{float: 'right'}">
+
+  <button
+    mat-button color="primary"
+    (click)="this.searchValue = ''"
+  >
+    скинути
+  </button>
+
+  <mat-form-field >
+    <mat-label>пошук ...</mat-label>
+    <input matInput
+           title="nameInput"
+           type="text"
+           #nameInput
+           [(ngModel)]="searchValue"
+    >
+  </mat-form-field>
+
+</div>
+
+
+<router-outlet></router-outlet>
+
+<app-auditorium-section-list
+  *ngIf="sectionService.sections; else loader"
+  (showButton)="setShowButton($event)"
+  [sections] = "sectionService.sections | search : searchValue : searchField"
+></app-auditorium-section-list>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+

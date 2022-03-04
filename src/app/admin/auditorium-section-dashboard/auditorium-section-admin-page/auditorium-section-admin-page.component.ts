@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {SectionService} from "../../services/section.service";
+import {AlertService} from "../../../shared/services/alert.service";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-auditorium-section-admin-page',
@@ -7,9 +11,53 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuditoriumSectionAdminPageComponent implements OnInit {
 
-  constructor() { }
+  showButton = true;
+
+  searchOption = true;
+  searchValue = '';
+  searchField = ['sectionName'];
+
+  // // @ts-ignore
+  // @ViewChild('nameInput') nameInputRef: ElementRef;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public sectionService: SectionService,
+    private alert: AlertService
+  ) {
+  }
 
   ngOnInit(): void {
+    this.sectionService.sections = undefined;
+    this.route.queryParams
+      .pipe(
+        switchMap(
+          (params: Params) => {
+            if (params['showButton']) {
+              this.showButton = params['showButton'];
+            }
+            return this.sectionService.getAllSections();
+          }
+        )
+      )
+      .subscribe(
+        coaches => {
+        },
+        error => {
+          this.alert.danger(error.error.message);
+        }
+      );
+  }
+
+  setShowButton(condition: boolean): void {
+    this.showButton = condition;
+  }
+
+  goToSectionEditor(): void {
+    this.showButton = false;
+    this.router.navigateByUrl(`admin/section/create`);
+    this.searchValue = '';
   }
 
 }

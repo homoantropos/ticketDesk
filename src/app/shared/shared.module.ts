@@ -90,7 +90,8 @@ import { SearchPipe } from './pipes/search.pipe';
         ResetPasswordComponent,
         UserRegisterOrEditComponent,
         UserProfileComponent,
-        SearchPipe
+        SearchPipe,
+        DeletionConfirmerComponent
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'uk'}, {provide: MAT_DATE_LOCALE, useValue: 'uk'},

@@ -1,1 +1,40 @@
-<p>auditorium-section-editor works!</p>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<div *ngIf="sectionForm; else loader">
+
+  <form [formGroup]="sectionForm">
+
+    <small>{{createOrEditLabelName}}</small>
+
+    <mat-form-field class="forms-inputs">
+      <mat-label>назва...</mat-label>
+      <input matInput
+             title="for sectionName"
+             type="text"
+             formControlName="sectionName"
+             #sectionName
+      >
+    </mat-form-field>
+
+    <button mat-button
+            color="primary"
+            type="button"
+            (click)="onSubmit(sectionForm.value)"
+            [disabled]="sectionForm.invalid || submitted"
+    >
+      Зберегти
+    </button>
+
+    <button mat-button
+            color="primary"
+            type="button"
+            (click)="resetCoachForm()"
+    >
+      Скасувати
+    </button>
+
+  </form>
+</div>
+
