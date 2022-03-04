@@ -12,16 +12,7 @@ export class SectionService {
 
   public error$: Subject<string> = new Subject<string>();
 
-  private _sections: Array<AuditoriumSection> | undefined = [];
-
-  get sections(): Array<AuditoriumSection> {
-    // @ts-ignore
-    return this._sections;
-  }
-
-  set sections(sections: Array<AuditoriumSection> | undefined) {
-    this._sections = sections;
-  }
+  sections: Array<AuditoriumSection> = [];
 
   constructor(
     private http: HttpClient
@@ -46,7 +37,7 @@ export class SectionService {
   getAllSections(): Observable<Array<AuditoriumSection>> {
     return this.http.get<Array<AuditoriumSection>>(`${environment.dbUrl}/section`)
       .pipe(
-        map(sections => this._sections = sections.slice())
+        map(sections => this.sections = sections.slice())
       );
   }
 

@@ -1,4 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {AuditoriumSection} from "../../../shared/interfaces";
 import {Router} from "@angular/router";
 import {SectionService} from "../../services/section.service";
@@ -74,6 +82,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
     }
     this.showDeleteConfirmation = false;
   }
+
 
   sortTable(sortOption: any): void {
     this.sortDirection = this.sortService.sortTableByStringValues(sortOption, this.sectionService.sections, this.sortDirection);

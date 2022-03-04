@@ -6,12 +6,11 @@
   Додати
 </button>
 
-
 <div *ngIf="showButton" [ngStyle]="{float: 'right'}">
 
   <button
     mat-button color="primary"
-    (click)="this.searchValue = ''"
+    (click)="resetFiltering()"
   >
     скинути
   </button>
@@ -31,11 +30,12 @@
 
 <router-outlet></router-outlet>
 
-<app-auditorium-section-list
-  *ngIf="sectionService.sections; else loader"
-  (showButton)="setShowButton($event)"
-  [sections] = "sectionService.sections | search : searchValue : searchField"
-></app-auditorium-section-list>
+<ng-container *ngIf="sectionService.sections; else loader">
+  <app-auditorium-section-list
+    (showButton)="setShowButton($event)"
+    [sections] = "sectionService.sections | search : searchValue : searchField"
+  ></app-auditorium-section-list>
+</ng-container>
 
 <ng-template #loader>
   <app-loader></app-loader>

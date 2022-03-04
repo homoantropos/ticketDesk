@@ -29,7 +29,7 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sectionService.sections = undefined;
+    this.sectionService.sections = [];
     this.route.queryParams
       .pipe(
         switchMap(
@@ -60,4 +60,8 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
     this.searchValue = '';
   }
 
+  resetFiltering(): void {
+    this.searchValue = '';
+    this.ngOnInit();
+  }
 }
