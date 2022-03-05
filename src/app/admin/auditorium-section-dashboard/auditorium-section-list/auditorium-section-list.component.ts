@@ -65,7 +65,6 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
         .subscribe(
           (response: {message: string}) => {
             this.alert.success(response.message);
-            this.sections = this.sections.filter(c => c.id !== this.sectionId);
             this.showDeleteConfirmation = false;
             this.showButton.emit(false);
             this.idSectionToRemove.emit(this.sectionId);
