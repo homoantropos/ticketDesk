@@ -118,6 +118,7 @@ export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDe
           this.alert.danger(message)
       );
     }
+    this.newSection.emit(undefined);
   }
 
   resetSectionForm(): void {

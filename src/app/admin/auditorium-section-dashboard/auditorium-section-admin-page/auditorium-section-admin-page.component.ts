@@ -20,7 +20,7 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
     this.sections = [...this.sections];
   }
     // @ts-ignore
-  section: Section;
+  section: AuditoriumSection | undefined;
 
   setSection(section: AuditoriumSection): void {
     this.section = section;
