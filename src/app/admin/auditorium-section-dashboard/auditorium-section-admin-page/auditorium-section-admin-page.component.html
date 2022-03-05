@@ -11,7 +11,7 @@
       [section]="section"
       (hideEditor) = "showSectionEditor($event)"
       (newSection)="setSections($event)"
-      [hidden]="!showEditor"
+      *ngIf="showEditor"
     >
     </app-auditorium-section-editor>
   </ng-container>

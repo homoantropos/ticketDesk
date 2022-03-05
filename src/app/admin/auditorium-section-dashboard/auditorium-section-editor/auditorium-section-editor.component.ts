@@ -3,7 +3,8 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -23,16 +24,14 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDestroy {
 
-  // @ts-ignore
-  @Input() section: Section;
+  @Input() section: AuditoriumSection | undefined = undefined;
   @Output() hideEditor: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() newSection: EventEmitter<AuditoriumSection> = new EventEmitter<AuditoriumSection>();
   // @ts-ignore
   sectionForm: FormGroup;
+
   showSectionForm = false;
   submitted = false;
-  // @ts-ignore
-  sectionId: number;
 
   // @ts-ignore
   cSub: Subscription;
@@ -60,16 +59,23 @@ export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDe
   ) {
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (typeof this.section !== 'undefined') {
       this.setCreatOrEditor(false);
       this.createOrEditLabelName = 'Змінити';
       this.sectionForm = this.createSectionForm(this.section);
+      if (this.sectionForm) {
+        setTimeout(() => this.sectionName.nativeElement.focus(), 0)
+      }
     } else {
       this.sectionForm = this.createSectionForm(this.sectionService.initSection());
       this.createOrEditLabelName = 'Додати';
+      if (this.sectionForm) {
+        setTimeout(() => this.sectionName.nativeElement.focus(), 0)
+      }
     }
   }
 
@@ -89,6 +95,7 @@ export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDe
     if (this.creatorOrEditor) {
       sectionServiceMethod = this.sectionService.createSection(createdSection);
     } else {
+      if(typeof this.section !== 'undefined')
       createdSection['id'] = this.section.id;
       sectionServiceMethod = this.sectionService.updateSection(createdSection);
     }

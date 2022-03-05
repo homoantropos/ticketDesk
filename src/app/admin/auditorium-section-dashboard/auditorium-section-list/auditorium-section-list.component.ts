@@ -80,6 +80,8 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
       this.alert.warning('Видалення скасованою');
     }
     this.showDeleteConfirmation = false;
+    this.showButton.emit(false);
+    this.sectionForEditing.emit(undefined);
   }
 
 
