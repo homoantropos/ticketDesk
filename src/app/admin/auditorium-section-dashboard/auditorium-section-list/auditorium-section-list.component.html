@@ -1,5 +1,5 @@
-<div *ngIf="sectionService.sections.length !== 0; else emptyListMessage">
-
+<div class="scroll">
+  <h3 *ngIf="sections.length === 0"><b>дані відсутні</b></h3>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -33,12 +33,12 @@
         {{section.sectionName}}
       </td>
       <td>
-        <mat-icon *ngIf="section.id" (click)="goToSectionEditor(section.id)">
+        <mat-icon *ngIf="section.id" (click)="goToSectionEditor(section)" class="pointer">
           edit
         </mat-icon>
       </td>
       <td>
-        <mat-icon *ngIf="section.id" (click)="callDeletion(section.id)">
+        <mat-icon *ngIf="section.id" (click)="callDeletion(section.id)" class="pointer">
           delete
         </mat-icon>
       </td>
@@ -66,10 +66,6 @@
     ></pagination-controls>
   </div>
 </div>
-
-<ng-template #emptyListMessage>
-  <h3 class="centerHorizontal"><b>База даних частин глядацького залу порожня</b></h3>
-</ng-template>
 
 <app-deletion-confirmer
   [show]="showDeleteConfirmation"

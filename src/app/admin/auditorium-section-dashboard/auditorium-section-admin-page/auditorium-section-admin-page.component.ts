@@ -1,24 +1,36 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SectionService} from "../../services/section.service";
 import {AlertService} from "../../../shared/services/alert.service";
-import {switchMap} from "rxjs";
+import {AuditoriumSection} from "../../../shared/interfaces";
 
 @Component({
   selector: 'app-auditorium-section-admin-page',
   templateUrl: './auditorium-section-admin-page.component.html',
   styleUrls: ['./auditorium-section-admin-page.component.css']
 })
+
 export class AuditoriumSectionAdminPageComponent implements OnInit {
 
-  showButton = true;
+  sections: Array<AuditoriumSection> = [];
+
+  setSections(section: AuditoriumSection): void {
+    this.sections = this.sections.filter(sctn => sctn.id !== section.id)
+    this.sections.unshift(section);
+    this.sections = [...this.sections];
+  }
+    // @ts-ignore
+  section: Section;
+
+  setSection(section: AuditoriumSection): void {
+    this.section = section;
+  }
+
+  showEditor = false;
 
   searchOption = true;
   searchValue = '';
   searchField = ['sectionName'];
-
-  // // @ts-ignore
-  // @ViewChild('nameInput') nameInputRef: ElementRef;
 
   constructor(
     private router: Router,
@@ -29,39 +41,16 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sectionService.sections = [];
-    this.route.queryParams
-      .pipe(
-        switchMap(
-          (params: Params) => {
-            if (params['showButton']) {
-              this.showButton = params['showButton'];
-            }
-            return this.sectionService.getAllSections();
-          }
-        )
-      )
+    this.sectionService.getAllSections()
       .subscribe(
-        coaches => {
-        },
-        error => {
-          this.alert.danger(error.error.message);
-        }
+        sections => this.sections = sections.slice(),
+        error => this.alert.danger(error.error.message)
       );
   }
 
-  setShowButton(condition: boolean): void {
-    this.showButton = condition;
-  }
-
-  goToSectionEditor(): void {
-    this.showButton = false;
-    this.router.navigateByUrl(`admin/section/create`);
+  showSectionEditor(condition: boolean): void {
+    this.showEditor = condition;
     this.searchValue = '';
   }
 
-  resetFiltering(): void {
-    this.searchValue = '';
-    this.ngOnInit();
-  }
 }

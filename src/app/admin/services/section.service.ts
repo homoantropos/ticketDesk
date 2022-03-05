@@ -12,7 +12,7 @@ export class SectionService {
 
   public error$: Subject<string> = new Subject<string>();
 
-  sections: Array<AuditoriumSection> = [];
+
 
   constructor(
     private http: HttpClient
@@ -35,10 +35,7 @@ export class SectionService {
   }
 
   getAllSections(): Observable<Array<AuditoriumSection>> {
-    return this.http.get<Array<AuditoriumSection>>(`${environment.dbUrl}/section`)
-      .pipe(
-        map(sections => this.sections = sections.slice())
-      );
+    return this.http.get<Array<AuditoriumSection>>(`${environment.dbUrl}/section`);
   }
 
   public errorHandle(error: HttpErrorResponse): any {

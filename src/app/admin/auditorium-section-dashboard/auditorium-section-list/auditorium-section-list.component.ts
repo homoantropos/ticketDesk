@@ -33,6 +33,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
   option = 'секцію глядацького залу';
 
   @Output() showButton: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() sectionForEditing: EventEmitter<AuditoriumSection> = new EventEmitter<AuditoriumSection>();
 
   constructor(
     private router: Router,
@@ -45,19 +46,17 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.sectionService.sections = [...changes['sections'].currentValue];
+    this.sections = [...changes['sections'].currentValue];
   }
 
-  goToSectionEditor(id: number): void {
-    this.showButton.emit(false);
-    this.router.navigateByUrl(`admin/section/edit/${id}`);
+  goToSectionEditor(section: AuditoriumSection): void {
+    this.sectionForEditing.emit(section);
+    this.showButton.emit(true);
   }
 
   callDeletion(id: number): void {
     this.showDeleteConfirmation = true;
     this.sectionId = id;
-    this.router.navigateByUrl(`admin/section`);
-    this.showButton.emit(true);
   }
 
   onDelete(confirm: boolean): void {
@@ -66,7 +65,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
         .subscribe(
           (response: {message: string}) => {
             this.alert.success(response.message);
-            this.sectionService.sections = this.sectionService.sections.filter(c => c.id !== this.sectionId);
+            this.sections = this.sections.filter(c => c.id !== this.sectionId);
           },
           error => {
             this.sectionService.errorHandle(error);
@@ -85,7 +84,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
 
 
   sortTable(sortOption: any): void {
-    this.sortDirection = this.sortService.sortTableByStringValues(sortOption, this.sectionService.sections, this.sortDirection);
+    this.sortDirection = this.sortService.sortTableByStringValues(sortOption, this.sections, this.sortDirection);
   }
 
 }

@@ -20,8 +20,8 @@ const routes: Routes = [
         ]},
       {path: 'section', children: [
           {path: '', component: AuditoriumSectionAdminPageComponent},
-          {path: 'create', component: AuditoriumSectionEditorComponent},
-          {path: 'edit/:id', component: AuditoriumSectionEditorComponent}
+          {path: 'create', component: AuditoriumSectionAdminPageComponent},
+          {path: 'edit/:id', component: AuditoriumSectionAdminPageComponent}
         ]}
     ] },
 ];

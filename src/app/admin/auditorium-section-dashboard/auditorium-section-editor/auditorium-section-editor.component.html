@@ -6,34 +6,31 @@
 
   <form [formGroup]="sectionForm">
 
-    <small>{{createOrEditLabelName}}</small>
+    <small class="centerHorizontal"><b>{{createOrEditLabelName}}</b></small>
 
-    <mat-form-field class="forms-inputs">
-      <mat-label>назва...</mat-label>
-      <input matInput
-             title="for sectionName"
-             type="text"
-             formControlName="sectionName"
-             #sectionName
-      >
-    </mat-form-field>
+    <div class="centerHorizontal">
+      <mat-form-field>
+        <mat-label>назва...</mat-label>
+        <input matInput
+               title="for sectionName"
+               type="text"
+               formControlName="sectionName"
+               #sectionName
+        >
+      </mat-form-field>
 
-    <button mat-button
-            color="primary"
-            type="button"
-            (click)="onSubmit(sectionForm.value)"
-            [disabled]="sectionForm.invalid || submitted"
-    >
-      Зберегти
-    </button>
+      <div class="centerHorizontal">
+        <mat-icon (click)="resetSectionForm()">
+          cancel
+        </mat-icon>
 
-    <button mat-button
-            color="primary"
-            type="button"
-            (click)="resetCoachForm()"
-    >
-      Скасувати
-    </button>
+        <mat-icon (click)="onSubmit(sectionForm.value)" [hidden]="sectionForm.invalid || submitted">
+          save
+        </mat-icon>
+      </div>
+
+
+    </div>
 
   </form>
 </div>

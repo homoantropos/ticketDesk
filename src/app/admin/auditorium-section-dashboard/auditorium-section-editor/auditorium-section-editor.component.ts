@@ -1,7 +1,16 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges, OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {SectionService} from "../../services/section.service";
-import {switchMap} from "rxjs";
 import {AlertService} from "../../../shared/services/alert.service";
 import {AuditoriumSection} from "../../../shared/interfaces";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -11,8 +20,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   templateUrl: './auditorium-section-editor.component.html',
   styleUrls: ['./auditorium-section-editor.component.css']
 })
-export class AuditoriumSectionEditorComponent implements OnInit {
 
+export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDestroy {
+
+  // @ts-ignore
+  @Input() section: Section;
+  @Output() hideEditor: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() newSection: EventEmitter<AuditoriumSection> = new EventEmitter<AuditoriumSection>();
   // @ts-ignore
   sectionForm: FormGroup;
   showSectionForm = false;
@@ -35,14 +49,8 @@ export class AuditoriumSectionEditorComponent implements OnInit {
     return this.creatOrEditor;
   }
 
-  @ViewChild('sectionName')
-  set name(name: ElementRef<HTMLInputElement>) {
-    if (name) {
-      setTimeout(() => {
-        name.nativeElement.focus();
-      });
-    }
-  }
+  // @ts-ignore
+  @ViewChild('sectionName') sectionName: ElementRef<HTMLInputElement>;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,25 +60,13 @@ export class AuditoriumSectionEditorComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    if (this.route.toString().includes('edit')) {
+  ngOnInit(): void { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (typeof this.section !== 'undefined') {
       this.setCreatOrEditor(false);
       this.createOrEditLabelName = 'Змінити';
-      this.route.params
-        .pipe(
-          switchMap(
-            (params: Params) => {
-              this.sectionId = params['id'];
-              return this.sectionService.getSectionByID(params['id']);
-            }
-          )
-        )
-        .subscribe(
-          section => {
-            this.sectionForm = this.createSectionForm(section);
-          },
-          error => this.alert.danger(error.message)
-        );
+      this.sectionForm = this.createSectionForm(this.section);
     } else {
       this.sectionForm = this.createSectionForm(this.sectionService.initSection());
       this.createOrEditLabelName = 'Додати';
@@ -93,16 +89,16 @@ export class AuditoriumSectionEditorComponent implements OnInit {
     if (this.creatorOrEditor) {
       sectionServiceMethod = this.sectionService.createSection(createdSection);
     } else {
-      createdSection['id'] = this.sectionId;
+      createdSection['id'] = this.section.id;
       sectionServiceMethod = this.sectionService.updateSection(createdSection);
     }
     this.cSub = sectionServiceMethod
       .subscribe(
-        dbCoachAndMessage => {
-          this.sectionService.sections = this.sectionService.sections.filter(c => c.id !== dbCoachAndMessage.section.id);
-          this.sectionService.sections.push(dbCoachAndMessage.section);
-          this.alert.success(dbCoachAndMessage.message);
-          this.resetCoachForm();
+        dbSelectAndMessage => {
+          this.alert.success(dbSelectAndMessage.message);
+          this.hideEditor.emit(false);
+          this.newSection.emit(dbSelectAndMessage.section);
+          this.resetSectionForm();
         }, error => {
           this.sectionService.errorHandle(error);
           this.sectionForm.enable();
@@ -117,18 +113,15 @@ export class AuditoriumSectionEditorComponent implements OnInit {
     }
   }
 
-  resetCoachForm(): void {
-    this.router.navigate(['admin', 'section'], {
-      queryParams: {
-        showButton: false
-      }
-    });
+  resetSectionForm(): void {
+    this.hideEditor.emit(false);
     this.sectionForm.reset();
     this.sectionForm.enable();
     this.submitted = false;
     this.showSectionForm = false;
     this.createOrEditLabelName = 'Додати';
     this.setCreatOrEditor(true);
+    this.section = undefined;
   }
 
   ngOnDestroy(): void {

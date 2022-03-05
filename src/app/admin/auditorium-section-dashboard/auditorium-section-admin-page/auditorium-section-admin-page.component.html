@@ -1,12 +1,45 @@
-<div *ngIf="showButton" class="col-sm-2 m-a-1">
+<div class="col-sm-2 m-t-1">
 
-  <button
-    mat-button color="primary"
-    (click)="goToSectionEditor()"
-  >
-    Додати
-  </button>
+  <mat-icon title="додати частину глядацького залу"
+    class="centerHorizontal pointer"
+    [hidden]="showEditor"
+    (click)="showSectionEditor(true)"
+  >add</mat-icon>
 
+  <ng-container>
+    <app-auditorium-section-editor
+      [section]="section"
+      (hideEditor) = "showSectionEditor($event)"
+      (newSection)="setSections($event)"
+      [hidden]="!showEditor"
+    >
+    </app-auditorium-section-editor>
+  </ng-container>
+
+</div>
+
+
+<div class="col-sm-8 m-t-1">
+
+  <ng-container *ngIf="sections; else loader">
+    <ng-container *ngIf="sections.length > 0; else emptyListMessage">
+      <app-auditorium-section-list
+        (showButton)="showSectionEditor($event)"
+        (sectionForEditing)="setSection($event)"
+        [sections]="sections | search : searchValue : searchField"
+      ></app-auditorium-section-list>
+    </ng-container>
+    <ng-template #emptyListMessage>
+      <h3 class="centerHorizontal"><b>Дані відсутні</b></h3>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+</div>
+
+<div class="col-sm-2 m-t-1 p-r-1">
   <mat-form-field>
     <mat-label>пошук ...</mat-label>
     <input matInput
@@ -21,27 +54,10 @@
   <button
     *ngIf="nameInput.value.trim().length > 0"
     mat-button color="primary"
-    (click)="resetFiltering()"
+    (click)="searchValue = ''"
   >
     скинути
   </button>
-
 </div>
-
-<router-outlet></router-outlet>
-
-<div
-  *ngIf="sectionService.sections; else loader"
-  class="col-sm-8 centerHorizontal m-a-0"
->
-  <app-auditorium-section-list
-    (showButton)="setShowButton($event)"
-    [sections]="sectionService.sections | search : searchValue : searchField"
-  ></app-auditorium-section-list>
-</div>
-
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>
 
 

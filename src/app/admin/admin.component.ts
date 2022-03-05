@@ -18,8 +18,7 @@ export class AdminComponent implements OnInit {
     private alert: AlertService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   goToMainPage(): void {
     this.router.navigate(['main']);
