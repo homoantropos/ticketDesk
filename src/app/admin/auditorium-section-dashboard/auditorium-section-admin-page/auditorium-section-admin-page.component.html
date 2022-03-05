@@ -1,21 +1,13 @@
-<button mat-button color="primary"
-        [ngStyle]="{marginTop:'10px'}"
-        type="button"
-        (click)="goToSectionEditor()"
-        *ngIf="showButton">
-  Додати
-</button>
-
-<div *ngIf="showButton" [ngStyle]="{float: 'right'}">
+<div *ngIf="showButton" class="col-sm-2 m-a-1">
 
   <button
     mat-button color="primary"
-    (click)="resetFiltering()"
+    (click)="goToSectionEditor()"
   >
-    скинути
+    Додати
   </button>
 
-  <mat-form-field >
+  <mat-form-field>
     <mat-label>пошук ...</mat-label>
     <input matInput
            title="nameInput"
@@ -25,17 +17,28 @@
     >
   </mat-form-field>
 
-</div>
 
+  <button
+    *ngIf="nameInput.value.trim().length > 0"
+    mat-button color="primary"
+    (click)="resetFiltering()"
+  >
+    скинути
+  </button>
+
+</div>
 
 <router-outlet></router-outlet>
 
-<ng-container *ngIf="sectionService.sections; else loader">
+<div
+  *ngIf="sectionService.sections; else loader"
+  class="col-sm-8 centerHorizontal m-a-0"
+>
   <app-auditorium-section-list
     (showButton)="setShowButton($event)"
-    [sections] = "sectionService.sections | search : searchValue : searchField"
+    [sections]="sectionService.sections | search : searchValue : searchField"
   ></app-auditorium-section-list>
-</ng-container>
+</div>
 
 <ng-template #loader>
   <app-loader></app-loader>
