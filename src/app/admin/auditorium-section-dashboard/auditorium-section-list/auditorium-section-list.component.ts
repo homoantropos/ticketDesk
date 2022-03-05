@@ -33,7 +33,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
   option = 'секцію глядацького залу';
 
   @Output() showButton: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() sectionForEditing: EventEmitter<AuditoriumSection> = new EventEmitter<AuditoriumSection>();
+  @Output() idSectionToRemove: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
     private router: Router,
@@ -50,7 +50,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
   }
 
   goToSectionEditor(section: AuditoriumSection): void {
-    this.sectionForEditing.emit(section);
+    this.sectionService.section = section;
     this.showButton.emit(true);
   }
 
@@ -66,6 +66,10 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
           (response: {message: string}) => {
             this.alert.success(response.message);
             this.sections = this.sections.filter(c => c.id !== this.sectionId);
+            this.showDeleteConfirmation = false;
+            this.showButton.emit(false);
+            this.idSectionToRemove.emit(this.sectionId);
+            this.sectionService.section = undefined;
           },
           error => {
             this.sectionService.errorHandle(error);
@@ -79,11 +83,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
     } else {
       this.alert.warning('Видалення скасованою');
     }
-    this.showDeleteConfirmation = false;
-    this.showButton.emit(false);
-    this.sectionForEditing.emit(undefined);
   }
-
 
   sortTable(sortOption: any): void {
     this.sortDirection = this.sortService.sortTableByStringValues(sortOption, this.sections, this.sortDirection);

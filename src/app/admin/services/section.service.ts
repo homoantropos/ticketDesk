@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuditoriumSection} from "../../shared/interfaces";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {map, Observable, Subject, throwError} from "rxjs";
+import {Observable, Subject, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -12,7 +12,7 @@ export class SectionService {
 
   public error$: Subject<string> = new Subject<string>();
 
-
+  section: AuditoriumSection | undefined = undefined;
 
   constructor(
     private http: HttpClient

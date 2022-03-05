@@ -25,7 +25,7 @@
     <ng-container *ngIf="sections.length > 0; else emptyListMessage">
       <app-auditorium-section-list
         (showButton)="showSectionEditor($event)"
-        (sectionForEditing)="setSection($event)"
+        (idSectionToRemove)="removeSection($event)"
         [sections]="sections | search : searchValue : searchField"
       ></app-auditorium-section-list>
     </ng-container>

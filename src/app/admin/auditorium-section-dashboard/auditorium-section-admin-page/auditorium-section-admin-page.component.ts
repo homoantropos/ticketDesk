@@ -15,15 +15,17 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
   sections: Array<AuditoriumSection> = [];
 
   setSections(section: AuditoriumSection): void {
-    this.sections = this.sections.filter(sctn => sctn.id !== section.id)
-    this.sections.unshift(section);
-    this.sections = [...this.sections];
+    if(typeof section !== 'undefined') {
+      this.sections = this.sections.filter(sctn => sctn.id !== section.id)
+      this.sections.unshift(section);
+      this.sections = [...this.sections];
+    }
   }
-    // @ts-ignore
-  section: AuditoriumSection | undefined;
 
-  setSection(section: AuditoriumSection): void {
-    this.section = section;
+  section: AuditoriumSection | undefined = undefined;
+
+  removeSection(id: number): void {
+    this.sections = this.sections.filter(sctn => sctn.id !== id);
   }
 
   showEditor = false;
@@ -50,6 +52,7 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
 
   showSectionEditor(condition: boolean): void {
     this.showEditor = condition;
+    this.section = this.sectionService.section;
     this.searchValue = '';
   }
 

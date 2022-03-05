@@ -118,7 +118,7 @@ export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDe
           this.alert.danger(message)
       );
     }
-    this.newSection.emit(undefined);
+    this.sectionService.section = undefined;
   }
 
   resetSectionForm(): void {
@@ -130,12 +130,18 @@ export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDe
     this.createOrEditLabelName = 'Додати';
     this.setCreatOrEditor(true);
     this.section = undefined;
+    this.newSection.emit(this.section);
   }
 
   ngOnDestroy(): void {
     if (this.cSub) {
       this.cSub.unsubscribe();
     }
+    console.log('working');
+    this.resetSectionForm();
+    this.section = undefined;
+    this.sectionService.section = undefined
+    this.newSection.emit(this.section);
   }
 
 }
