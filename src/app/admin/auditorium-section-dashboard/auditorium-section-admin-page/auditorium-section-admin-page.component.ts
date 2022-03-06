@@ -16,16 +16,21 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
 
   setSections(section: AuditoriumSection): void {
     if(typeof section !== 'undefined') {
-      this.sections = this.sections.filter(sctn => sctn.id !== section.id)
+      this.removeSection(section.id);
       this.sections.unshift(section);
-      this.sections = [...this.sections];
+      this.removeSection(undefined);
+    } else {
+      this.removeSection(undefined);
     }
   }
 
   section: AuditoriumSection | undefined = undefined;
 
-  removeSection(id: number): void {
-    this.sections = this.sections.filter(sctn => sctn.id !== id);
+  removeSection(id: number | undefined): void {
+    if(typeof id !== 'undefined') {
+      this.sections = this.sections.filter(sctn => sctn.id !== id);
+    }
+    this.sections = [...this.sections];
   }
 
   showEditor = false;
