@@ -31,8 +31,8 @@ export interface Theatre {
 }
 
 export interface Seat {
-  row: number,
-  seatNumber: number,
+  row?: number,
+  seatNumber?: number,
   auditoriumSection: AuditoriumSection,
   id?: number
 }

@@ -12,6 +12,9 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { AuditoriumSectionAdminPageComponent } from './auditorium-section-dashboard/auditorium-section-admin-page/auditorium-section-admin-page.component';
 import { AuditoriumSectionListComponent } from './auditorium-section-dashboard/auditorium-section-list/auditorium-section-list.component';
 import { AuditoriumSectionEditorComponent } from './auditorium-section-dashboard/auditorium-section-editor/auditorium-section-editor.component';
+import { SeatsListComponent } from './seats-dashboard/seats-list/seats-list.component';
+import { SeatsAdminPageComponent } from './seats-dashboard/seats-admin-page/seats-admin-page.component';
+import { SeatsEditorComponent } from './seats-dashboard/seats-editor/seats-editor.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { AuditoriumSectionEditorComponent } from './auditorium-section-dashboard
     UserListComponent,
     AuditoriumSectionAdminPageComponent,
     AuditoriumSectionListComponent,
-    AuditoriumSectionEditorComponent
+    AuditoriumSectionEditorComponent,
+    SeatsListComponent,
+    SeatsAdminPageComponent,
+    SeatsEditorComponent
   ],
   imports: [
     CommonModule,
