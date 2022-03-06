@@ -48,8 +48,8 @@ export class SectionService {
         case('EMAIL_NOT_FOUND'):
           this.error$.next('емейл не знайдено');
           break;
-        case('повторювані значення ключа порушують обмеження унікальності \\"result_discipline_participantId_key\\'):
-          this.error$.next('Такий учасник вже зареєстрований в цій вагові категорії');
+        case('повторювані значення ключа порушують обмеження унікальності \"auditoriumSection_sectionName_key5\"'):
+          this.error$.next('Така частина глядацького залу вже існує в базі даних');
           break;
       }
     }

@@ -33,6 +33,9 @@ div .paginatorSelect small {
   margin-top: 0;
 }
 
+h1, h2, h3, h4, h5 {
+  text-align: center;
+}
 .my-pagination {
   z-index: 1;
   font-family: "Oswald", "Roboto Condensed", sans-serif;
@@ -56,9 +59,13 @@ div .paginatorSelect small {
 }
 
 .centerHorizontal {
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translate(-50%);
+}
+
+.centerDiv {
+  position: center;
 }
 
 .formContainer {
@@ -95,7 +102,11 @@ div .paginatorSelect small {
 }
 
 .scroll {
-  overflow: scroll;
+  overflow: auto;
+}
+
+.z-index-n1 {
+  z-index: -1;
 }
 
 @media (max-width: 510px) {

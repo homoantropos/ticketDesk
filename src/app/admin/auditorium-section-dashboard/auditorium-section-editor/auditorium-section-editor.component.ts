@@ -137,11 +137,10 @@ export class AuditoriumSectionEditorComponent implements OnInit, OnChanges, OnDe
     if (this.cSub) {
       this.cSub.unsubscribe();
     }
-    console.log('working');
-    this.resetSectionForm();
-    this.section = undefined;
-    this.sectionService.section = undefined
-    this.newSection.emit(this.section);
+    // this.resetSectionForm();
+    // this.section = undefined;
+    // this.sectionService.section = undefined
+    // this.newSection.emit(this.section);
   }
 
 }
