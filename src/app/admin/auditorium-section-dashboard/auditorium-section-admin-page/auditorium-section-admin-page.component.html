@@ -21,7 +21,7 @@
 
 <div class="col-sm-8 m-t-1">
 
-  <ng-container *ngIf="sections; else loader">
+  <ng-container *ngIf="!loading; else loader">
     <ng-container *ngIf="sections.length > 0; else emptyListMessage">
       <app-auditorium-section-list
         (showButton)="showSectionEditor($event)"

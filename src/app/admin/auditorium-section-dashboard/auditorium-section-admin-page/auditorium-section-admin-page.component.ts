@@ -33,6 +33,7 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
     this.sections = [...this.sections];
   }
 
+  loading = false;
   showEditor = false;
 
   searchOption = true;
@@ -48,10 +49,17 @@ export class AuditoriumSectionAdminPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.sectionService.getAllSections()
       .subscribe(
-        sections => this.sections = sections.slice(),
-        error => this.alert.danger(error.error.message)
+        sections => {
+          this.sections = sections.slice();
+          this.loading = false;
+        },
+        error => {
+          this.alert.danger(error.error.message);
+          this.loading = false;
+        }
       );
   }
 

@@ -72,6 +72,7 @@ export class AuditoriumSectionListComponent implements OnInit, OnChanges {
         );
       }
     } else {
+      this.showDeleteConfirmation = false;
       this.alert.warning('Видалення скасованою');
     }
   }
