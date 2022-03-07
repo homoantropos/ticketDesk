@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SeatService} from "../../services/seat.service";
 import {AlertService} from "../../../shared/services/alert.service";
 import {Seat} from "../../../shared/interfaces";
@@ -10,7 +10,7 @@ import {FilterRequest, FilterRequestInitValue} from "../../../shared/config/type
   templateUrl: './seats-admin-page.component.html',
   styleUrls: ['./seats-admin-page.component.css']
 })
-export class SeatsAdminPageComponent implements OnInit {
+export class SeatsAdminPageComponent implements OnInit, OnDestroy {
 
   seats: Array<Seat> = [];
 
@@ -79,20 +79,24 @@ export class SeatsAdminPageComponent implements OnInit {
     this.loading = true;
     this.seatService.getAllSeats(fr)
       .subscribe(
-      seats => {
-        this.seats = seats.slice();
-        this.loading = false;
-      },
-      error => {
-        this.alert.danger(error.error.message);
-        this.loading = false;
-      }
-    )
+        seats => {
+          this.seats = seats.slice();
+          this.loading = false;
+        },
+        error => {
+          this.alert.danger(error.error.message);
+          this.loading = false;
+        }
+      )
   }
 
   showSectionEditor(condition: boolean): void {
     this.showEditor = condition;
     this.seat = this.seatService.seat;
     this.searchValue = '';
+  }
+
+  ngOnDestroy() {
+    this.friv.resetInit();
   }
 }

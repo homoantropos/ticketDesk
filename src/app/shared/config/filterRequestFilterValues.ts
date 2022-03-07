@@ -107,4 +107,27 @@ export class FilterRequestInitValues {
     this.addValueOptions('row', rows);
     this.addValueOptions('seatNumber', seatNumbers);
   }
+
+  resetInit(): void {
+    this.init = {
+      sectionName: {
+        initValue: '',
+        valueOptions: [
+          {value: '', option: 'всі разом'}
+        ]
+      },
+      row: {
+        initValue: '',
+        valueOptions: [
+          {value: '', option: 'всі ряди'}
+        ]
+      },
+      seatNumber: {
+        initValue: '',
+        valueOptions: [
+          {value: '', option: 'всі місця'}
+        ]
+      }
+    };
+  }
 }
