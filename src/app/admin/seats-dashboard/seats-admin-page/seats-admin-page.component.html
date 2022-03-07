@@ -1,1 +1,69 @@
-<p>seats-admin-page works!</p>
+<div class="col-sm-2 m-a-0 p-a-1 centerDiv">
+
+  <mat-icon title="додати частину глядацького залу"
+            class="centerHorizontal pointer"
+            [hidden]="showEditor"
+            (click)="showSectionEditor(true)"
+  >add
+  </mat-icon>
+
+  <ng-container>
+    <!--    <app-auditorium-section-editor-->
+    <!--      [seats]="seats"-->
+    <!--      (hideEditor)="showSectionEditor($event)"-->
+    <!--      (newSection)="setSeats($event)"-->
+    <!--      *ngIf="showEditor"-->
+    <!--    >-->
+    <!--    </app-auditorium-section-editor>-->
+  </ng-container>
+
+  <div class="centerHorizontal">
+    <mat-form-field>
+      <mat-label>пошук ...</mat-label>
+      <input matInput
+             title="nameInput"
+             type="text"
+             #nameInput
+             [(ngModel)]="searchValue"
+      >
+    </mat-form-field>
+
+    <button
+      *ngIf="nameInput.value.trim().length > 0"
+      mat-button color="primary"
+      (click)="searchValue = ''"
+    >
+      скинути
+    </button>
+  </div>
+
+</div>
+
+
+<div class="col-sm-8 m-a-0 p-a-1 centerDiv">
+
+  <ng-container *ngIf="!loading; else loader">
+    <ng-container *ngIf="seats.length > 0; else emptyListMessage">
+      <app-seats-list
+        (showButton)="showSectionEditor($event)"
+        (idSeatToRemove)="removeSeats($event)"
+        [seats]="seats | search : searchValue : searchField"
+      ></app-seats-list>
+    </ng-container>
+    <ng-template #emptyListMessage>
+      <h3 class="centerHorizontal"><b>Дані відсутні</b></h3>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+</div>
+
+<div class="col-sm-2 m-a-0 p-r-1">
+  <app-request-spring
+    (filterRequest)="filterSeats($event)"
+    [filterRequestInitValue]="friv.getInitValue(initFilterValues)"
+  >
+  </app-request-spring>
+</div>

@@ -1,0 +1,19 @@
+<div *ngIf="filterRequestForm; else loader">
+  <form [formGroup]="filterRequestForm">
+    <mat-form-field *ngFor="let formControlName of formControlNames">
+      <mat-select formControlName="{{formControlName}}">
+        <mat-option
+          *ngFor="let value of selectOptions[formControlName]"
+          value="{{value.value}}"
+          (click)="fetchRequest(filterRequestForm.value)"
+        >{{value.option}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+

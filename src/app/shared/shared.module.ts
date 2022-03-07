@@ -30,6 +30,7 @@ import { DeletionConfirmerComponent } from './components/deletion-confirmer/dele
 import {RouterModule} from "@angular/router";
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SearchPipe } from './pipes/search.pipe';
+import { RequestSpringComponent } from './components/request-spring/request-spring.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SearchPipe } from './pipes/search.pipe';
     UserProfileComponent,
     DeletionConfirmerComponent,
     ResetPasswordComponent,
-    SearchPipe
+    SearchPipe,
+    RequestSpringComponent
   ],
     imports: [
         CommonModule,
@@ -65,34 +67,35 @@ import { SearchPipe } from './pipes/search.pipe';
         MatIconModule,
         RouterModule
     ],
-    exports: [
-        AlertComponent,
-        FormsModule,
-        LoaderComponent,
-        LoginComponent,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatDatepickerModule,
-        MatMomentDateModule,
-        MatSelectModule,
-        MatProgressSpinnerModule,
-        MatAutocompleteModule,
-        MatNativeDateModule,
-        MatRadioModule,
-        HttpClientModule,
-        MatIconModule,
-        PageNotFoundComponent,
-        ReactiveFormsModule,
-        ResetPasswordComponent,
-        UserRegisterOrEditComponent,
-        UserProfileComponent,
-        SearchPipe,
-        DeletionConfirmerComponent
-    ],
+  exports: [
+    AlertComponent,
+    FormsModule,
+    LoaderComponent,
+    LoginComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    HttpClientModule,
+    MatIconModule,
+    PageNotFoundComponent,
+    ReactiveFormsModule,
+    ResetPasswordComponent,
+    UserRegisterOrEditComponent,
+    UserProfileComponent,
+    SearchPipe,
+    DeletionConfirmerComponent,
+    RequestSpringComponent
+  ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'uk'}, {provide: MAT_DATE_LOCALE, useValue: 'uk'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

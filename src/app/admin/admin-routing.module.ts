@@ -11,6 +11,7 @@ import {
 import {
   AuditoriumSectionEditorComponent
 } from "./auditorium-section-dashboard/auditorium-section-editor/auditorium-section-editor.component";
+import {SeatsAdminPageComponent} from "./seats-dashboard/seats-admin-page/seats-admin-page.component";
 
 const routes: Routes = [
   { path: '', canActivate: [AdminLayoutGuard, AuthGuard], component: AdminComponent, children: [
@@ -22,6 +23,9 @@ const routes: Routes = [
           {path: '', component: AuditoriumSectionAdminPageComponent},
           {path: 'create', component: AuditoriumSectionAdminPageComponent},
           {path: 'edit/:id', component: AuditoriumSectionAdminPageComponent}
+        ]},
+      {path: 'seat', children: [
+          {path: '', component: SeatsAdminPageComponent}
         ]}
     ] },
 ];

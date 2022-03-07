@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth/auth.service";
+import {FilterRequestInitValues} from "../../shared/config/filterRequestFilterValues";
 
 @Component({
   selector: 'app-main',
@@ -10,12 +11,13 @@ import {AuthService} from "../../shared/services/auth/auth.service";
 
 export class MainComponent implements OnInit {
 
+
   constructor(
     private router: Router,
     public auth: AuthService
   ) { }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { }
 
   goToRegisterForm(): void {
     this.router.navigateByUrl('/main/register');

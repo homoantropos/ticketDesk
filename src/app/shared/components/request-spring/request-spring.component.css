@@ -1,0 +1,67 @@
+.centerVertical {
+  position: absolute;;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centerHorizontal {
+  position: absolute;;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.toll {
+  height: 40px;
+}
+
+.main_container {
+  width: 80%;
+  height: 80vh;
+  position: absolute;;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: solid grey 1px;
+}
+
+.dark {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.medium {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.light {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.scroll {
+  overflow: auto;
+}
+
+.heightEmbedded {
+  height: 95%;
+}
+
+button {
+  border: none;
+  border-radius: 0;
+}
+
+.wide {
+  width: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5 {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
