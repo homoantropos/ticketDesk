@@ -18,6 +18,16 @@ export class FilterRequestInitValues {
     return ini;
   }
 
+  addValueOptions(key: string, values: Array<string>): FilterRequestInitValue {
+    const ini = this.getIni();
+    values.map(
+      value => {
+        ini[key].valueOptions.push({value, option: value})
+      }
+    )
+    return ini
+  }
+
   getInitValue(values?: Array<string>): FilterRequestInitValue {
     const ini = this.addYear();
     if (values && values.length > 0) {
@@ -51,31 +61,27 @@ export class FilterRequestInitValues {
   }
 
   getIni(): FilterRequestInitValue {
-    return {
-      sectionName: {
-        initValue: '',
-        valueOptions: [
-          {value: 'партер', option: 'партер'},
-          {value: 'дансінг', option: 'дансінг'},
-          {value: '', option: 'всі разом'}
-        ]
-      },
-      row: {
-        initValue: '',
-        valueOptions: [
-          {value: '1', option: '1'},
-          {value: '2', option: '2'},
-          {value: '', option: 'всі ряди'}
-        ]
-      },
-      seatNumber: {
-        initValue: '',
-        valueOptions: [
-          {value: '1', option: '1'},
-          {value: '2', option: '2'},
-          {value: '', option: 'всі місця'}
-        ]
-      }
-    };
+    return this.init;
   }
+
+  init: FilterRequestInitValue = {
+    sectionName: {
+      initValue: '',
+      valueOptions: [
+        {value: '', option: 'всі разом'}
+      ]
+    },
+    row: {
+      initValue: '',
+      valueOptions: [
+        {value: '', option: 'всі ряди'}
+      ]
+    },
+    seatNumber: {
+      initValue: '',
+      valueOptions: [
+        {value: '', option: 'всі місця'}
+      ]
+    }
+  };
 }

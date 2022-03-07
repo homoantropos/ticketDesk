@@ -38,6 +38,9 @@ export class SectionService {
     return this.http.get<Array<AuditoriumSection>>(`${environment.dbUrl}/section`);
   }
 
+  getSectionNames(): Observable<Array<string>> {
+    return this.http.get<Array<string>>(`${environment.dbUrl}/section/sectionNames`)
+  }
   public errorHandle(error: HttpErrorResponse): any {
     const message = error.error.message;
     if (message) {
