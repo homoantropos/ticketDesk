@@ -1,5 +1,6 @@
 import {FilterRequestInitValue} from './typesForFiltering';
 import {Injectable} from '@angular/core';
+import {Seat} from "../interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -84,4 +85,26 @@ export class FilterRequestInitValues {
       ]
     }
   };
+
+  setSelectsForSeatAdmin(seats: Array<Seat>): void {
+    const sectionNames: Array<string> = [];
+    const rows: Array<string> = [];
+    const seatNumbers: Array<string> = [];
+    Object.keys(seats).map(
+      key => {
+        if(!sectionNames.includes(seats[key].auditoriumSection.sectionName)) {
+          sectionNames.push(seats[key].auditoriumSection.sectionName);
+        }
+        if(!rows.includes(seats[key].row)) {
+          rows.push(seats[key].row)
+        }
+        if(!seatNumbers.includes(seats[key].seatNumber)) {
+          seatNumbers.push(seats[key].seatNumber)
+        }
+      }
+    )
+    this.addValueOptions('sectionName', sectionNames);
+    this.addValueOptions('row', rows);
+    this.addValueOptions('seatNumber', seatNumbers);
+  }
 }

@@ -65,27 +65,7 @@ export class SeatsAdminPageComponent implements OnInit {
       .subscribe(
         seats => {
           this.seats = seats.slice();
-          const sectionNames: Array<string> = [];
-          const rows: Array<string> = [];
-          const seatNumbers: Array<string> = [];
-          Object.keys(seats).map(
-            key => {
-              console.log(seats[key].auditoriumSection.sectionName);
-              if(!sectionNames.includes(seats[key].auditoriumSection.sectionName)) {
-                sectionNames.push(seats[key].auditoriumSection.sectionName);
-                console.log(seats[key].auditoriumSection.sectionName);
-              }
-              if(!rows.includes(seats[key].row)) {
-                rows.push(seats[key].row)
-              }
-              if(!seatNumbers.includes(seats[key].seatNumber)) {
-                seatNumbers.push(seats[key].seatNumber)
-              }
-            }
-          )
-          this.frInit = this.friv.addValueOptions('sectionName', sectionNames);
-          this.frInit = this.friv.addValueOptions('row', rows);
-          this.frInit = this.friv.addValueOptions('seatNumber', seatNumbers);
+          this.friv.setSelectsForSeatAdmin(this.seats);
           this.loading = false;
         },
         error => {
