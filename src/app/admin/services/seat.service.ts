@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, Subject, throwError} from "rxjs";
 import {Seat} from "../../shared/interfaces";
 import {environment} from "../../../environments/environment";
-import {FilterRequest} from "../../shared/config/typesForFiltering";
+import {FilterRequest} from "../../shared/services/filterRequestFilterValuesService";
 
 @Injectable({
   providedIn: 'root'

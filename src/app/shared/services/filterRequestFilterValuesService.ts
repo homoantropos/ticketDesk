@@ -1,4 +1,3 @@
-import {FilterRequestInitValue} from './typesForFiltering';
 import {Injectable} from '@angular/core';
 import {Seat} from "../interfaces";
 
@@ -6,7 +5,7 @@ import {Seat} from "../interfaces";
   providedIn: 'root'
 })
 
-export class FilterRequestInitValues {
+export class FilterRequestInitValuesService {
 
   setInitValue(addedValue: FilterRequestInitValue): FilterRequestInitValue {
     const ini = this.getIni();
@@ -131,3 +130,22 @@ export class FilterRequestInitValues {
     };
   }
 }
+
+export type FilterRequestInitValue = {
+  [key: string]: {
+    initValue: string,
+    valueOptions: Array<{
+      value: string, option: string
+    }>
+  }
+};
+
+export type SelectInitOptions = Array<{
+  [key: string]: {
+    valueOptions: Array<{
+      value: any, option: string
+    }>
+  }
+}>;
+
+export type FilterRequest = { [key: string]: string };

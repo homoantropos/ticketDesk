@@ -5,7 +5,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import {FilterRequest, FilterRequestInitValue, SelectInitOptions} from "../../config/typesForFiltering";
+import {FilterRequest, FilterRequestInitValue, SelectInitOptions} from "../../services/filterRequestFilterValuesService";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({

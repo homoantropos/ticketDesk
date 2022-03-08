@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SeatService} from "../../services/seat.service";
 import {AlertService} from "../../../shared/services/alert.service";
 import {Seat} from "../../../shared/interfaces";
-import {FilterRequestInitValues} from "../../../shared/config/filterRequestFilterValues";
-import {FilterRequest, FilterRequestInitValue} from "../../../shared/config/typesForFiltering";
+import {FilterRequestInitValuesService} from "../../../shared/services/filterRequestFilterValuesService";
+import {FilterRequest, FilterRequestInitValue} from "../../../shared/services/filterRequestFilterValuesService";
 
 @Component({
   selector: 'app-seats-admin-page',
@@ -55,7 +55,7 @@ export class SeatsAdminPageComponent implements OnInit, OnDestroy {
   constructor(
     private seatService: SeatService,
     private alert: AlertService,
-    public friv: FilterRequestInitValues
+    public friv: FilterRequestInitValuesService
   ) {
   }
 
