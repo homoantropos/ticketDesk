@@ -41,6 +41,7 @@ export class SectionService {
   getSectionNames(): Observable<Array<string>> {
     return this.http.get<Array<string>>(`${environment.dbUrl}/section/sectionNames`)
   }
+
   public errorHandle(error: HttpErrorResponse): any {
     const message = error.error.message;
     if (message) {

@@ -1,1 +1,72 @@
-<p>seats-editor works!</p>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<div class="m-a-0" *ngIf="creatingForm; else loader">
+
+<form
+  [formGroup]="creatingForm"
+  (ngSubmit)="onSubmit(creatingForm.value.seats)"
+>
+  <small class="centerHorizontal"><b>додати місця</b></small>
+
+  <ng-container formArrayName = "seats"
+                *ngFor="let seat of seats['controls']; let i = index"
+  >
+    <ng-container formGroupName="{{i}}">
+      <mat-form-field>
+        <mat-label>частина глядацького залу...</mat-label>
+        <mat-select
+               type="text"
+               formControlName="sectionName"
+        >
+          <mat-option *ngFor="let sectionName of sectionNames"
+                      value="{{sectionName}}"
+          >{{sectionName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>ряд (від)...</mat-label>
+        <input matInput
+               type="number"
+               [min]="0"
+               formControlName="startRow"
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>ряд (до)...</mat-label>
+        <input matInput
+               type="number"
+               [min]="seats.value[i].startRow"
+               formControlName="lastRow"
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>номер місця (від)...</mat-label>
+        <input matInput
+               type="number"
+               [min]="0"
+               formControlName="startSeatNumber"
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>номер місця (до)...</mat-label>
+        <input matInput
+               type="number"
+               [min]="seats.value[i].startSeatNumber"
+               formControlName="lastSeatNumber"
+        >
+      </mat-form-field>
+
+    </ng-container>
+
+  </ng-container>
+  <button mat-button color="primary" class="w-100">додати</button>
+</form>
+
+
+
+
+</div>
+
+

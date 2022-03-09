@@ -8,13 +8,8 @@
   </mat-icon>
 
   <ng-container>
-    <!--    <app-auditorium-section-editor-->
-    <!--      [seats]="seats"-->
-    <!--      (hideEditor)="showSectionEditor($event)"-->
-    <!--      (newSection)="setSeats($event)"-->
-    <!--      *ngIf="showEditor"-->
-    <!--    >-->
-    <!--    </app-auditorium-section-editor>-->
+        <app-seats-editor>
+        </app-seats-editor>
   </ng-container>
 
   <div class="centerHorizontal">
@@ -63,7 +58,7 @@
 <div class="col-sm-2 m-a-0 p-r-1">
   <app-request-spring
     (filterRequest)="filterSeats($event)"
-    [filterRequestInitValue]="friv.getInitValue(initFilterValues)"
+    [filterRequestInitValue]="friv.getValueForFilterSelects(initFilterValues)"
   >
   </app-request-spring>
 </div>

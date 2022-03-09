@@ -97,6 +97,6 @@ export class SeatsAdminPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.friv.resetInit();
+    this.friv.resetCurrentFilterRequestValues();
   }
 }

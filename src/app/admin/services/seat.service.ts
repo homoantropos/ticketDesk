@@ -19,7 +19,7 @@ export class SeatService {
   ) { }
 
   createSeat(seats: Array<Seat>): Observable<{seats: Array<Seat>, message: string}> {
-    return this.http.post<{seats: Array<Seat>, message: string}>(`${environment.dbUrl}/seate/create`, seats);
+    return this.http.post<{seats: Array<Seat>, message: string}>(`${environment.dbUrl}/seat/create`, seats);
   }
 
   updateSeats(seats: Array<Seat>): Observable<{ seats: Array<Seat>, message: string }> {
