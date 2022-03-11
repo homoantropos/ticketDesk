@@ -4,6 +4,7 @@ import {AlertService} from "../../../shared/services/alert.service";
 import {Seat} from "../../../shared/interfaces";
 import {FilterRequestInitValuesService} from "../../../shared/services/filterRequestFilterValuesService";
 import {FilterRequest, FilterRequestInitValue} from "../../../shared/services/filterRequestFilterValuesService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-seats-admin-page',
@@ -53,6 +54,7 @@ export class SeatsAdminPageComponent implements OnInit, OnDestroy {
   frInit: FilterRequestInitValue = {};
 
   constructor(
+    private router: Router,
     private seatService: SeatService,
     private alert: AlertService,
     public friv: FilterRequestInitValuesService
@@ -88,6 +90,10 @@ export class SeatsAdminPageComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       )
+  }
+
+  goToSeatsEditor(): void {
+    this.router.navigate(['admin', 'seat', 'create']);
   }
 
   showSectionEditor(condition: boolean): void {

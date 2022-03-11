@@ -1,16 +1,11 @@
 <div class="col-sm-2 m-a-0 p-a-1 centerDiv">
 
-  <mat-icon title="додати частину глядацького залу"
+  <mat-icon title="додати глядацькі місця"
             class="centerHorizontal pointer"
             [hidden]="showEditor"
-            (click)="showSectionEditor(true)"
+            (click)="goToSeatsEditor()"
   >add
   </mat-icon>
-
-  <ng-container>
-        <app-seats-editor>
-        </app-seats-editor>
-  </ng-container>
 
   <div class="centerHorizontal">
     <mat-form-field>

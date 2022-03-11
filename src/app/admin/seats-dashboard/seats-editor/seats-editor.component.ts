@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuditoriumSection, Seat} from "../../../shared/interfaces";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Seat} from "../../../shared/interfaces";
 import {Subscription} from "rxjs";
 import {SeatService} from "../../services/seat.service";
 import {TableSortService} from "../../../shared/services/table-sort";
 import {SectionService} from "../../services/section.service";
 import {AlertService} from "../../../shared/services/alert.service";
+import {SeatEditorValue} from "../../interfaces";
 
 @Component({
   selector: 'app-seats-editor',
@@ -47,55 +48,48 @@ export class SeatsEditorComponent implements OnInit {
   ngOnInit(): void {
     this.sectionService.getSectionNames()
       .subscribe(
-        sectionNames => this.sectionNames = sectionNames,
-        error => this.alert.danger(error.error.message)
+        sectionNames => {
+          this.sectionNames = sectionNames;
+          this.creatingForm = this.fb.group({
+            seats: this.fb.array([])
+          });
+          this.addControlsToSeatForm();
+        },
+        error => this.alert.danger(error.error.message ? error.error.message : error)
       );
-    this.creatingForm = this.fb.group({
-      seats: this.fb.array([
-        this.fb.group({
-          sectionName: ['', [Validators.required]],
-          startRow: [null],
-          lastRow: [null],
-          startSeatNumber: [null],
-          lastSeatNumber: [null]
-        })
-      ])
-    });
-    console.log(this.seats.value[0].startSeatNumber);
-    // console.log(this._seatForm);
   }
 
   resetSeatForm(): void {
 
   }
 
-  get seats(): FormArray {
-    return this.creatingForm.controls['seats'] as FormArray
+  get seats(): any {
+    return this.creatingForm['controls']['seats']['controls'];
   }
 
-  addControlsToSeatForm(seat: Seat, formArray: FormArray): FormArray {
-    formArray.push(this.fb.group({
-        sectionName: [seat.auditoriumSection.sectionName, []],
-        row: [seat.row],
-        seatNumber: [seat.seatNumber]
+  addControlsToSeatForm(value?: SeatEditorValue): void {
+    const group = this.creatingForm['controls']['seats'] as FormArray;
+    group.push(this.fb.group({
+        sectionName: [value ? value.sectionName : '', [Validators.required]],
+        startRow: [value ? value.startRow : null, [Validators.required]],
+        lastRow: [value ? value.lastRow : null, [Validators.required]],
+        startSeatNumber: [value ? value.startSeatNumber : null, [Validators.required]],
+        lastSeatNumber: [value ? value.lastSeatNumber : null, [Validators.required]]
       })
     );
-    return formArray;
   }
 
-  remoVeControlsFromSeatForm(seats: Array<Seat>): void {
+  remoVeControlsFromSeatForm(seatsGroupIndex: number): void {
+    const group = this.creatingForm['controls']['seats'] as FormArray;
+    group.removeAt(seatsGroupIndex);
+  }
+
+  resetCreatingForm(): void {
 
   }
 
-  onSubmit(someVal: [{
-    startRow: number,
-    lastRow: number,
-    startSeatNumber: number,
-    lastSeatNumber: number,
-    sectionName: string
-  }]): void {
-    console.log(someVal);
-    someVal.map(
+  onSubmit(seats: Array<SeatEditorValue>): void {
+    seats.map(
       value => {
         let finish = value.lastRow;
         const seats: Array<Seat> = [];

@@ -2,71 +2,109 @@
   <app-loader></app-loader>
 </ng-template>
 
-<div class="m-a-0" *ngIf="creatingForm; else loader">
-
-<form
-  [formGroup]="creatingForm"
-  (ngSubmit)="onSubmit(creatingForm.value.seats)"
->
-  <small class="centerHorizontal"><b>додати місця</b></small>
-
-  <ng-container formArrayName = "seats"
-                *ngFor="let seat of seats['controls']; let i = index"
+<ng-container *ngIf="creatingForm; else loader">
+  <form
+    class="centerHorizontal scroll"
+    [formGroup]="creatingForm"
+    (ngSubmit)="onSubmit(creatingForm.value)"
   >
-    <ng-container formGroupName="{{i}}">
-      <mat-form-field>
-        <mat-label>частина глядацького залу...</mat-label>
-        <mat-select
-               type="text"
-               formControlName="sectionName"
-        >
-          <mat-option *ngFor="let sectionName of sectionNames"
-                      value="{{sectionName}}"
-          >{{sectionName}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>ряд (від)...</mat-label>
-        <input matInput
-               type="number"
-               [min]="0"
-               formControlName="startRow"
-        >
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>ряд (до)...</mat-label>
-        <input matInput
-               type="number"
-               [min]="seats.value[i].startRow"
-               formControlName="lastRow"
-        >
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>номер місця (від)...</mat-label>
-        <input matInput
-               type="number"
-               [min]="0"
-               formControlName="startSeatNumber"
-        >
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>номер місця (до)...</mat-label>
-        <input matInput
-               type="number"
-               [min]="seats.value[i].startSeatNumber"
-               formControlName="lastSeatNumber"
-        >
-      </mat-form-field>
+    <ng-container formArrayName="seats"
+                  *ngFor="let seatsFormGroup of seats; index as i; last as lastGroup"
+    >
+      <form [formGroup]="seatsFormGroup">
+        <table class="table table-striped">
+          <tr>
+
+            <td class="col-sm-3">
+              <mat-form-field>
+                <mat-label>частини глядацького залу...</mat-label>
+                <mat-select
+                  formControlName="sectionName"
+                >
+                  <mat-option
+                    *ngFor="let sectionName of sectionNames"
+                    value="{{sectionName}}">
+                    {{sectionName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+
+            <td class="col-sm-2">
+              <mat-form-field>
+                <mat-label>ряди в {{seatsFormGroup.value.sectionName}} від...</mat-label>
+                <input matInput
+                       type="number"
+                       [min]="0"
+                       formControlName="startRow"/>
+              </mat-form-field>
+            </td>
+
+            <td class="col-sm-2">
+              <mat-form-field>
+                <mat-label>ряди в {{seatsFormGroup.value.sectionName}} до...</mat-label>
+                <input matInput
+                       type="number"
+                       [min]="seatsFormGroup.value.startRow"
+                       formControlName="lastRow"/>
+              </mat-form-field>
+            </td>
+
+            <td class="col-sm-2">
+              <mat-form-field>
+                <mat-label>місця в рядах від ...</mat-label>
+                <input matInput
+                       type="number"
+                       [min]="0"
+                       formControlName="startSeatNumber"/>
+              </mat-form-field>
+            </td>
+
+            <td class="col-sm-2">
+              <mat-form-field>
+                <mat-label>місця в рядах до ...</mat-label>
+                <input matInput
+                       type="number"
+                       [min]="seatsFormGroup.value.startSeatNumber"
+                       formControlName="lastSeatNumber"/>
+              </mat-form-field>
+            </td>
+
+            <td class="col-sm-1">
+              <mat-icon
+                class="centerHorizontal pointer"
+                (click)="remoVeControlsFromSeatForm(i)"
+              >
+                remove
+              </mat-icon>
+            </td>
+          </tr>
+        </table>
+      </form>
 
     </ng-container>
+    <div>
+      <tr>
+        <td [colSpan]="6">
+          <mat-icon
+            class="centerHorizontal pointer"
+            (click)="addControlsToSeatForm()"
+          >
+            add
+          </mat-icon>
+        </td>
+      </tr>
+    </div>
+    <div class="centerHorizontal">
+      <mat-icon (click)="resetCreatingForm()">
+        cancel
+      </mat-icon>
 
-  </ng-container>
-  <button mat-button color="primary" class="w-100">додати</button>
-</form>
-
-
-
-
-</div>
+      <mat-icon type="submit" [hidden]="creatingForm.invalid || submitted">
+        save
+      </mat-icon>
+    </div>
+  </form>
+</ng-container>
 
 
