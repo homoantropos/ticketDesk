@@ -15,6 +15,9 @@ import { AuditoriumSectionEditorComponent } from './auditorium-section-dashboard
 import { SeatsListComponent } from './seats-dashboard/seats-list/seats-list.component';
 import { SeatsAdminPageComponent } from './seats-dashboard/seats-admin-page/seats-admin-page.component';
 import { SeatsEditorComponent } from './seats-dashboard/seats-editor/seats-editor.component';
+import { TheatreAdminPageComponent } from './theatre-dashboard/theatre-admin-page/theatre-admin-page.component';
+import { TheatresListComponent } from './theatre-dashboard/theatres-list/theatres-list.component';
+import { TheatreEditorComponent } from './theatre-dashboard/theatre-editor/theatre-editor.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { SeatsEditorComponent } from './seats-dashboard/seats-editor/seats-edito
     AuditoriumSectionEditorComponent,
     SeatsListComponent,
     SeatsAdminPageComponent,
-    SeatsEditorComponent
+    SeatsEditorComponent,
+    TheatreAdminPageComponent,
+    TheatresListComponent,
+    TheatreEditorComponent
   ],
   imports: [
     CommonModule,

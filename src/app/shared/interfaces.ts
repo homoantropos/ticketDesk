@@ -27,6 +27,7 @@ export interface Theatre {
   country: string,
   town: string,
   address: string,
+  seats?: Array<Seat>,
   id?: number
 }
 
