@@ -1,3 +1,5 @@
+import {Ticket} from "./classes/Ticket";
+
 export interface User {
   email: string,
   password: string,
@@ -18,6 +20,7 @@ export interface Performance {
   description?: string,
   place: Venue,
   start: Date,
+  tickets?: Array<Ticket>,
   posterSrc?: string,
   promoter?: User,
   phones?: Array<string>,
@@ -47,7 +50,6 @@ export interface Seat {
 }
 
 export interface AuditoriumSection {
-  // name?: string,
   sectionName: string,
   id?: number
 }

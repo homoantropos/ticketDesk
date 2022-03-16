@@ -8,6 +8,8 @@ import {UserRegisterOrEditComponent} from "../shared/components/user-register-or
 import {
   AuditoriumSectionAdminPageComponent
 } from "./auditorium-section-dashboard/auditorium-section-admin-page/auditorium-section-admin-page.component";
+import {VenueAdminPageComponent} from "./venue-dashboard/venue-admin-page/venue-admin-page.component";
+import {VenueEditorComponent} from "./venue-dashboard/venue-editor/venue-editor.component";
 
 const routes: Routes = [
   { path: '', canActivate: [AdminLayoutGuard, AuthGuard], component: AdminComponent, children: [
@@ -19,6 +21,11 @@ const routes: Routes = [
           {path: '', component: AuditoriumSectionAdminPageComponent},
           {path: 'create', component: AuditoriumSectionAdminPageComponent},
           {path: 'edit/:id', component: AuditoriumSectionAdminPageComponent}
+        ]},
+      {path: 'venue', children: [
+          {path: '', component: VenueAdminPageComponent, pathMatch: 'full'},
+          {path: 'create', component: VenueEditorComponent},
+          {path: 'edit/:id', component: VenueEditorComponent}
         ]}
     ] },
 ];
