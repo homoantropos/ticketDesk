@@ -1,1 +1,111 @@
-<p>venue-editor works!</p>
+<ng-container *ngIf="venueEditorForm; else loader">
+  <form
+    class="col-sm-12 m-a-0 centerHorizontal formContainer"
+    [formGroup]="venueEditorForm"
+    (ngSubmit)="onSubmit(venueEditorForm.value)"
+  >
+    <mat-form-field>
+      <mat-label>назва</mat-label>
+      <input
+        matInput
+        title="назва місця проведення"
+        type="text"
+        formControlName="name"
+      />
+    </mat-form-field>
+
+    <ng-container
+      formGroupName="address"
+    >
+      <ng-container>
+        <mat-form-field>
+          <mat-label>країна</mat-label>
+          <input
+            matInput
+            title="адреса: країна"
+            type="text"
+            formControlName="country"
+          />
+        </mat-form-field>
+      </ng-container>
+
+      <mat-form-field>
+        <mat-label>місто</mat-label>
+        <input
+          matInput
+          title="адреса: місто"
+          type="text"
+          formControlName="town"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>вулиця</mat-label>
+        <input
+          matInput
+          title="адреса: вулиця"
+          type="text"
+          formControlName="street"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>номер будинку</mat-label>
+        <input
+          matInput
+          title="адреса: номер будинку"
+          type="text"
+          formControlName="building"
+        />
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container
+      formArrayName="phones"
+      *ngFor="let _ of phones.controls; index as i; last as lastIndex "
+    >
+      <mat-form-field>
+        <mat-label>номер телефону</mat-label>
+        <input
+          matInput
+          title="назва місця проведення"
+          type="text"
+          formControlName="{{i}}"
+        />
+      </mat-form-field>
+    </ng-container>
+
+    <mat-form-field>
+      <mat-label>електронна пошта</mat-label>
+      <input
+        matInput
+        title="назва місця проведення"
+        type="text"
+        formControlName="email"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>сайт</mat-label>
+      <input
+        matInput
+        title="назва місця проведення"
+        type="text"
+        formControlName="webSite"
+      />
+    </mat-form-field>
+
+    <button
+      mat-button
+      color="primary"
+      class="wide"
+      type="submit"
+    >
+      зберегти
+    </button>
+  </form>
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

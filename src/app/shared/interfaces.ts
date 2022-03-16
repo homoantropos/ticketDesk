@@ -31,7 +31,10 @@ export interface Performance {
 
 export interface Venue {
   name: string,
-  address: string,
+  country: string,
+  town: string,
+  street: string,
+  building: string,
   phones?: Array<string>,
   email?: string,
   webSite?: string,

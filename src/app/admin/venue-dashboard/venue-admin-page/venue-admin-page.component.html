@@ -1,1 +1,65 @@
-<p>venue-admin-page works!</p>
+<div class="col-sm-2 m-a-0 p-a-1 centerDiv">
+
+  <mat-icon title="додати частину глядацького залу"
+            class="centerHorizontal pointer"
+            [hidden]="showEditor"
+            (click)="goToVenueCreator()"
+  >add
+  </mat-icon>
+
+  <ng-container>
+<!--    <app-auditorium-section-editor-->
+<!--      [venue]="venue"-->
+<!--      (hideEditor)="showSectionEditor($event)"-->
+<!--      (newSection)="setSections($event)"-->
+<!--      *ngIf="showEditor"-->
+<!--    >-->
+<!--    </app-auditorium-section-editor>-->
+  </ng-container>
+
+  <div class="centerHorizontal">
+    <mat-form-field>
+      <mat-label>пошук ...</mat-label>
+      <input matInput
+             title="nameInput"
+             type="text"
+             #nameInput
+             [(ngModel)]="searchValue"
+      >
+    </mat-form-field>
+
+    <button
+      *ngIf="nameInput.value.trim().length > 0"
+      mat-button color="primary"
+      (click)="searchValue = ''"
+    >
+      скинути
+    </button>
+  </div>
+
+</div>
+
+<div class="col-sm-8 m-a-0 p-a-1 centerDiv">
+
+  <ng-container *ngIf="!loading; else loader">
+    <ng-container *ngIf="venues.length > 0; else emptyListMessage">
+      <app-venue-list
+        (showButton)="showSectionEditor($event)"
+        (idSectionToRemove)="removeVenue($event)"
+        [venues]="venues | search : searchValue : searchField"
+      >
+      </app-venue-list>
+    </ng-container>
+    <ng-template #emptyListMessage>
+      <h3 class="centerHorizontal"><b>Дані відсутні</b></h3>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+</div>
+
+<div class="col-sm-2 m-a-0 p-r-1">
+
+</div>

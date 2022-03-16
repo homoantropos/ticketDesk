@@ -1,17 +1,17 @@
-<ng-container *ngIf="userForm; else loader" xmlns="http://www.w3.org/1999/html">
+<ng-container *ngIf="userForm; else loader">
   <div class="formTitle m-t-2">
     <p><b>{{createOrEditLabelName}}</b></p>
   </div>
 
   <form
-    class="col-sm-12 centerHorizontal formContainer"
+    class="col-sm-12 m-a-0 centerHorizontal formContainer"
     [formGroup]="userForm"
     (ngSubmit)="onSubmit(userForm.value)"
   >
 
-    <div class="alert info" *ngIf="userForm.controls['passwordCheck'].dirty && message">
+    <ng-container class="alert info" *ngIf="userForm.controls['passwordCheck'].dirty && message">
       {{ message }}
-    </div>
+    </ng-container>
 
     <mat-form-field class="col-sm-12 centerHorizontal">
       <mat-label>email:</mat-label>
@@ -127,7 +127,6 @@
     </button>
 
     <button mat-button
-            click-stop-propagation
             class="col-sm-6"
             color="primary"
             type="button"

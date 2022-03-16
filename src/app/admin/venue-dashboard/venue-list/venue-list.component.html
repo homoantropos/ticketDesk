@@ -1,1 +1,77 @@
-<p>venue-list works!</p>
+<ng-container *ngIf="venues">
+
+  <h3 *ngIf="venues.length === 0"><b>дані відсутні</b></h3>
+
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th
+          (click)="sortTable(['id'])"
+          [innerHTML]="sortDirection ? 'id &#8595;' : 'id &#8593;'"
+          class="sortArrow"
+        ></th>
+        <th
+          (click)="sortTable(['name'])"
+          [innerHTML]="sortDirection ? 'name &#8595;' : 'name &#8593;'"
+          class="sortArrow"
+        ></th>
+        <th>address</th>
+        <th>phones</th>
+        <th>email</th>
+        <th>webSite</th>
+        <th>edit</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let venue of venues | paginate: { itemsPerPage: itemsPerPage, currentPage: paginatorStartPageNumber }">
+        <td>{{venue.id}}</td>
+        <td>{{venue.name}}</td>
+        <td>{{venue.country}}, {{venue.town}}, {{venue.street}}, {{venue.building}},</td>
+        <td>
+        <span *ngFor="let phone of venue.phones">
+          {{phone}}<br/>
+        </span>
+        </td>
+        <td>{{venue.email}}</td>
+        <td>{{venue.webSite}}</td>
+        <td>
+          <mat-icon
+            class="pointer"
+            (click)="goToVenueEditor(venue.id)"
+          >
+            edit
+          </mat-icon>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+      <div class="paginatorSelect">
+        <small>
+          рядків на сторінці:
+        </small>
+        <mat-select
+          [(ngModel)]="itemsPerPage"
+        >
+          <mat-option value=5>5</mat-option>
+          <mat-option value=10>10</mat-option>
+          <mat-option value=15>15</mat-option>
+        </mat-select>
+      </div>
+      <pagination-controls
+        class="my-pagination"
+        (pageChange)="paginatorStartPageNumber = $event"
+        previousLabel="назад"
+        nextLabel="уперед"
+      ></pagination-controls>
+    </div>
+  </div>
+</ng-container>
+
+<app-deletion-confirmer
+  [show]="showDeleteConfirmation"
+  [option]="option"
+  (confirm)="onDelete($event)"
+></app-deletion-confirmer>
+
