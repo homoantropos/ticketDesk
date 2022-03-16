@@ -15,30 +15,39 @@ export interface User {
 
 export interface Performance {
   name: string,
-  description: string,
-  place: Theatre,
+  description?: string,
+  place: Venue,
   start: Date,
   posterSrc?: string,
+  promoter?: User,
+  phones?: Array<string>,
+  email?: string,
+  web?: string,
   id?: number
 }
 
-export interface Theatre {
+export interface Venue {
   name: string,
-  country: string,
-  town: string,
   address: string,
+  phones?: Array<string>,
+  email?: string,
+  webSite?: string,
   seats?: Array<Seat>,
   id?: number
 }
 
 export interface Seat {
+  venue: Venue,
+  venueHall?: string,
+  hallSection?: string,
   row?: number,
   seatNumber?: number,
-  auditoriumSection: AuditoriumSection,
+  typeOfSeat?: string,
   id?: number
 }
 
 export interface AuditoriumSection {
-  sectionName: string
+  // name?: string,
+  sectionName: string,
   id?: number
 }

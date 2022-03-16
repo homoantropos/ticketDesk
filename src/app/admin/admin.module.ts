@@ -12,13 +12,6 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { AuditoriumSectionAdminPageComponent } from './auditorium-section-dashboard/auditorium-section-admin-page/auditorium-section-admin-page.component';
 import { AuditoriumSectionListComponent } from './auditorium-section-dashboard/auditorium-section-list/auditorium-section-list.component';
 import { AuditoriumSectionEditorComponent } from './auditorium-section-dashboard/auditorium-section-editor/auditorium-section-editor.component';
-import { SeatsListComponent } from './seats-dashboard/seats-list/seats-list.component';
-import { SeatsAdminPageComponent } from './seats-dashboard/seats-admin-page/seats-admin-page.component';
-import { SeatsEditorComponent } from './seats-dashboard/seats-editor/seats-editor.component';
-import { TheatreAdminPageComponent } from './theatre-dashboard/theatre-admin-page/theatre-admin-page.component';
-import { TheatresListComponent } from './theatre-dashboard/theatres-list/theatres-list.component';
-import { TheatreEditorComponent } from './theatre-dashboard/theatre-editor/theatre-editor.component';
-
 
 @NgModule({
   declarations: [
@@ -27,13 +20,7 @@ import { TheatreEditorComponent } from './theatre-dashboard/theatre-editor/theat
     UserListComponent,
     AuditoriumSectionAdminPageComponent,
     AuditoriumSectionListComponent,
-    AuditoriumSectionEditorComponent,
-    SeatsListComponent,
-    SeatsAdminPageComponent,
-    SeatsEditorComponent,
-    TheatreAdminPageComponent,
-    TheatresListComponent,
-    TheatreEditorComponent
+    AuditoriumSectionEditorComponent
   ],
   imports: [
     CommonModule,
