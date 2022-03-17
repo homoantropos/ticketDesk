@@ -48,6 +48,7 @@ export class VenueAdminPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.venues = undefined;
     this.venueService.getAllVenues()
       .subscribe(
         venues => {

@@ -21,6 +21,7 @@
         <th>email</th>
         <th>webSite</th>
         <th>edit</th>
+        <th>delete</th>
       </tr>
       </thead>
       <tbody>
@@ -34,13 +35,21 @@
         </span>
         </td>
         <td>{{venue.email}}</td>
-        <td>{{venue.webSite}}</td>
+        <td><a href="{{venue.webSite}}">{{venue.webSite}}</a></td>
         <td>
           <mat-icon
             class="pointer"
             (click)="goToVenueEditor(venue.id)"
           >
             edit
+          </mat-icon>
+        </td>
+        <td>
+          <mat-icon
+            class="pointer"
+            (click)="callDeletion(venue.id)"
+          >
+            delete
           </mat-icon>
         </td>
       </tr>

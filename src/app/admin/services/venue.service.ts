@@ -17,7 +17,7 @@ export class VenueService {
   ) { }
 
   createVenue(venue: Venue): Observable<{venue: Venue, message: string}> {
-    return this.http.post<{venue: Venue, message: string}>(`${environment.dbUrl}/venue`, venue);
+    return this.http.post<{venue: Venue, message: string}>(`${environment.dbUrl}/venue/create`, venue);
   }
 
   updateVenue(venue: Venue): Observable<{venue: Venue, message: string}> {

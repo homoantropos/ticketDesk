@@ -5,7 +5,7 @@ import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {AgeValidator} from "../../services/age-validator";
 import {AlertService} from "../../services/alert.service";
-import {switchMap} from "rxjs";
+import {Subscription, switchMap} from "rxjs";
 import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
@@ -16,17 +16,16 @@ import {AuthService} from "../../services/auth/auth.service";
 
 export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
 
-  // @ts-ignore
   userForm: FormGroup;
   submitted = false;
-  // @ts-ignore
+
   userId: number;
-  // @ts-ignore
+
   uSub: Subscription;
   reset = false;
-  // @ts-ignore
+
   createOrEditLabelName: string;
-  buttonName = 'зареєсттруватись';
+  buttonName = 'зареєструватись';
   showRoleInput = false;
   private creatOrEditor = true;
 
@@ -50,12 +49,11 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
   }
 
   message = '';
-  // @ts-ignore
+
   @ViewChild('emailInput') private emailInput: ElementRef;
-  // @ts-ignore
+
   @ViewChild('profilePictureLoader') private profilePictureLoader: ElementRef;
   profilePictureSrc = '';
-  // @ts-ignore
   profilePicture: File;
 
   constructor(
@@ -146,11 +144,13 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
       if (reader.result)
         this.profilePictureSrc = reader.result.toString()
     }
-
     reader.readAsDataURL(file)
   }
 
   onSubmit(formValue: any): void {
+    if(this.userForm.invalid) {
+      return
+    }
     this.userForm.disable();
     this.submitted = true;
     const createdUser: User = {
@@ -178,7 +178,6 @@ export class UserRegisterOrEditComponent implements OnInit, OnDestroy {
         user => {
           const id = this.auth.accessAllowed('superAdmin') ? this.userId : this.auth.getUserId();
           this.router.navigateByUrl(`profile/${id}`);
-          // this.alert.success(dbCoachAndMessage.message);
           this.resetUserForm();
         }, error => {
           this.userService.errorHandle(error);

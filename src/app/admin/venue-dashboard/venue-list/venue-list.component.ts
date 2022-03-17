@@ -36,6 +36,11 @@ export class VenueListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  callDeletion(id: number): void {
+    this.showDeleteConfirmation = true;
+    this.venueId = id;
+  }
+
   onDelete(confirm: boolean): void {
     if (confirm) {
       this.venueService.deleteVenue(this.venueId)
