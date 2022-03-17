@@ -1,186 +1,191 @@
-<ng-container *ngIf="venueEditorForm; else loader">
+<div class="formTitle m-t-2">
+  <p><b>{{createOrEditLabelName}}</b></p>
+</div>
+<div class="col-sm-6">
+  <ng-container *ngIf="venueEditorForm; else loader">
 
-  <div class="formTitle m-t-2">
-    <p><b>{{createOrEditLabelName}}</b></p>
-  </div>
-
-  <form
-    class="col-sm-12 m-a-0 centerHorizontal formContainer"
-    [formGroup]="venueEditorForm"
-    (ngSubmit)="onSubmit(venueEditorForm.value)"
-  >
-    <mat-form-field>
-      <mat-label>назва</mat-label>
-      <input
-        matInput
-        title="назва місця проведення"
-        type="text"
-        #nameInput
-        formControlName="name"
-      />
-    </mat-form-field>
-    <div *ngIf="venueEditorForm.controls['name'].touched && venueEditorForm.controls['name'].errors">
-      <small class="error" *ngIf="venueEditorForm.controls['name'].errors['required']">поле повинно бути
-        заповнене</small>
-    </div>
-
-    <ng-container
-      formGroupName="address"
-    >
-      <ng-container>
-        <mat-form-field>
-          <mat-label>країна</mat-label>
-          <input
-            matInput
-            title="адреса: країна"
-            type="text"
-            formControlName="country"
-          />
-        </mat-form-field>
-      </ng-container>
-      <div *ngIf="
-      venueEditorForm['controls']['address']['controls']['country'].touched
-       && venueEditorForm['controls']['address']['controls']['country'].errors">
-        <small
-          class="error"
-          *ngIf="venueEditorForm['controls']['address']['controls']['country'].errors['required']"
-        >
-          поле повинно бути заповнене
-        </small>
-      </div>
-
-      <mat-form-field>
-        <mat-label>місто</mat-label>
-        <input
-          matInput
-          title="адреса: місто"
-          type="text"
-          formControlName="town"
-        />
-      </mat-form-field>
-      <div *ngIf="venueEditorForm['controls']['address']['controls']['town'].touched
-       && venueEditorForm['controls']['address']['controls']['town'].errors">
-        <small
-          class="error"
-          *ngIf="venueEditorForm['controls']['address']['controls']['town'].errors['required']"
-        >
-          поле повинно бути заповнене
-        </small>
-      </div>
-
-      <mat-form-field>
-        <mat-label>вулиця</mat-label>
-        <input
-          matInput
-          title="адреса: вулиця"
-          type="text"
-          formControlName="street"
-        />
-      </mat-form-field>
-      <div *ngIf="venueEditorForm['controls']['address']['controls']['street'].touched
-      && venueEditorForm['controls']['address']['controls']['street'].errors">
-        <small
-          class="error"
-          *ngIf="venueEditorForm['controls']['address']['controls']['street'].errors['required']"
-        >
-          поле повинно бути заповнене
-        </small>
-      </div>
-
-      <mat-form-field>
-        <mat-label>номер будинку</mat-label>
-        <input
-          matInput
-          title="адреса: номер будинку"
-          type="text"
-          formControlName="building"
-        />
-      </mat-form-field>
-      <div *ngIf="venueEditorForm['controls']['address']['controls']['building'].touched
-      && venueEditorForm['controls']['address']['controls']['building'].errors">
-        <small
-          class="error"
-          *ngIf="venueEditorForm['controls']['address']['controls']['building'].errors['required']"
-        >
-          поле повинно бути заповнене
-        </small>
-      </div>
-    </ng-container>
-
-    <mat-form-field>
-      <mat-label>електронна пошта</mat-label>
-      <input
-        matInput
-        title="назва місця проведення"
-        type="text"
-        formControlName="email"
-      />
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>сайт</mat-label>
-      <input
-        matInput
-        title="назва місця проведення"
-        type="text"
-        formControlName="webSite"
-      />
-    </mat-form-field>
-
-    <ng-container
-      formArrayName="phones"
-      *ngFor="let _ of phones.controls; index as i; last as lastIndex "
+    <form
+      class="col-sm-12 m-a-0 centerHorizontal formContainer"
+      [formGroup]="venueEditorForm"
+      (ngSubmit)="onSubmit(venueEditorForm.value)"
     >
       <mat-form-field>
-        <mat-label>номер телефону (формат: +38 012 345 67 89):</mat-label>
+        <mat-label>назва</mat-label>
         <input
           matInput
           title="назва місця проведення"
           type="text"
-          formControlName="{{i}}"
+          #nameInput
+          formControlName="name"
         />
-        <mat-icon
-          class="floatedRight"
-          (click)="deletePhoneControl(i)"
-        >delete
-        </mat-icon>
       </mat-form-field>
-      <div *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors">
-        <small
-          class="error"
-          *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
+      <div *ngIf="venueEditorForm.controls['name'].touched && venueEditorForm.controls['name'].errors">
+        <small class="error" *ngIf="venueEditorForm.controls['name'].errors['required']">поле повинно бути
+          заповнене</small>
       </div>
-    </ng-container>
-    <div class="col-sm-12">
-      <mat-icon
-        class="centerHorizontal pointer"
-        (click)="addPhoneArrayToForm()"
-      >add
-      </mat-icon>
-    </div>
+
+      <ng-container
+        formGroupName="address"
+      >
+        <ng-container>
+          <mat-form-field>
+            <mat-label>країна</mat-label>
+            <input
+              matInput
+              title="адреса: країна"
+              type="text"
+              formControlName="country"
+            />
+          </mat-form-field>
+        </ng-container>
+        <div *ngIf="
+      venueEditorForm['controls']['address']['controls']['country'].touched
+       && venueEditorForm['controls']['address']['controls']['country'].errors">
+          <small
+            class="error"
+            *ngIf="venueEditorForm['controls']['address']['controls']['country'].errors['required']"
+          >
+            поле повинно бути заповнене
+          </small>
+        </div>
+
+        <mat-form-field>
+          <mat-label>місто</mat-label>
+          <input
+            matInput
+            title="адреса: місто"
+            type="text"
+            formControlName="town"
+          />
+        </mat-form-field>
+        <div *ngIf="venueEditorForm['controls']['address']['controls']['town'].touched
+       && venueEditorForm['controls']['address']['controls']['town'].errors">
+          <small
+            class="error"
+            *ngIf="venueEditorForm['controls']['address']['controls']['town'].errors['required']"
+          >
+            поле повинно бути заповнене
+          </small>
+        </div>
+
+        <mat-form-field>
+          <mat-label>вулиця</mat-label>
+          <input
+            matInput
+            title="адреса: вулиця"
+            type="text"
+            formControlName="street"
+          />
+        </mat-form-field>
+        <div *ngIf="venueEditorForm['controls']['address']['controls']['street'].touched
+      && venueEditorForm['controls']['address']['controls']['street'].errors">
+          <small
+            class="error"
+            *ngIf="venueEditorForm['controls']['address']['controls']['street'].errors['required']"
+          >
+            поле повинно бути заповнене
+          </small>
+        </div>
+
+        <mat-form-field>
+          <mat-label>номер будинку</mat-label>
+          <input
+            matInput
+            title="адреса: номер будинку"
+            type="text"
+            formControlName="building"
+          />
+        </mat-form-field>
+        <div *ngIf="venueEditorForm['controls']['address']['controls']['building'].touched
+      && venueEditorForm['controls']['address']['controls']['building'].errors">
+          <small
+            class="error"
+            *ngIf="venueEditorForm['controls']['address']['controls']['building'].errors['required']"
+          >
+            поле повинно бути заповнене
+          </small>
+        </div>
+      </ng-container>
+
+      <mat-form-field>
+        <mat-label>електронна пошта</mat-label>
+        <input
+          matInput
+          title="назва місця проведення"
+          type="text"
+          formControlName="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>сайт</mat-label>
+        <input
+          matInput
+          title="назва місця проведення"
+          type="text"
+          formControlName="webSite"
+        />
+      </mat-form-field>
+
+      <ng-container
+        formArrayName="phones"
+        *ngFor="let _ of phones.controls; index as i; last as lastIndex "
+      >
+        <mat-form-field>
+          <mat-label>номер телефону (формат: +38 012 345 67 89):</mat-label>
+          <input
+            matInput
+            title="назва місця проведення"
+            type="text"
+            formControlName="{{i}}"
+          />
+          <mat-icon
+            class="floatedRight"
+            (click)="deletePhoneControl(i)"
+          >delete
+          </mat-icon>
+        </mat-form-field>
+        <div *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors">
+          <small
+            class="error"
+            *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
+        </div>
+      </ng-container>
+      <div class="col-sm-12">
+        <mat-icon
+          class="centerHorizontal pointer"
+          (click)="addPhoneArrayToForm()"
+        >add
+        </mat-icon>
+      </div>
 
 
-    <button
-      mat-button
-      color="primary"
-      class="col-sm-6"
-      (click)="resetForm($event)"
-    >
-      скинути
-    </button>
+      <button
+        mat-button
+        color="primary"
+        class="col-sm-6"
+        (click)="resetForm($event)"
+      >
+        скинути
+      </button>
 
-    <button
-      mat-button
-      color="primary"
-      class="col-sm-6"
-      type="submit"
-      [disabled]="venueEditorForm.invalid || submitted"
-    >
-      зберегти
-    </button>
-  </form>
+      <button
+        mat-button
+        color="primary"
+        class="col-sm-6"
+        type="submit"
+        [disabled]="venueEditorForm.invalid || submitted"
+      >
+        зберегти
+      </button>
+    </form>
 
-</ng-container>
+  </ng-container>
+</div>
+<div class="col-sm-6">
+
+</div>
+
 
 <ng-template #loader>
   <app-loader></app-loader>
