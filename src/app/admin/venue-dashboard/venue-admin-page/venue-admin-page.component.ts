@@ -32,7 +32,6 @@ export class VenueAdminPageComponent implements OnInit {
     this.venues = [...this.venues];
   }
 
-  loading = false;
   showEditor = false;
 
   searchOption = true;

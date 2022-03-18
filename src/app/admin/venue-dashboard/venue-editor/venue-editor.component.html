@@ -174,7 +174,7 @@
         color="primary"
         class="col-sm-6"
         type="submit"
-        [disabled]="venueEditorForm.invalid || submitted"
+        [disabled]="disableSubmit()"
       >
         зберегти
       </button>
@@ -182,8 +182,13 @@
 
   </ng-container>
 </div>
-<div class="col-sm-6">
 
+<div class="col-sm-6">
+<app-seat-editor
+  *ngIf="seats"
+  [seats]="seats"
+>
+</app-seat-editor>
 </div>
 
 

@@ -15,6 +15,7 @@ import { AuditoriumSectionEditorComponent } from './auditorium-section-dashboard
 import { VenueAdminPageComponent } from './venue-dashboard/venue-admin-page/venue-admin-page.component';
 import { VenueEditorComponent } from './venue-dashboard/venue-editor/venue-editor.component';
 import { VenueListComponent } from './venue-dashboard/venue-list/venue-list.component';
+import { SeatEditorComponent } from './seat-dashboard/seat-editor/seat-editor.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { VenueListComponent } from './venue-dashboard/venue-list/venue-list.comp
     AuditoriumSectionEditorComponent,
     VenueAdminPageComponent,
     VenueEditorComponent,
-    VenueListComponent
+    VenueListComponent,
+    SeatEditorComponent
   ],
   imports: [
     CommonModule,

@@ -41,7 +41,7 @@
 
 <div class="col-sm-8 m-a-0 p-a-1 centerDiv">
 
-  <ng-container *ngIf="!loading; else loader">
+  <ng-container *ngIf="venues; else loader">
     <ng-container *ngIf="venues.length > 0; else emptyListMessage">
       <app-venue-list
         (showButton)="showSectionEditor($event)"

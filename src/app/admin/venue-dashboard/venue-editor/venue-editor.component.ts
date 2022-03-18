@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Venue} from "../../../shared/interfaces";
+import {Seat, Venue} from "../../../shared/interfaces";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription, switchMap} from "rxjs";
 import {VenueService} from "../../services/venue.service";
@@ -23,6 +23,16 @@ export class VenueEditorComponent implements OnInit, OnDestroy {
   createOrEditLabelName = '';
 
   @ViewChild('nameInput') nameInput: ElementRef<HTMLInputElement>
+
+  private _seats: Array<Seat>;
+
+  get seats(): Array<Seat> {
+    return this._seats;
+  }
+
+  setSeats(seats: Array<Seat>): void {
+    this._seats = seats;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -52,12 +62,14 @@ export class VenueEditorComponent implements OnInit, OnDestroy {
         .subscribe(
           venue => {
             this.venueEditorForm = this.createForm(venue);
+            this.setSeats(venue.seats);
             this.addPhoneArrayToForm(venue);
             this.makeFocus();
           }
         )
     } else {
       this.venueEditorForm = this.createForm();
+      this.setSeats([]);
       this.addPhoneArrayToForm();
       this.makeFocus();
       this.createOrEditLabelName = 'Додати місце проведення';
@@ -116,6 +128,15 @@ export class VenueEditorComponent implements OnInit, OnDestroy {
 
   get phones(): FormArray {
     return this.venueEditorForm['controls']['phones'] as FormArray;
+  }
+
+  disableSubmit(): boolean {
+  return (
+    this.venueEditorForm.invalid
+    || this.submitted
+    || typeof this.seats === 'undefined'
+  )
+
   }
 
   onSubmit(formGroupValue: any): void {
