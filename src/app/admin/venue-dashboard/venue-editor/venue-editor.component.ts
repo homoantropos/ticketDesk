@@ -131,12 +131,11 @@ export class VenueEditorComponent implements OnInit, OnDestroy {
   }
 
   disableSubmit(): boolean {
-  return (
-    this.venueEditorForm.invalid
-    || this.submitted
-    || typeof this.seats === 'undefined'
-  )
-
+    return (
+      this.venueEditorForm.invalid
+      || this.submitted
+      || typeof this.seats === 'undefined'
+    )
   }
 
   onSubmit(formGroupValue: any): void {
@@ -153,10 +152,11 @@ export class VenueEditorComponent implements OnInit, OnDestroy {
       building: formGroupValue.address.building,
       phones: formGroupValue.phones,
       email: formGroupValue.email,
-      webSite: formGroupValue.webSite
+      webSite: formGroupValue.webSite,
+      seats: this.seats
     };
     let venueServiceMethod;
-    if(this.editOrCreat()) {
+    if (this.editOrCreat()) {
       venue.id = this.venueId;
       venueServiceMethod = this.venueService.updateVenue(venue);
     } else {
@@ -168,10 +168,10 @@ export class VenueEditorComponent implements OnInit, OnDestroy {
         this.submitted = false;
         this.resetForm();
       },
-        error => {
-          this.alert.danger(error.error.message ? error.error.message : error);
-          this.submitted = false;
-          this.venueEditorForm.enable();
+      error => {
+        this.alert.danger(error.error.message ? error.error.message : error);
+        this.submitted = false;
+        this.venueEditorForm.enable();
       }
     )
   }

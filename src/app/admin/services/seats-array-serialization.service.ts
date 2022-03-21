@@ -54,7 +54,8 @@ export class SeatsArraySerializationService implements OnInit {
       initValue1.venueHall === initValue2.venueHall &&
       initValue1.hallSection === initValue2.hallSection &&
       initValue1.startSeatNumber === initValue2.startSeatNumber &&
-      initValue1.lastSeatNumber === initValue2.lastSeatNumber
+      initValue1.lastSeatNumber === initValue2.lastSeatNumber &&
+      initValue1.typeOfSeat === initValue2.typeOfSeat
     );
   }
 
@@ -84,6 +85,7 @@ export class SeatsArraySerializationService implements OnInit {
     let formVal: Array<SeatEditorFormInitValue> = [];
     let currentValue = this.formValue[0];
     this.formValue = this.formValue.slice(1);
+    console.log(this.formValue.length);
     if (formValue.length > 0) {
       this.formValue.map(
         initValue1 => {
@@ -95,13 +97,18 @@ export class SeatsArraySerializationService implements OnInit {
               }
             }
           )
-          if(currentValue.lastRow !== null) {
+          if (currentValue.lastRow !== null) {
             formVal.push(currentValue);
           }
           this.formValue = this.formValue.slice(1);
           currentValue = initValue1;
         }
       );
+    }
+    if (this.formValue.length === 0) {
+      currentValue.lastRow = currentValue.startRow;
+      formVal.push(currentValue);
+      console.log(formVal);
     }
     return formVal
   }

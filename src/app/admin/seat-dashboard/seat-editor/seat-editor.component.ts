@@ -77,12 +77,36 @@ export class SeatEditorComponent implements OnInit, OnDestroy {
     this.valueForSeatsGen.removeAt(index);
   }
 
-  onSubmit(value: any): void {
-    let seats = [];
+  onSubmit(value: Array<SeatEditorFormInitValue>): void {
+    const seats: Array<Seat> = [];
     value.map(
-
+      initValue => {
+        for(let row = initValue.startRow; row <= initValue.lastRow; row++) {
+          for(let seatNumber = initValue.startSeatNumber; seatNumber <= initValue.lastSeatNumber; seatNumber++) {
+            seats.push({
+              venueHall: initValue.venueHall,
+              hallSection: initValue.hallSection,
+              row,
+              seatNumber,
+              typeOfSeat: initValue.typeOfSeat,
+            });
+          }
+        }
+      }
     )
-    console.log(value);
+    this.seats$.emit(seats);
+  }
+
+  resetForm(event?: any): void {
+    if (event) {
+      this.stopEvent(event);
+    }
+    this.seatEditorForm.reset();
+  }
+
+  stopEvent(event: any): void {
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   ngOnDestroy() {

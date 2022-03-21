@@ -9,6 +9,9 @@
       [formGroup]="venueEditorForm"
       (ngSubmit)="onSubmit(venueEditorForm.value)"
     >
+      <div class="centerHorizontal m-a-0">
+        <h4 class="formTitle m-a-0"><b>Місце проведення</b></h4>
+      </div>
       <mat-form-field>
         <mat-label>назва</mat-label>
         <input
@@ -131,7 +134,7 @@
         formArrayName="phones"
         *ngFor="let _ of phones.controls; index as i; last as lastIndex "
       >
-        <mat-form-field>
+        <mat-form-field class="col-sm-11">
           <mat-label>номер телефону (формат: +38 012 345 67 89):</mat-label>
           <input
             matInput
@@ -139,16 +142,17 @@
             type="text"
             formControlName="{{i}}"
           />
-          <mat-icon
-            class="floatedRight"
-            (click)="deletePhoneControl(i)"
-          >delete
-          </mat-icon>
         </mat-form-field>
+        <mat-icon
+
+          (click)="deletePhoneControl(i)"
+        >delete
+        </mat-icon>
         <div *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors">
           <small
             class="error"
-            *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors['pattern']">введіть номер в форматі +38 012 345 67 89</small>
+            *ngIf="venueEditorForm['controls']['phones']['controls'][i].errors['pattern']">введіть номер в форматі +38
+            012 345 67 89</small>
         </div>
       </ng-container>
       <div class="col-sm-12">
@@ -184,11 +188,12 @@
 </div>
 
 <div class="col-sm-7 screenHeight scroll">
-<app-seat-editor
-  *ngIf="seats"
-  [seats]="seats"
->
-</app-seat-editor>
+  <app-seat-editor
+    *ngIf="seats"
+    [seats]="seats"
+    (seats$)="setSeats($event)"
+  >
+  </app-seat-editor>
 </div>
 
 

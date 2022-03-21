@@ -43,7 +43,7 @@ export interface Venue {
 }
 
 export interface Seat {
-  venue: Venue,
+  venue?: Venue,
   venueHall?: string,
   hallSection?: string,
   row?: number,

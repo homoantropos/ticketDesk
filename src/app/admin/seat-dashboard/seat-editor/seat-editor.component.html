@@ -4,6 +4,10 @@
     [formGroup]="seatEditorForm"
     (ngSubmit)="onSubmit(valueForSeatsGen.value)"
   >
+    <div class="centerHorizontal m-a-0">
+      <h4 class="formTitle m-a-0"><b>Глядацькі місця</b></h4>
+    </div>
+
     <ng-container
       formArrayName="valueForSeatsGen"
       *ngFor="let _ of valueForSeatsGen.controls; index as i"
@@ -45,7 +49,7 @@
             title="ряд (до)"
             matInput
             type="number"
-            [min]="0"
+            [min]="valueForSeatsGen.controls[i].value.startRow"
             formControlName="lastRow"
           />
         </mat-form-field>
@@ -65,7 +69,7 @@
             title="місця (до)"
             matInput
             type="number"
-            [min]="valueForSeatsGen.value.startSeatNumber"
+            [min]="valueForSeatsGen.controls[i].value.startSeatNumber"
             formControlName="lastSeatNumber"
           />
         </mat-form-field>
@@ -81,7 +85,32 @@
         <mat-icon (click)="removeSeatsControl(i)" class="pointer">delete</mat-icon>
       </form>
     </ng-container>
-    <mat-icon (click)="addValueForSeatsGenControl()" class="pointer">add</mat-icon>
+    <div>
+      <mat-icon
+        title="додати глядацькі місця"
+        (click)="addValueForSeatsGenControl()"
+        class="pointer centerHorizontal"
+      >
+        add
+      </mat-icon>
+    </div>
+    <button
+      mat-button
+      color="primary"
+      class="col-sm-6"
+      (click)="resetForm($event)"
+    >
+      скинути
+    </button>
+
+    <button
+      mat-button
+      color="primary"
+      class="col-sm-6"
+      type="submit"
+    >
+      зберегти
+    </button>
   </form>
 
 </ng-container>
