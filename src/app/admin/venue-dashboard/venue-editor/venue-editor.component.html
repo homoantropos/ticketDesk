@@ -1,11 +1,11 @@
 <div class="formTitle m-t-2">
   <p><b>{{createOrEditLabelName}}</b></p>
 </div>
-<div class="col-sm-6">
+<div class="col-sm-5">
   <ng-container *ngIf="venueEditorForm; else loader">
 
     <form
-      class="col-sm-12 m-a-0 centerHorizontal formContainer"
+      class="col-sm-12 m-a-0 centerHorizontal formContainer screenHeight scroll"
       [formGroup]="venueEditorForm"
       (ngSubmit)="onSubmit(venueEditorForm.value)"
     >
@@ -183,7 +183,7 @@
   </ng-container>
 </div>
 
-<div class="col-sm-6">
+<div class="col-sm-7 screenHeight scroll">
 <app-seat-editor
   *ngIf="seats"
   [seats]="seats"

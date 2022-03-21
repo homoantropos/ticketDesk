@@ -1,1 +1,91 @@
-<p>seat-editor works!</p>
+<ng-container class="scroll" *ngIf="seatEditorForm; else loader">
+
+  <form
+    [formGroup]="seatEditorForm"
+    (ngSubmit)="onSubmit(valueForSeatsGen.value)"
+  >
+    <ng-container
+      formArrayName="valueForSeatsGen"
+      *ngFor="let _ of valueForSeatsGen.controls; index as i"
+    >
+      <form
+        formGroupName="{{i}}"
+      >
+        <mat-form-field class="narrow m-r-1">
+          <mat-label>назва залу</mat-label>
+          <input
+            title="назва залу"
+            matInput
+            type="text"
+            formControlName="venueHall"
+          />
+        </mat-form-field>
+        <mat-form-field class="narrow m-r-1">
+          <mat-label>частина глядацького залу</mat-label>
+          <input
+            title="частина глядацького залу"
+            matInput
+            type="text"
+            formControlName="hallSection"
+          />
+        </mat-form-field>
+        <mat-form-field class="input_number_container m-r-1">
+          <mat-label>ряд (від)</mat-label>
+          <input
+            title="яд (від)"
+            matInput
+            type="number"
+            [min]="0"
+            formControlName="startRow"
+          />
+        </mat-form-field>
+        <mat-form-field class="input_number_container m-r-1">
+          <mat-label>ряд (до)</mat-label>
+          <input
+            title="ряд (до)"
+            matInput
+            type="number"
+            [min]="0"
+            formControlName="lastRow"
+          />
+        </mat-form-field>
+        <mat-form-field class="input_number_container m-r-1">
+          <mat-label>місця (від)</mat-label>
+          <input
+            title="місця (від)"
+            matInput
+            type="number"
+            [min]="0"
+            formControlName="startSeatNumber"
+          />
+        </mat-form-field>
+        <mat-form-field class="input_number_container m-r-1">
+          <mat-label>місця (до)</mat-label>
+          <input
+            title="місця (до)"
+            matInput
+            type="number"
+            [min]="valueForSeatsGen.value.startSeatNumber"
+            formControlName="lastSeatNumber"
+          />
+        </mat-form-field>
+        <mat-form-field class="narrow m-r-1">
+          <mat-label>тип крісел</mat-label>
+          <input
+            title="тип крісел"
+            matInput
+            type="text"
+            formControlName="typeOfSeat"
+          />
+        </mat-form-field>
+        <mat-icon (click)="removeSeatsControl(i)" class="pointer">delete</mat-icon>
+      </form>
+    </ng-container>
+    <mat-icon (click)="addValueForSeatsGenControl()" class="pointer">add</mat-icon>
+  </form>
+
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

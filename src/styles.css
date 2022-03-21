@@ -113,6 +113,18 @@ h1, h2, h3, h4, h5 {
   width: 100%;
 }
 
+.screenHeight {
+  height: 80vh;
+}
+
+.narrow{
+  width: 20%;
+}
+
+.input_number_container {
+  width: 5%;
+}
+
 .z-index-n1 {
   z-index: -1;
 }

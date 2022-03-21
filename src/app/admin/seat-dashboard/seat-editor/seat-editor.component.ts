@@ -45,19 +45,21 @@ export class SeatEditorComponent implements OnInit, OnDestroy {
     this.seatEditorForm = this.fb.group({
       valueForSeatsGen: this.fb.array([])
     });
-    this.sortSeatsForEditor();
-    this.formValue = this.seatsReducer.serializeSeatsArray(this.seats);
-    // this.formValue = this.seatsReducer.reduceRows(this.formValue);
-    this.formValue.map(
-      initValue => this.addValueForSeatsGenControl(initValue)
-    )
+    if (this.seats.length > 0) {
+      this.formValue = this.seatsReducer.serializeSeatsArray(this.seats);
+      this.formValue.map(
+        initValue => this.addValueForSeatsGenControl(initValue)
+      )
+    } else {
+      this.addValueForSeatsGenControl();
+    }
   }
 
   get valueForSeatsGen(): FormArray {
     return this.seatEditorForm['controls']['valueForSeatsGen'] as FormArray;
   }
 
-  addValueForSeatsGenControl(initValue: SeatEditorFormInitValue): void {
+  addValueForSeatsGenControl(initValue?: SeatEditorFormInitValue): void {
     this.valueForSeatsGen.push(
       this.fb.group({
         venueHall: [initValue ? initValue.venueHall : ''],
@@ -66,20 +68,23 @@ export class SeatEditorComponent implements OnInit, OnDestroy {
         lastRow: [initValue ? initValue.lastRow : null],
         startSeatNumber: [initValue ? initValue.startSeatNumber : null],
         lastSeatNumber: [initValue ? initValue.lastSeatNumber : null],
-        typeOfSeat: [initValue ? initValue.lastSeatNumber : '']
+        typeOfSeat: [initValue ? initValue.typeOfSeat : '']
       })
     )
   }
 
-  sortSeatsForEditor(): void {
-    let keys = Object.keys(this.seats[0]).filter(key => !key.toLowerCase().includes('id'.toLowerCase()));
-    keys = keys.sort((a, b) => keys.indexOf(b) - keys.indexOf(a));
-    keys.map(
-      key => {
-        this.sortService.sortTableByStringValues([key], this.seats, false);
-      }
-    );
+  removeSeatsControl(index: number): void {
+    this.valueForSeatsGen.removeAt(index);
   }
+
+  onSubmit(value: any): void {
+    let seats = [];
+    value.map(
+
+    )
+    console.log(value);
+  }
+
   ngOnDestroy() {
     this.formValue = [];
   }

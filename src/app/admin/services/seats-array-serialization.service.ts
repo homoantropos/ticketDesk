@@ -1,6 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Seat} from "../../shared/interfaces";
 import {SeatEditorFormInitValue} from "../seat-dashboard/seat-editor/seat-editor.component";
+import {TableSortService} from "../../shared/services/table-sort";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class SeatsArraySerializationService implements OnInit {
   formValue: Array<SeatEditorFormInitValue> = [];
   seats: Array<Seat> = [];
 
-  constructor() {
+  constructor(
+    private sortService: TableSortService
+  ) {
   }
 
   ngOnInit() {
@@ -57,7 +60,7 @@ export class SeatsArraySerializationService implements OnInit {
 
   serializeSeatsArray(seats: Array<Seat>): Array<SeatEditorFormInitValue> {
     this.formValue = [];
-    this.seats = seats.slice();
+    this.seats = this.sortSeats(seats).slice();
     if (seats.length > 0) {
       let currentSeat = seats[0];
       this.createGroup(seats[0]);
@@ -102,4 +105,16 @@ export class SeatsArraySerializationService implements OnInit {
     }
     return formVal
   }
+
+  sortSeats(seats: Array<Seat>): Array<Seat> {
+    let keys = Object.keys(seats[0]).filter(key => !key.toLowerCase().includes('id'.toLowerCase()));
+    keys = keys.sort((a, b) => keys.indexOf(b) - keys.indexOf(a));
+    keys.map(
+      key => {
+        this.sortService.sortTableByStringValues([key], seats, false);
+      }
+    );
+    return seats
+  }
+
 }
