@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Seat} from "../../shared/interfaces";
 import {environment} from "../../../environments/environment";
 import {ActivatedRoute} from "@angular/router";
+import {SeatEditorFormInitValue} from "../seat-dashboard/seat-editor/seat-editor.component";
 
 @Injectable({
   providedIn: 'root'
@@ -17,4 +18,5 @@ export class SeatService {
   getSeats(id: number): Observable<Array<Seat>> {
     return this.http.get<Array<Seat>>(`${environment.dbUrl}/seat?venueId=${id}`);
   }
+
 }

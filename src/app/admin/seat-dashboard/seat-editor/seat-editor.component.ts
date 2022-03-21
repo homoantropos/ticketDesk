@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {Seat, Venue} from "../../../shared/interfaces";
 import {TableSortService} from "../../../shared/services/table-sort";
 import {SeatService} from "../../services/seat.service";
-import {ActivatedRoute} from "@angular/router";
+import {SeatsArraySerializationService} from "../../services/seats-array-serialization.service";
 
 export interface SeatEditorFormInitValue {
-  venueHall?: string,
+  venueHall: string,
   hallSection: string,
   startRow: number,
   lastRow: number,
   startSeatNumber: number,
   lastSeatNumber: number,
-  typeOfSeat?: string,
+  typeOfSeat: string,
 }
 
 @Component({
@@ -21,7 +21,7 @@ export interface SeatEditorFormInitValue {
   styleUrls: ['./seat-editor.component.css']
 })
 
-export class SeatEditorComponent implements OnInit {
+export class SeatEditorComponent implements OnInit, OnDestroy {
 
   seatEditorForm: FormGroup;
 
@@ -29,12 +29,15 @@ export class SeatEditorComponent implements OnInit {
   @Input() seats: Array<Seat>;
   @Output() seats$: EventEmitter<Array<Seat>> = new EventEmitter<Array<Seat>>();
 
-  sortDirection = true;
+  formValue: Array<SeatEditorFormInitValue> = [];
+
+  currentSeat: Seat;
 
   constructor(
     private fb: FormBuilder,
     private seatService: SeatService,
-    private sortService: TableSortService
+    private sortService: TableSortService,
+    private seatsReducer: SeatsArraySerializationService
   ) {
   }
 
@@ -42,43 +45,30 @@ export class SeatEditorComponent implements OnInit {
     this.seatEditorForm = this.fb.group({
       valueForSeatsGen: this.fb.array([])
     });
-    this.addValueForSeatsGenControl(this.seats);
+    this.sortSeatsForEditor();
+    this.formValue = this.seatsReducer.serializeSeatsArray(this.seats);
+    // this.formValue = this.seatsReducer.reduceRows(this.formValue);
+    this.formValue.map(
+      initValue => this.addValueForSeatsGenControl(initValue)
+    )
   }
 
   get valueForSeatsGen(): FormArray {
     return this.seatEditorForm['controls']['valueForSeatsGen'] as FormArray;
   }
 
-  addValueForSeatsGenControl(seats?: Array<Seat>): void {
-    if (seats.length > 0) {
-      this.sortSeatsForEditor();
-      const venueHalls: Array<string> = []
-      seats.map(
-        seat => {
-          if (!venueHalls.includes(seat.venueHall)) {
-            venueHalls.push(seat.venueHall);
-          }
-        }
-      );
-      console.log(venueHalls);
-      venueHalls.map(
-        venueHall => {
-          const sts = seats.filter(seat => seat.venueHall === venueHall);
-        }
-      )
-    } else {
-      this.valueForSeatsGen.push(
-        this.fb.group({
-          venueHall: [''],
-          hallSection: [''],
-          startRow: [null],
-          lastRow: [null],
-          startSeatNumber: [null],
-          lastSeatNumber: [null],
-          typeOfSeat: ['']
-        })
-      )
-    }
+  addValueForSeatsGenControl(initValue: SeatEditorFormInitValue): void {
+    this.valueForSeatsGen.push(
+      this.fb.group({
+        venueHall: [initValue ? initValue.venueHall : ''],
+        hallSection: [initValue ? initValue.hallSection : ''],
+        startRow: [initValue ? initValue.startRow : null],
+        lastRow: [initValue ? initValue.lastRow : null],
+        startSeatNumber: [initValue ? initValue.startSeatNumber : null],
+        lastSeatNumber: [initValue ? initValue.lastSeatNumber : null],
+        typeOfSeat: [initValue ? initValue.lastSeatNumber : '']
+      })
+    )
   }
 
   sortSeatsForEditor(): void {
@@ -89,6 +79,9 @@ export class SeatEditorComponent implements OnInit {
         this.sortService.sortTableByStringValues([key], this.seats, false);
       }
     );
+  }
+  ngOnDestroy() {
+    this.formValue = [];
   }
 
 }
