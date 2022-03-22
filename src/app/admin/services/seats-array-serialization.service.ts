@@ -42,6 +42,7 @@ export class SeatsArraySerializationService implements OnInit {
 
   seatsAreInSameRow(seat1: Seat, seat2: Seat): boolean {
     return (
+      seat2.typeOfSeat === seat1.typeOfSeat &&
       (seat2.seatNumber - seat1.seatNumber === 1) &&
       seat1.row === seat2.row &&
       seat1.hallSection === seat2.hallSection &&
@@ -83,33 +84,27 @@ export class SeatsArraySerializationService implements OnInit {
 
   reduceRows(formValue: Array<SeatEditorFormInitValue>): Array<SeatEditorFormInitValue> {
     let formVal: Array<SeatEditorFormInitValue> = [];
-    let currentValue = this.formValue[0];
-    this.formValue = this.formValue.slice(1);
-    console.log(this.formValue.length);
     if (formValue.length > 0) {
-      this.formValue.map(
-        initValue1 => {
-          this.formValue.map(
-            initValue2 => {
-              if (this.initValuesChain(currentValue, initValue2)) {
-                currentValue.lastRow = initValue2.startRow;
-                this.formValue.splice(this.formValue.indexOf(initValue2), 1);
-              }
-            }
-          )
-          if (currentValue.lastRow !== null) {
-            formVal.push(currentValue);
+      formValue.map(
+        initValue => {
+          const matchRow = formVal.find(v => this.initValuesChain(v, initValue));
+          if (matchRow) {
+            matchRow.lastRow = initValue.startRow;
+            formVal = formVal.filter(v => !this.initValuesChain(v, initValue));
+            formVal.push(matchRow);
+          } else {
+            formVal.push(initValue);
           }
-          this.formValue = this.formValue.slice(1);
-          currentValue = initValue1;
         }
-      );
+      )
     }
-    if (this.formValue.length === 0) {
-      currentValue.lastRow = currentValue.startRow;
-      formVal.push(currentValue);
-      console.log(formVal);
-    }
+    formVal.map(
+      v => {
+        if(v.lastRow === null) {
+          v.lastRow = v.startRow;
+        }
+      }
+    )
     return formVal
   }
 
